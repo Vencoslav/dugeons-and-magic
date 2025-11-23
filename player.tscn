@@ -73,8 +73,8 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_4sjlk"]
-radius = 4.47214
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
+size = Vector2(10, 13)
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_onrkg")
@@ -83,9 +83,9 @@ script = ExtResource("1_onrkg")
 unique_name_in_owner = true
 position = Vector2(1, -15)
 sprite_frames = SubResource("SpriteFrames_lhvu3")
-animation = &"run"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, -6)
-shape = SubResource("CircleShape2D_4sjlk")
+position = Vector2(2, -8.5)
+shape = SubResource("RectangleShape2D_i3pqv")
