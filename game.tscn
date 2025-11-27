@@ -335,7 +335,7 @@ texture = ExtResource("5_ryrav")
 3:6/0 = 0
 4:6/0 = 0
 5:6/0 = 0
-5:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5.39576, 0.179859, 5.57562, 0.179859, 6.1152, 8, -6.29506, 8)
+5:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 0.5, 6, 0.5, 6, 8, -6, 8)
 6:6/0 = 0
 8:6/0 = 0
 9:6/0 = 0
@@ -359,7 +359,7 @@ texture = ExtResource("5_ryrav")
 29:6/0 = 0
 30:6/0 = 0
 5:7/0 = 0
-5:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -7, 7, -6, 5.83603, -5.1147, 5, -4, 3, -3, -3, -3, -5, -4, -5.8339, -5.12543, -7, -6, -8, -7)
 6:7/0 = 0
 8:7/0 = 0
 9:7/0 = 0
@@ -819,6 +819,7 @@ texture = ExtResource("5_ryrav")
 
 [sub_resource type="TileSet" id="TileSet_vef74"]
 physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 2
 sources/0 = SubResource("TileSetAtlasSource_j5wjh")
 
 [node name="game" type="Node2D"]
