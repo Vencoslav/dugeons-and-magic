@@ -48,7 +48,7 @@ wall_min_slide_angle = 0.0523599
 safe_margin = 2.0
 script = ExtResource("1_5jc4t")
 
-[node name="sprite" type="AnimatedSprite2D" parent="."]
+[node name="animace" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -6)
 sprite_frames = SubResource("SpriteFrames_2002g")
 animation = &"move"
