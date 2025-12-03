@@ -12,4 +12,15 @@ func _process(delta: float) -> void:
 		scale.y = 1
 	
 	
+func shoot():
+	const BULLET = preload("res://fireball.tscn")
+	var new_bullet = BULLET.instantiate()
+	new_bullet.global_position = %shootingPoint.global_position
+	%shootingPoint.add_child(new_bullet)
 	
+	
+
+
+
+func _on_timer_timeout():
+	shoot()
