@@ -44,7 +44,7 @@ radius = 4.0
 
 [node name="fireball" type="Area2D"]
 collision_layer = 0
-collision_mask = 3
+priority = 1
 script = ExtResource("1_olwj8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -58,8 +58,7 @@ position = Vector2(3, 0)
 shape = SubResource("CircleShape2D_lk87q")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-position = Vector2(9.53674e-07, -0.999999)
-scale = Vector2(1.7, 1.7)
+scale = Vector2(1.35, 1.35)
 enable_node_path = NodePath("../CollisionShape2D")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
