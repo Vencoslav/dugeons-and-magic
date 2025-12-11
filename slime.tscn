@@ -1,8 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://d3cv5d6l8jjh8"]
+[gd_scene load_steps=14 format=3 uid="uid://d3cv5d6l8jjh8"]
 
 [ext_resource type="Texture2D" uid="uid://drkvcyxjqxs7f" path="res://animace/slime_green-Sheet.png" id="1_2d52u"]
 [ext_resource type="Script" uid="uid://jn6nls41bfe1" path="res://slime.gd" id="1_5jc4t"]
 [ext_resource type="Texture2D" uid="uid://bheic4b2b6cui" path="res://animace/slime_hurt_better-Sheet.png" id="2_4l1t8"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4l1t8"]
+resource_local_to_scene = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2002g"]
 atlas = ExtResource("2_4l1t8")
@@ -33,15 +36,16 @@ atlas = ExtResource("1_2d52u")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2002g"]
+resource_local_to_scene = true
 animations = [{
 "frames": [{
-"duration": 3.0,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_2002g")
 }, {
-"duration": 5.0,
+"duration": 2.0,
 "texture": SubResource("AtlasTexture_bratd")
 }, {
-"duration": 10.0,
+"duration": 5.0,
 "texture": SubResource("AtlasTexture_5b0gg")
 }],
 "loop": true,
@@ -76,12 +80,12 @@ safe_margin = 5.0
 script = ExtResource("1_5jc4t")
 
 [node name="animace" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -6)
+material = SubResource("CanvasItemMaterial_4l1t8")
 sprite_frames = SubResource("SpriteFrames_2002g")
-animation = &"hurt"
+animation = &"move"
 autoplay = "move"
-frame_progress = 0.0770443
 speed_scale = 0.8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_5jc4t")

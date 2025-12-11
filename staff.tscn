@@ -41,7 +41,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hxfvw")
 }],
-"loop": true,
+"loop": false,
 "name": &"cast",
 "speed": 10.0
 }]
