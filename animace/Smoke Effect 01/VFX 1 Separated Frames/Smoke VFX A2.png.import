@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwiyj3l8dktai"
-path="res://.godot/imported/slime_hurt-Sheet.png-e1aa5126cd6af5222dfadb6cd6d99b67.ctex"
+uid="uid://c1jes558inifo"
+path="res://.godot/imported/Smoke VFX A2.png-0d37a552bb187874329c90fe3a919e6c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://animace/slime_hurt-Sheet.png"
-dest_files=["res://.godot/imported/slime_hurt-Sheet.png-e1aa5126cd6af5222dfadb6cd6d99b67.ctex"]
+source_file="res://animace/Smoke Effect 01/VFX 1 Separated Frames/Smoke VFX A2.png"
+dest_files=["res://.godot/imported/Smoke VFX A2.png-0d37a552bb187874329c90fe3a919e6c.ctex"]
 
 [params]
 

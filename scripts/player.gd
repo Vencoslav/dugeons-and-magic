@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+var health = 100.0
+
 @export var movement_speed : float = 100.0
 var character_direction : Vector2
 
