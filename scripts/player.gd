@@ -1,8 +1,12 @@
 extends CharacterBody2D
 
+signal health_depleted
+
 var health = 100.0
 
 @export var movement_speed : float = 100.0
+@onready var health_bar = $Bar
+
 var character_direction : Vector2
 
 func _physics_process(delta):
@@ -21,4 +25,13 @@ func _physics_process(delta):
 		if %animace.animation != "idle": %animace.animation = "idle"
 	
 	move_and_slide()
-		
+	
+	const DAMAGE_RATE = 5.0
+	var overlapping_mobs = %hurtBox.get_overlapping_bodies()
+	if overlapping_mobs.size() > 0:
+		health -= DAMAGE_RATE * overlapping_mobs.size() * delta
+		health_bar.value = health
+		#%ProgressBar.value = 500 - můžu nastavi maximální životy
+		if health <= 0.0:	
+			health_depleted.emit()
+			
