@@ -49,15 +49,15 @@ region = Rect2(48, 0, 16, 28)
 [sub_resource type="SpriteFrames" id="SpriteFrames_lhvu3"]
 animations = [{
 "frames": [{
-"duration": 0.4,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_1jxqw")
 }, {
-"duration": 0.4,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_dw050")
 }],
 "loop": true,
 "name": &"hurt",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -127,6 +127,7 @@ position = Vector2(1, -15)
 sprite_frames = SubResource("SpriteFrames_lhvu3")
 animation = &"hurt"
 autoplay = "idle"
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, -6)

@@ -3,8 +3,6 @@ extends Area2D
 var travelled_distance = 0
 
 const SPEED: int = 300
-const RANGE = 1200
-
 	
 func _process(delta: float) -> void:
 	position += transform.x * SPEED * delta
