@@ -7,6 +7,7 @@ var health = 100.0
 @export var movement_speed : float = 100.0
 @onready var health_bar = $Bar
 
+
 var character_direction : Vector2
 
 func _physics_process(delta):

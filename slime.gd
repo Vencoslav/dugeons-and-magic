@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var health = 3
 
-@onready var player = get_node("/root/game/tilemap/player")
+@onready var player = get_node("/root/game/player")
 @onready var an = $animace
 
 func _ready() -> void:

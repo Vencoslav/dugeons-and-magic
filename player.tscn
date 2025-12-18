@@ -115,7 +115,9 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [node name="player" type="CharacterBody2D"]
-collision_layer = 0
+light_mask = 0
+visibility_layer = 0
+collision_mask = 26
 motion_mode = 1
 wall_min_slide_angle = 0.174533
 safe_margin = 2.0
@@ -134,6 +136,7 @@ position = Vector2(2, -6)
 shape = SubResource("CircleShape2D_hqtel")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+ignore_rotation = false
 zoom = Vector2(2, 2)
 
 [node name="staff" parent="." instance=ExtResource("4_hqtel")]
