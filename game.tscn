@@ -10,7 +10,7 @@
 
 [sub_resource type="Curve2D" id="Curve2D_j5wjh"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -442, -221, 0, 0, 0, 0, 583, -221, 0, 0, 0, 0, 583, 308, 0, 0, 0, 0, -442, 306)
+"points": PackedVector2Array(0, 0, 0, 0, -474, -253, 0, 0, 0, 0, 613, -252, 0, 0, 0, 0, 614, 341, 0, 0, 0, 0, -474, 339)
 }
 point_count = 4
 
@@ -835,6 +835,17 @@ position = Vector2(506, 284)
 script = ExtResource("1_eow3j")
 metadata/_edit_horizontal_guides_ = [791.0]
 
+[node name="Path2D" type="Path2D" parent="."]
+visibility_layer = 3
+z_as_relative = false
+curve = SubResource("Curve2D_j5wjh")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+unique_name_in_owner = true
+z_index = 10
+position = Vector2(-474, -253)
+rotation = 0.000919963
+
 [node name="player" parent="." instance=ExtResource("1_80nbo")]
 light_mask = 1
 visibility_layer = 30
@@ -842,26 +853,16 @@ z_index = 10
 position = Vector2(89, 89)
 scale = Vector2(1.42254, 1.5)
 
-[node name="Path2D" type="Path2D" parent="."]
-visibility_layer = 3
-z_index = 10
-z_as_relative = false
-curve = SubResource("Curve2D_j5wjh")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-unique_name_in_owner = true
-z_index = 10
-position = Vector2(-442, -221)
-
 [node name="tilemap" type="Node" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="tilemap"]
-offset_left = -692.0
-offset_top = -473.0
-offset_right = 1765.0
-offset_bottom = 1347.0
-color = Color(0.133333, 0.133333, 0.133333, 1)
-metadata/_edit_use_anchors_ = true
+z_index = -1
+offset_left = -335.0
+offset_top = -229.0
+offset_right = 1238.0
+offset_bottom = 809.0
+scale = Vector2(1.17976, 1.21261)
+color = Color(0.133196, 0.133196, 0.133196, 1)
 
 [node name="floor" type="TileMapLayer" parent="tilemap"]
 light_mask = 0
@@ -870,6 +871,8 @@ tile_map_data = PackedByteArray("AADi/xQAAQACAAAAAADi/+7/AQAAAAAAAADi/+//AQABAAE
 tile_set = SubResource("TileSet_mfdv2")
 
 [node name="obtacle" type="TileMapLayer" parent="tilemap"]
+z_index = 10
+position = Vector2(0, -1)
 tile_map_data = PackedByteArray("AAACABQAAAAFAAUAAAAGABYAAAAFAAUAAAAHABMAAAAFAAUAAAAMACEAAAAFAAcAAAAPACYAAAAFAAcAAAAZAAkAAAAFAAYAAAAbACMAAAAFAAcAAAAhABsAAAAFAAYAAAAnABEAAAAFAAcAAAAqABQAAAAFAAcAAAAsAAcAAAAFAAcAAAAsAA4AAAAFAAUAAAAvABsAAAAFAAUAAAAvABwAAAAFAAYAAAA1ABgAAAAFAAcAAAA2ABwAAAAFAAUAAAA6ACAAAAAFAAcAAABBACUAAAAFAAUAAAAvAB0AAAAFAAcAAAA2AB0AAAAFAAYAAAA6AB8AAAAFAAYAAAA1ABcAAAAFAAYAAABBACYAAAAFAAYAAABBACcAAAAFAAcAAAAhABwAAAAFAAcAAAAHABQAAAAFAAYAAAACABUAAAAFAAYAAAAGABcAAAAFAAYAAAAsAA8AAAAFAAYAAAA1ABYAAAAFAAUAAAAhABoAAAAFAAUAAAA6AB4AAAAFAAUAAAAnAA8AAAAFAAUAAAAsABAAAAAFAAcAAAAnABAAAAAFAAYAAAAGABgAAAAFAAcAAAACABYAAAAFAAcAAAAHABUAAAAFAAcAAAAZAAoAAAAFAAcAAAAZAAgAAAAFAAUAAAAsAAYAAAAFAAYAAAAsAAUAAAAFAAUAAAAbACIAAAAFAAYAAAAbACEAAAAFAAUAAAAqABMAAAAFAAYAAAAqABIAAAAFAAUAAAAMAB8AAAAFAAUAAAAPACQAAAAFAAUAAAAPACUAAAAFAAYAAAAMACAAAAAFAAYAAAA2AB4AAAAGAAcAAAA=")
 tile_set = SubResource("TileSet_vef74")
 

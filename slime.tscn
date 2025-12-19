@@ -129,12 +129,13 @@ animations = [{
 radius = 6.08276
 
 [node name="slime" type="CharacterBody2D"]
+light_mask = 33
+visibility_layer = 33
+z_index = 4
 collision_layer = 2
-collision_mask = 19
 motion_mode = 1
 wall_min_slide_angle = 0.0523599
 platform_floor_layers = 4294967047
-safe_margin = 5.0
 script = ExtResource("1_5jc4t")
 
 [node name="animace" type="AnimatedSprite2D" parent="."]
