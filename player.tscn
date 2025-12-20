@@ -98,8 +98,9 @@ animations = [{
 radius = 6.0
 height = 18.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_sweqy"]
-radius = 6.08276
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2hs0m"]
+radius = 8.0
+height = 22.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sweqy"]
 bg_color = Color(0.226707, 0.226708, 0.226707, 1)
@@ -150,8 +151,8 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtBox"]
-position = Vector2(2, -6)
-shape = SubResource("CircleShape2D_sweqy")
+position = Vector2(2, -10)
+shape = SubResource("CapsuleShape2D_2hs0m")
 debug_color = Color(0.980392, 0.0352941, 0, 0.419608)
 
 [node name="Bar" type="ProgressBar" parent="."]

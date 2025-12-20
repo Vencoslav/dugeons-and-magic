@@ -125,8 +125,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5jc4t"]
-radius = 6.08276
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ppcr1"]
+radius = 8.0
+height = 16.0
 
 [node name="slime" type="CharacterBody2D"]
 light_mask = 33
@@ -147,4 +148,4 @@ speed_scale = 0.8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 5)
-shape = SubResource("CircleShape2D_5jc4t")
+shape = SubResource("CapsuleShape2D_ppcr1")
