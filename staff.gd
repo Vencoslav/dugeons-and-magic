@@ -7,7 +7,7 @@ const BULLET = preload("res://fireball.tscn")
 @onready var fire_timer: Timer = $FireTimer
 
 
-func _process(delta):
+func _process(_delta):
 	look_at(get_global_mouse_position())
 
 	rotation_degrees = wrap(rotation_degrees, 0, 360)
