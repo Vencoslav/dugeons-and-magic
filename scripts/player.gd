@@ -30,7 +30,7 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-	const DAMAGE_RATE = 5.0
+	const DAMAGE_RATE = 25.0
 	var overlapping_mobs = %hurtBox.get_overlapping_bodies()
 
 	if overlapping_mobs.size() > 0:

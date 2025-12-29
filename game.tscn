@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://ds3td1sio5svj"]
+[gd_scene load_steps=20 format=4 uid="uid://ds3td1sio5svj"]
 
 [ext_resource type="PackedScene" uid="uid://bl0uwoljmplb5" path="res://player.tscn" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://cb32luqhr437t" path="res://game.gd" id="1_eow3j"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://8cdv8xoxg1dd" path="res://mapa/wall.png" id="3_fc0e3"]
 [ext_resource type="Texture2D" uid="uid://2wm5t7tca8ht" path="res://mapa/corners.png" id="4_7jktm"]
 [ext_resource type="Texture2D" uid="uid://ixfbmamd7215" path="res://0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7.png" id="5_ryrav"]
+[ext_resource type="Theme" uid="uid://d022i4cmvv35p" path="res://Default.tres" id="8_j5wjh"]
+[ext_resource type="Texture2D" uid="uid://cxtlraaqh3si7" path="res://moje_grafika/GUI/Sprite-0001.png" id="9_vef74"]
 
 [sub_resource type="Curve2D" id="Curve2D_j5wjh"]
 _data = {
@@ -914,5 +916,47 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 128
 text = "Game Over"
 
+[node name="ButtonTryAgain" type="Button" parent="GameOver/ColorRect"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -166.0
+offset_top = -230.0
+offset_right = -38.0
+offset_bottom = -166.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("8_j5wjh")
+toggle_mode = true
+text = "Try Again"
+icon = ExtResource("9_vef74")
+icon_alignment = 1
+
+[node name="ButtonExit" type="Button" parent="GameOver/ColorRect"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 75.0
+offset_top = -230.0
+offset_right = 203.0
+offset_bottom = -166.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("8_j5wjh")
+toggle_mode = true
+text = "Exit"
+icon = ExtResource("9_vef74")
+icon_alignment = 1
+
 [connection signal="health_depleted" from="player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="GameOver/ColorRect/ButtonTryAgain" to="." method="_on_button_try_again_pressed"]
+[connection signal="pressed" from="GameOver/ColorRect/ButtonExit" to="." method="_on_button_exit_pressed"]
