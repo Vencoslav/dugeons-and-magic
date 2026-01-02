@@ -14,7 +14,7 @@ func _physics_process(delta):
 	character_direction.x = Input.get_axis("move_left", "move_right")
 	character_direction.y = Input.get_axis("move_up", "move_down")
 	
-	velocity = velocity.normalized() # opravuje 2x rychlost když jdeš směrem do rohuaaaaaaaaaaa
+	velocity = velocity.normalized() # opravuje 2x rychlost když jdeš směrem do rohu
 
 	# otočení
 	if character_direction.x > 0:

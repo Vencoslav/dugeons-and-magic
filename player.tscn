@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bl0uwoljmplb5"]
+[gd_scene load_steps=20 format=3 uid="uid://bl0uwoljmplb5"]
 
 [ext_resource type="Texture2D" uid="uid://mkbktdlk4pf1" path="res://animace/wizzard_m_idle_anim_f0-Sheet.png" id="1_f50pn"]
 [ext_resource type="Script" uid="uid://blnvc0eh00u4f" path="res://scripts/player.gd" id="1_onrkg"]
@@ -102,13 +102,6 @@ height = 18.0
 radius = 8.0
 height = 22.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sweqy"]
-bg_color = Color(0.226707, 0.226708, 0.226707, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2hs0m"]
 bg_color = Color(1, 0, 0, 1)
 corner_radius_top_left = 8
@@ -155,11 +148,10 @@ debug_color = Color(0.980392, 0.0352941, 0, 0.419608)
 
 [node name="Bar" type="ProgressBar" parent="."]
 z_index = 20
-offset_left = -196.0
-offset_top = -103.0
-offset_right = -142.0
-offset_bottom = -99.0
-theme_override_styles/background = SubResource("StyleBoxFlat_sweqy")
+offset_left = -219.0
+offset_top = -116.0
+offset_right = -165.0
+offset_bottom = -112.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_2hs0m")
 value = 100.0
 rounded = true
