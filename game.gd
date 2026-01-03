@@ -3,6 +3,7 @@ extends Node2D
 @onready var path_follow = %PathFollow2D
 @onready var timer = $SpawnTimer
 
+
 var max_slimes := 5
 var current_slimes := 0
 
