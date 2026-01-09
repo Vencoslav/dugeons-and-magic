@@ -18,3 +18,4 @@ func stop() -> void:
 
 func get_time_formatted() -> String:
 	return "%02d:%02d" % [minutes, seconds]
+	

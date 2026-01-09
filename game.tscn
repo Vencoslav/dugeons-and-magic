@@ -890,6 +890,11 @@ tile_map_data = PackedByteArray("AAApAO3/AgACAAMAAADh/wwAAQABAAAAAADh/w0AAQABAAA
 tile_set = SubResource("TileSet_j5wjh")
 
 [node name="GlobalTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="IncreseHealthTimer" type="Timer" parent="."]
+wait_time = 20.0
 autostart = true
 
 [node name="GameOver" type="CanvasLayer" parent="."]
@@ -961,5 +966,7 @@ icon = ExtResource("9_vef74")
 icon_alignment = 1
 
 [connection signal="health_depleted" from="player" to="." method="_on_player_health_depleted"]
+[connection signal="timeout" from="GlobalTimer" to="." method="_on_global_timer_timeout"]
+[connection signal="timeout" from="IncreseHealthTimer" to="." method="_on_increse_health_timer_timeout"]
 [connection signal="pressed" from="GameOver/ColorRect/ButtonTryAgain" to="." method="_on_button_try_again_pressed"]
 [connection signal="pressed" from="GameOver/ColorRect/ButtonExit" to="." method="_on_button_exit_pressed"]
