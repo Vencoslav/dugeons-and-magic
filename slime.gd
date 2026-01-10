@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var health = 10
+var health = 8
 var speed = 30.0
 
 @onready var an = $animace
@@ -15,17 +15,19 @@ func _physics_process(_delta):
 	velocity = direction * speed
 	move_and_slide()
 	
-	velocity = velocity.normalized() # opravuje 2x rychlost když jdeš směrem do rohu
+	velocity = velocity.normalized() * speed # opravuje 2x rychlost když jdeš směrem do rohu
 
 
 func take_damage():
 	health -= 4
-	an.play("hurt")
-	await an.animation_finished
-	an.play("move")
 	
 	
-	if health == 0:
+	if health <= 0:
 		an.play("smoke")
 		await an.animation_finished
 		queue_free()
+		return
+
+	an.play("hurt")	
+	await an.animation_finished
+	an.play("move")

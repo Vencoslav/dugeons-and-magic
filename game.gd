@@ -4,25 +4,32 @@ extends Node2D
 @onready var timer = $GlobalTimer
 @onready var healthTimer = $IncreseHealthTimer
 
-var max_slimes := 5
-var current_slimes := 0
+var slimeHealthBonus := 0
+var slimeSpeedBonus := 0
+
+var maxSlimes := 5
+var currentSlimes := 0
 
 func spawn_mob():
-	if current_slimes >= max_slimes:
+	if currentSlimes >= maxSlimes:
 		return
 		
 	var mob = preload("res://slime.tscn").instantiate()
 	path_follow.progress_ratio = randf()
 	mob.global_position = path_follow.global_position
+	
+	mob.health += slimeHealthBonus
+	mob.speed += slimeSpeedBonus
+	
 
 	add_child(mob)
-	current_slimes += 1
+	currentSlimes += 1
 	
 	# Po zničení slima se počet sníží
 	mob.tree_exited.connect(_on_slime_removed)
 
 func _on_slime_removed():
-	current_slimes -= 1
+	currentSlimes -= 1
 	
 func _on_global_timer_timeout() -> void:
 	spawn_mob()	
@@ -39,7 +46,9 @@ func _on_button_try_again_pressed() -> void:
 	get_tree().reload_current_scene()
 
 func _on_increse_health_timer_timeout() -> void:
-	for slime in get_tree().get_nodes_in_group("slimes"):
-		slime.health += 5
-		slime.speed += 20
-		#dodělej text když se zvíší obtížnost
+	slimeHealthBonus += 2
+	slimeSpeedBonus += 5.0
+	maxSlimes += 2
+	#dodělej text když se zvíší obtížnost
+	#udělej lepší kolize
+	#hold třílení 

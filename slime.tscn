@@ -145,6 +145,8 @@ material = SubResource("CanvasItemMaterial_4l1t8")
 sprite_frames = SubResource("SpriteFrames_2002g")
 animation = &"move"
 autoplay = "move"
+frame = 3
+frame_progress = 0.177139
 speed_scale = 0.8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

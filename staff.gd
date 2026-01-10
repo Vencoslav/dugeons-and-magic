@@ -18,8 +18,9 @@ func _process(_delta):
 
 	if Input.is_action_just_pressed("fire"):
 		try_shoot()
-
-
+	if Input.is_action_pressed("fire"):
+		try_shoot()
+		
 func try_shoot():
 	# pokud cooldown běží, nestřílej
 	if not fire_timer.is_stopped():
