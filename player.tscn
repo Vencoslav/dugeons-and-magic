@@ -163,9 +163,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sweqy"]
-radius = 6.0
-height = 18.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dw050"]
+size = Vector2(11, 14)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2hs0m"]
 bg_color = Color(1, 0, 0, 1)
@@ -174,17 +173,16 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2hs0m"]
-radius = 8.0
-height = 22.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b26j0"]
+size = Vector2(16.5, 18.5)
 
 [node name="player" type="CharacterBody2D"]
 z_index = 10
-position = Vector2(715, 278)
-collision_mask = 26
+position = Vector2(714, 278)
+collision_mask = 24
 motion_mode = 1
 wall_min_slide_angle = 0.174533
-safe_margin = 2.0
+safe_margin = 1.0
 script = ExtResource("1_onrkg")
 
 [node name="animace" type="AnimatedSprite2D" parent="."]
@@ -193,11 +191,14 @@ position = Vector2(1, -15)
 sprite_frames = SubResource("SpriteFrames_lhvu3")
 animation = &"runRed"
 autoplay = "idleRed"
+frame = 2
+frame_progress = 0.167382
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 10
 position = Vector2(2, -10)
-shape = SubResource("CapsuleShape2D_sweqy")
+shape = SubResource("RectangleShape2D_dw050")
+one_way_collision_margin = 128.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 ignore_rotation = false
@@ -256,5 +257,6 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtBox"]
 position = Vector2(2, -10)
-shape = SubResource("CapsuleShape2D_2hs0m")
+shape = SubResource("RectangleShape2D_b26j0")
+one_way_collision_margin = 0.0
 debug_color = Color(0.980392, 0.0352941, 0, 0.419608)

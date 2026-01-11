@@ -3,6 +3,7 @@ extends Node2D
 @onready var path_follow = %PathFollow2D
 @onready var timer = $GlobalTimer
 @onready var healthTimer = $IncreseHealthTimer
+@onready var player = get_node("/root/game/player")
 
 var slimeHealthBonus := 0
 var slimeSpeedBonus := 0
@@ -49,6 +50,7 @@ func _on_increse_health_timer_timeout() -> void:
 	slimeHealthBonus += 2
 	slimeSpeedBonus += 5.0
 	maxSlimes += 2
+	player.damageRate += 5.0
+	
 	#dodělej text když se zvíší obtížnost
 	#udělej lepší kolize
-	#hold třílení 

@@ -2,7 +2,8 @@ extends CharacterBody2D
 
 signal health_depleted
 
-var health = 100.0
+var health = 10000.0
+var damageRate := 25.0
 
 @export var movementSpeed : float = 100.0
 @onready var healthBar = $Bar
@@ -30,12 +31,11 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-	const DAMAGE_RATE = 25.0
 	var overlapping_mobs = %hurtBox.get_overlapping_bodies()
 
 	if overlapping_mobs.size() > 0:
 		# dostávám damage → hurt
-		health -= DAMAGE_RATE * overlapping_mobs.size() * delta
+		health -= damageRate * overlapping_mobs.size() * delta
 		healthBar.value = health
 
 		if %animace.animation != "hurt":
