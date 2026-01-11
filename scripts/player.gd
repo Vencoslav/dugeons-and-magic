@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 signal health_depleted
 
-var health = 10000.0
+var health = 100.0
 var damageRate := 25.0
 
 @export var movementSpeed : float = 100.0
