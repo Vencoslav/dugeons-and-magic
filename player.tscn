@@ -202,7 +202,7 @@ one_way_collision_margin = 128.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 ignore_rotation = false
-zoom = Vector2(2, 2)
+zoom = Vector2(2.5, 2.5)
 
 [node name="Bar" type="ProgressBar" parent="."]
 z_index = 20

@@ -899,9 +899,9 @@ autostart = true
 
 [node name="GameOver" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="GameOver"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -945,7 +945,7 @@ text = "Try Again"
 icon = ExtResource("9_vef74")
 icon_alignment = 1
 
-[node name="ButtonMainMenu" type="Button" parent="GameOver/ColorRect"]
+[node name="ButtonExit" type="Button" parent="GameOver/ColorRect"]
 process_mode = 3
 layout_mode = 1
 anchors_preset = 7
@@ -961,7 +961,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("8_j5wjh")
 toggle_mode = true
-text = "Main menu"
+text = "Exit"
 icon = ExtResource("9_vef74")
 icon_alignment = 1
 
@@ -977,25 +977,6 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.494118)
 
-[node name="ButtonResume" type="Button" parent="PauseMenu/ColorRect"]
-process_mode = 3
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -113.0
-offset_top = -592.0
-offset_right = 35.0
-offset_bottom = -523.0
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(1.52196, 1.58029)
-theme = ExtResource("8_j5wjh")
-text = "Resume"
-icon_alignment = 1
-
 [node name="ButtonRestart" type="Button" parent="PauseMenu/ColorRect"]
 process_mode = 3
 layout_mode = 1
@@ -1005,13 +986,14 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -112.0
-offset_top = -480.0
+offset_top = -522.0
 offset_right = 36.0001
-offset_bottom = -411.0
+offset_bottom = -453.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.52196, 1.58029)
 theme = ExtResource("8_j5wjh")
+toggle_mode = true
 text = "Restart"
 icon_alignment = 1
 
@@ -1024,13 +1006,14 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -113.0
-offset_top = -369.0
+offset_top = -397.0
 offset_right = 35.0
-offset_bottom = -300.0
+offset_bottom = -328.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.52196, 1.58029)
 theme = ExtResource("8_j5wjh")
+toggle_mode = true
 text = "Main menu
 "
 icon_alignment = 1
@@ -1044,13 +1027,14 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -113.0
-offset_top = -258.0
+offset_top = -274.0
 offset_right = 35.0
-offset_bottom = -189.0
+offset_bottom = -205.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.52196, 1.58029)
 theme = ExtResource("8_j5wjh")
+toggle_mode = true
 text = "Quit game
 "
 icon_alignment = 1
@@ -1059,6 +1043,7 @@ icon_alignment = 1
 [connection signal="timeout" from="GlobalTimer" to="." method="_on_global_timer_timeout"]
 [connection signal="timeout" from="IncreseHealthTimer" to="." method="_on_increse_health_timer_timeout"]
 [connection signal="pressed" from="GameOver/ColorRect/ButtonTryAgain" to="." method="_on_button_try_again_pressed"]
-[connection signal="pressed" from="PauseMenu/ColorRect/ButtonResume" to="." method="_on_button_resume_pressed"]
-[connection signal="pressed" from="PauseMenu/ColorRect/ButtonRestart" to="." method="_on_button_restart_pressed"]
-[connection signal="pressed" from="PauseMenu/ColorRect/ButtonQuitGame" to="." method="_on_button_quit_game_pressed"]
+[connection signal="pressed" from="GameOver/ColorRect/ButtonExit" to="." method="_on_button_exit_pressed"]
+[connection signal="pressed" from="PauseMenu/ColorRect/ButtonRestart" to="." method="_on_button_try_again_pressed"]
+[connection signal="pressed" from="PauseMenu/ColorRect/ButtonMainMenu" to="." method="_on_button_try_again_pressed"]
+[connection signal="pressed" from="PauseMenu/ColorRect/ButtonQuitGame" to="." method="_on_button_try_again_pressed"]
