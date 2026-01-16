@@ -6,7 +6,7 @@ var health = 100.0
 var damageRate := 25.0
 
 @export var movementSpeed : float = 100.0
-@onready var healthBar = $Bar
+@onready var healthBar = $HealthBar
 
 
 var character_direction : Vector2

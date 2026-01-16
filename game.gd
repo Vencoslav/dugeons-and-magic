@@ -14,11 +14,6 @@ var currentSlimes := 0
 
 var is_paused := false
 
-func _ready():
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	$PauseMenu.process_mode = Node.PROCESS_MODE_ALWAYS
-
-
 func _process(_delta):
 	if Input.is_action_just_pressed("pause_menu"):
 		is_paused = true
@@ -85,5 +80,5 @@ func _on_button_resume_pressed() -> void:
 
 
 
-
-	#dodělej text když se zvíší obtížnost
+#přidej po dalším zmáčkutí tabu tak se zase zpustí hra
+#dodělej text když se zvíší obtížnost
