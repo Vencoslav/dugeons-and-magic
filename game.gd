@@ -78,7 +78,5 @@ func _on_button_resume_pressed() -> void:
 	$PauseMenu.visible = false
 	
 
-
-
 #přidej po dalším zmáčkutí tabu tak se zase zpustí hra
 #dodělej text když se zvíší obtížnost

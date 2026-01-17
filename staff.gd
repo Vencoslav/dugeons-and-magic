@@ -32,7 +32,6 @@ func try_shoot():
 
 func shoot():
 	an.play("cast")
-
 	var bullet_instance = BULLET.instantiate()
 	get_tree().root.add_child(bullet_instance)
 	bullet_instance.global_position = crysta.global_position

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://ds3td1sio5svj"]
+[gd_scene load_steps=21 format=4 uid="uid://ds3td1sio5svj"]
 
 [ext_resource type="PackedScene" uid="uid://bl0uwoljmplb5" path="res://player.tscn" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://cb32luqhr437t" path="res://game.gd" id="1_eow3j"]
@@ -831,6 +831,18 @@ sources/0 = SubResource("TileSetAtlasSource_7jktm")
 sources/1 = SubResource("TileSetAtlasSource_ryrav")
 sources/2 = SubResource("TileSetAtlasSource_eow3j")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vef74"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.155727, 0.211346, 0.237779, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
 [node name="game" type="Node2D"]
 y_sort_enabled = true
 position = Vector2(506, 284)
@@ -977,8 +989,18 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.494118)
 
+[node name="Panel" type="Panel" parent="PauseMenu/ColorRect"]
+layout_mode = 0
+offset_left = 501.0
+offset_top = 108.0
+offset_right = 541.0
+offset_bottom = 148.0
+scale = Vector2(6.9527, 12.0926)
+theme_override_styles/panel = SubResource("StyleBoxFlat_vef74")
+
 [node name="ButtonResume" type="Button" parent="PauseMenu/ColorRect"]
 process_mode = 3
+z_index = 20
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -998,6 +1020,7 @@ icon_alignment = 1
 
 [node name="ButtonRestart" type="Button" parent="PauseMenu/ColorRect"]
 process_mode = 3
+z_index = 20
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -1017,6 +1040,7 @@ icon_alignment = 1
 
 [node name="ButtonMainMenu" type="Button" parent="PauseMenu/ColorRect"]
 process_mode = 3
+z_index = 20
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -1037,6 +1061,7 @@ icon_alignment = 1
 
 [node name="ButtonQuitGame" type="Button" parent="PauseMenu/ColorRect"]
 process_mode = 3
+z_index = 20
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

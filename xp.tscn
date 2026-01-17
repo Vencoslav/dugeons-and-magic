@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://dg21q1j4xpwnv"]
+
+[ext_resource type="Script" uid="uid://c004hfsm0egu6" path="res://xp.gd" id="1_0ionr"]
+[ext_resource type="Texture2D" uid="uid://bux3ksg7p0op3" path="res://moje_grafika/others/xp.png" id="2_ipko0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0ionr"]
+radius = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8mxs"]
+atlas = ExtResource("2_ipko0")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_667cf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8mxs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8mxs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Xp" type="Area2D"]
+z_index = 3
+script = ExtResource("1_0ionr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0ionr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_667cf")
+frame_progress = 0.253909
