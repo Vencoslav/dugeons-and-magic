@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bl0uwoljmplb5"]
+[gd_scene load_steps=34 format=3 uid="uid://bl0uwoljmplb5"]
 
 [ext_resource type="Texture2D" uid="uid://mkbktdlk4pf1" path="res://animace/wizzard_m_idle_anim_f0-Sheet.png" id="1_f50pn"]
 [ext_resource type="Script" uid="uid://blnvc0eh00u4f" path="res://scripts/player.gd" id="1_onrkg"]
@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://wmfaovfbt162" path="res://staff.tscn" id="4_hqtel"]
 [ext_resource type="Script" uid="uid://d0qneubpjqwtk" path="res://panel.gd" id="5_2hs0m"]
 [ext_resource type="Texture2D" uid="uid://c4kuxuga3vvjh" path="res://animace/wizzard_run_red_Sheet.png" id="6_b26j0"]
+[ext_resource type="Texture2D" uid="uid://diajnyvf86lo" path="res://moje_grafika/others/xp_under_bar_new.png" id="7_nvl01"]
+[ext_resource type="Texture2D" uid="uid://cggufak7ixhgp" path="res://moje_grafika/others/xp_bar_over_new.png" id="8_nvl01"]
+[ext_resource type="Texture2D" uid="uid://vmoujp312885" path="res://moje_grafika/others/xp_bar_new.png" id="9_nvl01"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1jxqw"]
 atlas = ExtResource("2_sweqy")
@@ -173,13 +176,6 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dw050"]
-bg_color = Color(0.45098, 0.909804, 0.937255, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b26j0"]
 size = Vector2(16.5, 23)
 
@@ -232,33 +228,23 @@ scale = Vector2(0.344128, 0.24402)
 text = "HP"
 vertical_alignment = 1
 
-[node name="XpBar" type="ProgressBar" parent="."]
+[node name="XPBar" type="TextureProgressBar" parent="."]
 z_index = 20
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -178.0
-offset_top = 89.0
-offset_right = 90.0
-offset_bottom = 93.0
-grow_horizontal = 0
-grow_vertical = 0
-scale = Vector2(1.325, 1)
-theme_override_styles/background = SubResource("StyleBoxFlat_dw050")
-rounded = true
-show_percentage = false
+offset_left = -176.0
+offset_top = 88.0
+offset_right = 464.0
+offset_bottom = 126.0
+value = 10.0
+texture_under = ExtResource("7_nvl01")
+texture_over = ExtResource("9_nvl01")
+texture_progress = ExtResource("8_nvl01")
 
-[node name="XP" type="Label" parent="XpBar"]
+[node name="Level" type="Label" parent="XPBar"]
 layout_mode = 0
-offset_left = 1.50942
-offset_top = -1.0
-offset_right = 23.5094
-offset_bottom = 22.0
-scale = Vector2(0.264701, 0.246792)
-text = "XP"
-vertical_alignment = 1
+offset_left = -78.0
+offset_top = 59.0
+offset_right = -38.0
+offset_bottom = 82.0
 
 [node name="Time" type="CanvasLayer" parent="."]
 
