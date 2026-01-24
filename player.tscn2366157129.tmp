@@ -185,7 +185,7 @@ radius = 16.0
 [node name="player" type="CharacterBody2D"]
 z_index = 10
 position = Vector2(714, 278)
-collision_mask = 29
+collision_mask = 24
 motion_mode = 1
 wall_min_slide_angle = 0.174533
 safe_margin = 1.0
@@ -214,8 +214,8 @@ zoom = Vector2(2.5, 2.5)
 z_index = 20
 offset_left = -176.0
 offset_top = -93.0
-offset_right = -104.0
-offset_bottom = -88.0
+offset_right = -122.0
+offset_bottom = -89.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_2hs0m")
 value = 100.0
 rounded = true
@@ -223,15 +223,15 @@ show_percentage = false
 
 [node name="HP" type="Label" parent="HealthBar"]
 layout_mode = 0
-offset_left = 3.0
+offset_left = 1.0
 offset_top = -1.0
-offset_right = 25.0
+offset_right = 23.0
 offset_bottom = 22.0
-scale = Vector2(0.418285, 0.281301)
+scale = Vector2(0.375917, 0.259728)
 text = "HP"
 vertical_alignment = 1
 
-[node name="XpBar" type="TextureProgressBar" parent="."]
+[node name="XP" type="TextureProgressBar" parent="."]
 unique_name_in_owner = true
 z_index = 20
 offset_left = -178.0
@@ -242,13 +242,13 @@ texture_under = ExtResource("7_nvl01")
 texture_over = ExtResource("9_nvl01")
 texture_progress = ExtResource("8_nvl01")
 
-[node name="Level" type="Label" parent="XpBar"]
+[node name="Level" type="Label" parent="XP"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 340.0
-offset_top = -10.0
-offset_right = 371.0
-offset_bottom = 13.0
+offset_left = 345.0
+offset_top = -11.0
+offset_right = 376.0
+offset_bottom = 12.0
 scale = Vector2(0.4, 0.4)
 text = "Lv 1"
 horizontal_alignment = 2

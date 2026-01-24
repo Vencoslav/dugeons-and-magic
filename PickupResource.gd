@@ -9,4 +9,3 @@ var player_reference : CharacterBody2D
 
 func activate():
 	print(title + " pick up.")
-	

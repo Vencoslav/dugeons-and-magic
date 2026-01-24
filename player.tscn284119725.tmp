@@ -185,7 +185,7 @@ radius = 16.0
 [node name="player" type="CharacterBody2D"]
 z_index = 10
 position = Vector2(714, 278)
-collision_mask = 29
+collision_mask = 28
 motion_mode = 1
 wall_min_slide_angle = 0.174533
 safe_margin = 1.0
@@ -227,11 +227,11 @@ offset_left = 3.0
 offset_top = -1.0
 offset_right = 25.0
 offset_bottom = 22.0
-scale = Vector2(0.418285, 0.281301)
+scale = Vector2(0.474477, 0.299499)
 text = "HP"
 vertical_alignment = 1
 
-[node name="XpBar" type="TextureProgressBar" parent="."]
+[node name="XP" type="TextureProgressBar" parent="."]
 unique_name_in_owner = true
 z_index = 20
 offset_left = -178.0
@@ -242,7 +242,7 @@ texture_under = ExtResource("7_nvl01")
 texture_over = ExtResource("9_nvl01")
 texture_progress = ExtResource("8_nvl01")
 
-[node name="Level" type="Label" parent="XpBar"]
+[node name="Level" type="Label" parent="XP"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 340.0

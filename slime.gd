@@ -39,6 +39,9 @@ func take_damage():
 
 	
 func xp_drop(pos: Vector2):
+	call_deferred("_spawn_xp", pos)
+
+func _spawn_xp(pos: Vector2):
 	var xp = xp_scene.instantiate()
-	get_parent().get_parent().add_child(xp) #spawnuje se xp tam kde slime zemřel
+	get_parent().get_parent().add_child(xp)
 	xp.global_position = pos
