@@ -78,9 +78,3 @@ func check_XP():
 	if XP > $XpBar.max_value:
 		XP -= $XpBar.max_value
 		level += 1
-
-
-func _on_magnet_area_entered(area):
-	if area.has_method("follow"):
-		area.follow(self)
-	

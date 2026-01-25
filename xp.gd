@@ -1,12 +1,13 @@
 extends Area2D
 
 @export var xp_amount := 10
-@export var speed := 200.0
+@export var speed := 100.0
 
 var player: CharacterBody2D
 var following := false
 
 func _ready():
+	connect("area_entered", _on_area_entered)
 	connect("body_entered", _on_body_entered)
 
 func _physics_process(delta):
@@ -16,12 +17,16 @@ func _physics_process(delta):
 			speed * delta
 		)
 
-func follow(target: CharacterBody2D):
+func follow(target):
 	player = target
 	following = true
+	
+func _on_area_entered(area):
+	if area.name == "Magnet":
+		follow(area.get_parent())
 
+# 🔹 SEBRÁNÍ XP
 func _on_body_entered(body):
-	if body is CharacterBody2D:
-		if body.has_method("gain_XP"):
-			body.gain_XP(xp_amount)
+	if body.has_method("gain_XP"):
+		body.gain_XP(xp_amount)
 		queue_free()

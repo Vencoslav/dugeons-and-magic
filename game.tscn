@@ -990,7 +990,6 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.494118)
 
 [node name="Panel" type="Panel" parent="PauseMenu/ColorRect"]
-layout_mode = 0
 offset_left = 501.0
 offset_top = 108.0
 offset_right = 541.0
