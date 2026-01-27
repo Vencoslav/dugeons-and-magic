@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ixfbmamd7215" path="res://0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7.png" id="5_ryrav"]
 [ext_resource type="Theme" uid="uid://d022i4cmvv35p" path="res://Default.tres" id="8_j5wjh"]
 [ext_resource type="Texture2D" uid="uid://cxtlraaqh3si7" path="res://moje_grafika/GUI/Sprite-0001.png" id="9_vef74"]
+[ext_resource type="Texture2D" uid="uid://bfvguhtgwbnmi" path="res://moje_grafika/GUI/big_panel.png" id="10_hve3p"]
 
 [sub_resource type="Curve2D" id="Curve2D_j5wjh"]
 _data = {
@@ -831,18 +832,6 @@ sources/0 = SubResource("TileSetAtlasSource_7jktm")
 sources/1 = SubResource("TileSetAtlasSource_ryrav")
 sources/2 = SubResource("TileSetAtlasSource_eow3j")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vef74"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(0.155727, 0.211346, 0.237779, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-anti_aliasing = false
-
 [node name="game" type="Node2D"]
 y_sort_enabled = true
 position = Vector2(506, 284)
@@ -989,13 +978,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.494118)
 
-[node name="Panel" type="Panel" parent="PauseMenu/ColorRect"]
-offset_left = 501.0
-offset_top = 108.0
-offset_right = 541.0
-offset_bottom = 148.0
-scale = Vector2(6.9527, 12.0926)
-theme_override_styles/panel = SubResource("StyleBoxFlat_vef74")
+[node name="TextureRect" type="TextureRect" parent="PauseMenu/ColorRect"]
+layout_mode = 0
+offset_left = 484.0
+offset_top = 84.0
+offset_right = 612.0
+offset_bottom = 340.0
+scale = Vector2(2.44085, 2.08476)
+texture = ExtResource("10_hve3p")
 
 [node name="ButtonResume" type="Button" parent="PauseMenu/ColorRect"]
 process_mode = 3
