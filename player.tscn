@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bl0uwoljmplb5"]
+[gd_scene load_steps=36 format=3 uid="uid://bl0uwoljmplb5"]
 
 [ext_resource type="Texture2D" uid="uid://mkbktdlk4pf1" path="res://animace/wizzard_m_idle_anim_f0-Sheet.png" id="1_f50pn"]
 [ext_resource type="Script" uid="uid://blnvc0eh00u4f" path="res://scripts/player.gd" id="1_onrkg"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://diajnyvf86lo" path="res://moje_grafika/others/xp_under_bar_new.png" id="7_nvl01"]
 [ext_resource type="Texture2D" uid="uid://cggufak7ixhgp" path="res://moje_grafika/others/xp_bar_over_new.png" id="8_nvl01"]
 [ext_resource type="Texture2D" uid="uid://vmoujp312885" path="res://moje_grafika/others/xp_bar_new.png" id="9_nvl01"]
+[ext_resource type="Script" uid="uid://xj8s0a4a6d1y" path="res://kills.gd" id="12_ivps1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1jxqw"]
 atlas = ExtResource("2_sweqy")
@@ -167,7 +168,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dw050"]
-size = Vector2(11, 14)
+size = Vector2(11, 15)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2hs0m"]
 bg_color = Color(1, 0, 0, 1)
@@ -177,7 +178,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b26j0"]
-size = Vector2(16.5, 23)
+size = Vector2(18.25, 23)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nvl01"]
 radius = 38.0
@@ -201,14 +202,35 @@ frame = 2
 frame_progress = 0.167382
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visibility_layer = 0
 z_index = 10
-position = Vector2(2, -10)
+position = Vector2(2, -9.5)
 shape = SubResource("RectangleShape2D_dw050")
 one_way_collision_margin = 128.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 ignore_rotation = false
 zoom = Vector2(2.5, 2.5)
+
+[node name="KillsPanel" type="Panel" parent="."]
+unique_name_in_owner = true
+z_index = 20
+offset_left = 140.0
+offset_top = -94.0
+offset_right = 194.0
+offset_bottom = -52.0
+scale = Vector2(0.346327, 0.209533)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("12_ivps1")
+
+[node name="KillsLabel" type="Label" parent="KillsPanel"]
+layout_mode = 0
+offset_left = 5.77491
+offset_top = 4.77252
+offset_right = 45.7749
+offset_bottom = 27.7725
+scale = Vector2(0.753491, 1.31119)
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 z_index = 20
@@ -295,7 +317,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtBox"]
-position = Vector2(2, -10.5)
+position = Vector2(2, -10)
 shape = SubResource("RectangleShape2D_b26j0")
 one_way_collision_margin = 0.0
 debug_color = Color(0.980392, 0.0352941, 0, 0.419608)

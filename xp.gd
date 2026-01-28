@@ -5,6 +5,7 @@ extends Area2D
 
 var player: CharacterBody2D
 var following := false
+var collected: bool = false
 
 func _ready():
 	connect("area_entered", _on_area_entered)
