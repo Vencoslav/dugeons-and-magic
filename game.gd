@@ -91,7 +91,7 @@ func show_game_over():
 	get_tree().paused = true
 
 	# Status Labels
-	var status = %GameOver/ColorRect/Status
+	var status = %GameOver/ColorRect
 	var slime_label = status.get_node("SlimeKills")
 	var time_label = status.get_node("DeadTime")
 

@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbfjxcypy5ar0"]
+
+[ext_resource type="Texture2D" uid="uid://b5vbkbnb4s10u" path="res://moje_grafika/others/ikon.png" id="1_g7j6n"]
+[ext_resource type="Script" uid="uid://djd4v6bxy3cww" path="res://option_slot.gd" id="2_17p83"]
+[ext_resource type="Texture2D" uid="uid://cnxe7bkmg2vaa" path="res://moje_grafika/others/bord.png" id="2_plncn"]
+
+[node name="OptionSlot" type="TextureButton"]
+custom_minimum_size = Vector2(315, 40)
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("1_g7j6n")
+ignore_texture_size = true
+stretch_mode = 4
+script = ExtResource("2_17p83")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 9.0
+offset_right = 94.0
+offset_bottom = 32.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Lv2"
+
+[node name="Description" type="Label" parent="."]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 9.0
+offset_right = 264.0
+offset_bottom = 32.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "test"
+horizontal_alignment = 1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+show_behind_parent = true
+custom_minimum_size = Vector2(315, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_plncn")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

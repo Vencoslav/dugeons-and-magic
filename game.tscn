@@ -925,30 +925,22 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 128
 text = "Game Over"
 
-[node name="Status" type="Panel" parent="GameOver/ColorRect"]
+[node name="SlimeKills" type="Label" parent="GameOver/ColorRect"]
 layout_mode = 0
-offset_left = 527.0
-offset_top = 414.0
-offset_right = 1031.0
-offset_bottom = 455.0
-scale = Vector2(0.539115, 1.19825)
-
-[node name="SlimeKills" type="Label" parent="GameOver/ColorRect/Status"]
-layout_mode = 0
-offset_left = 7.90135
-offset_top = 2.54681
-offset_right = 22.9013
-offset_bottom = 37.5468
-scale = Vector2(1.7, 1.05)
+offset_left = 456.0
+offset_top = 417.0
+offset_right = 614.0
+offset_bottom = 452.0
+scale = Vector2(1.3, 1.01)
 vertical_alignment = 1
 
-[node name="DeadTime" type="Label" parent="GameOver/ColorRect/Status"]
+[node name="DeadTime" type="Label" parent="GameOver/ColorRect"]
 layout_mode = 0
-offset_left = 237.041
-offset_top = 2.54681
-offset_right = 252.041
-offset_bottom = 37.5468
-scale = Vector2(1.7, 1.05)
+offset_left = 663.0
+offset_top = 417.0
+offset_right = 821.0
+offset_bottom = 452.0
+scale = Vector2(1.3, 1.01)
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -980,9 +972,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 75.0
+offset_left = 40.0
 offset_top = -230.0
-offset_right = 203.0
+offset_right = 168.0
 offset_bottom = -166.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -1094,6 +1086,22 @@ theme = ExtResource("8_j5wjh")
 text = "Quit game
 "
 icon_alignment = 1
+
+[node name="Options" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 76.0
+offset_top = 63.0
+offset_right = 116.0
+offset_bottom = 103.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
 
 [connection signal="health_depleted" from="player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="GlobalTimer" to="." method="_on_global_timer_timeout"]
