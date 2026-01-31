@@ -188,24 +188,6 @@ wall_min_slide_angle = 0.174533
 safe_margin = 1.0
 script = ExtResource("1_onrkg")
 
-[node name="TextureHealhBar" type="TextureProgressBar" parent="."]
-z_index = 20
-offset_left = -178.0
-offset_top = -94.0
-offset_right = 176.0
-offset_bottom = -54.0
-texture_under = ExtResource("7_606se")
-texture_over = ExtResource("9_op7ga")
-texture_progress = ExtResource("8_u1c27")
-
-[node name="Hp" type="Label" parent="TextureHealhBar"]
-layout_mode = 0
-offset_left = 5.0
-offset_right = 45.0
-offset_bottom = 23.0
-scale = Vector2(0.274495, 0.240646)
-text = "HP"
-
 [node name="animace" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(1, -15)
@@ -225,6 +207,24 @@ one_way_collision_margin = 128.0
 [node name="Camera2D" type="Camera2D" parent="."]
 ignore_rotation = false
 zoom = Vector2(2.5, 2.5)
+
+[node name="TextureHealhBar" type="TextureProgressBar" parent="."]
+z_index = 20
+offset_left = -178.0
+offset_top = -94.0
+offset_right = 176.0
+offset_bottom = -54.0
+texture_under = ExtResource("7_606se")
+texture_over = ExtResource("9_op7ga")
+texture_progress = ExtResource("8_u1c27")
+
+[node name="Hp" type="Label" parent="TextureHealhBar"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 45.0
+offset_bottom = 23.0
+scale = Vector2(0.274495, 0.240646)
+text = "HP"
 
 [node name="KillsPanel" type="Panel" parent="."]
 unique_name_in_owner = true

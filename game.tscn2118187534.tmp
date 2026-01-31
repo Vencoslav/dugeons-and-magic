@@ -19,14 +19,13 @@ script/source = "extends Node2D
 @onready var timer = $GlobalTimer
 @onready var healthTimer = $IncreseHealthTimer
 @onready var level_menu = $LevelUpMenu
+@onready var healthBar = $player/HealthBar
 
 var player
 var kills_panel
-var healthBar
 
 var slimeHealthBonus := 0
 var slimeSpeedBonus := 0
-var slimeDamageBonus := 0.0
 
 var maxSlimes := 5
 var currentSlimes := 0
@@ -35,7 +34,6 @@ var is_paused := false
 
 func _ready():
 	player = get_tree().current_scene.get_node(\"player\")
-	healthBar = player.get_node(\"TextureHealhBar\")
 	kills_panel = player.get_node(\"KillsPanel\")
 	kills_panel.set_kills(0)
 
@@ -43,15 +41,11 @@ func _ready():
 	player.level_up.connect(_on_player_level_up)
 
 func _process(_delta):
-	# Pause menu toggle
 	if Input.is_action_just_pressed(\"pause_menu\"):
 		is_paused = true
 		get_tree().paused = true
 		$PauseMenu.visible = true
-	
-	# Resume game on TAB
-	if is_paused and Input.is_key_pressed(KEY_TAB):
-		_on_button_resume_pressed()
+
 
 func spawn_mob():
 	if currentSlimes >= maxSlimes:
@@ -63,7 +57,6 @@ func spawn_mob():
 	
 	mob.health += slimeHealthBonus
 	mob.speed += slimeSpeedBonus
-	mob.damage += slimeDamageBonus
 	
 	add_child(mob)
 	currentSlimes += 1
@@ -71,64 +64,51 @@ func spawn_mob():
 	# Po zničení slima se počet sníží
 	mob.tree_exited.connect(_on_slime_removed)
 
+
 func _on_slime_removed():
 	kills += 1
 	currentSlimes -= 1
 	kills_panel.set_kills(kills)
 
+
 func _on_global_timer_timeout() -> void:
 	spawn_mob()	
 
+
 func _on_player_health_depleted() -> void:
 	show_game_over()
+
 
 func _on_button_try_again_pressed() -> void:
 	Input.flush_buffered_events()
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
+
 func _on_increse_health_timer_timeout() -> void:
 	slimeHealthBonus += 2
 	slimeSpeedBonus += 5.0
 	maxSlimes += 2
-	slimeDamageBonus += 5.0
+	player.damageRate += 5.0
 
-	# Zobraz informaci hráči o zvýšení obtížnosti
-	show_difficulty_increase()
-
-func show_difficulty_increase():
-	var text := \"Difficulty increased!\\n\"
-	text += \"+2 Slime Health\\n\"
-	text += \"+5 Slime Speed\\n\"
-	text += \"+5 Slime Damage\\n\"
-	$DifficultyIncreaseLabel.text = text
-	$DifficultyIncreaseLabel.visible = true
-
-	# Schovat text po 3 sekundách
-	var t = Timer.new()
-	t.wait_time = 3.0
-	t.one_shot = true
-	t.connect(\"timeout\", Callable(self, \"_hide_difficulty_label\"))
-	add_child(t)
-	t.start()
-
-func _hide_difficulty_label():
-	$DifficultyIncreaseLabel.visible = false
 
 func _on_button_quit_game_pressed() -> void:
 	Input.flush_buffered_events() 
 	get_tree().quit()
+
 
 func _on_button_restart_pressed() -> void:
 	Input.flush_buffered_events()
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
+
 func _on_button_resume_pressed() -> void:
 	Input.flush_buffered_events()
 	is_paused = false
 	get_tree().paused = false
 	$PauseMenu.visible = false
+
 
 func show_game_over():
 	%GameOver.visible = true
@@ -174,10 +154,10 @@ func _on_button_speed_pressed() -> void:
 	get_tree().paused = false
 
 func _on_button_damage_pressed() -> void:
-	player.damage *= 1.1
+	player.damagePlayer *= 2
 	level_menu.visible = false
 	get_tree().paused = false
-	
+
 #přidej po dalším zmáčkutí tabu tak se zase zpustí hra
 #dodělej text když se zvíší obtížnost
 "
@@ -1027,6 +1007,7 @@ y_sort_enabled = true
 position = Vector2(76, 85)
 scale = Vector2(1.42254, 1.5)
 collision_mask = 25
+movementSpeed = 100.0
 
 [node name="tilemap" type="Node" parent="."]
 

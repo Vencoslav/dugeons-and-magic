@@ -1,5 +1,6 @@
 extends CanvasLayer
 
+"""
 @onready var container = $ColorRect/Container
 
 @export var possible_upgrades: Array[PackedScene]  # sem dej všechny upgrady
@@ -17,3 +18,5 @@ func show_options():
 func clear_options():
 	for child in container.get_children():
 		child.queue_free()
+		
+"""

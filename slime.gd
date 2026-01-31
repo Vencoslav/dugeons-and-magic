@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
-var health = 8
+var health = 50.0
 var speed = 30.0
+var damage = 20.0
 
 @onready var an = $animace
 @onready var player = get_node("/root/game/player")
@@ -13,14 +14,11 @@ func _ready():
 
 func _physics_process(_delta):
 	var direction = global_position.direction_to(player.global_position)
-	velocity = direction * speed
+	velocity = direction.normalized() * speed  # opravuje 2x rychlost když jdeš směrem do rohu
 	move_and_slide()
-	
-	velocity = velocity.normalized() * speed # opravuje 2x rychlost když jdeš směrem do rohu
-
 
 func take_damage():
-	health -= 4
+	health -= player.damage
 	
 	if health <= 0:
 		var death_position = global_position 

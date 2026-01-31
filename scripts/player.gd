@@ -5,11 +5,13 @@ signal level_up
 
 var max_health := 100.0
 var health := 100.0
-var damageRate := 25.0
+var damagePlayer := 25.0
 
 @export var movementSpeed := 100.0
 
 @onready var healthBar = get_node("TextureHealhBar")
+const slime_scene = preload("res://slime.tscn")
+
 
 @onready var xpBar = $XpBar
 @onready var levelLabel = $XpBar/Level
@@ -86,10 +88,12 @@ func _physics_process(delta):
 
 func damage_logic(delta):
 	if hurtBox.get_overlapping_bodies().size() > 0:
-		health -= damageRate * delta
+		health -= slime_scene.damageSlime * delta   # damage od slima 
 		healthBar.value = health
+
 		if animace.animation != "hurt":
 			animace.play("hurt")
+
 		if health <= 0:
 			health_depleted.emit()
 
