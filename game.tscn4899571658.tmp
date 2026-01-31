@@ -1,6 +1,7 @@
-[gd_scene load_steps=23 format=4 uid="uid://ds3td1sio5svj"]
+[gd_scene load_steps=24 format=4 uid="uid://ds3td1sio5svj"]
 
 [ext_resource type="PackedScene" uid="uid://bl0uwoljmplb5" path="res://player.tscn" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://cb32luqhr437t" path="res://game.gd" id="1_eow3j"]
 [ext_resource type="Texture2D" uid="uid://j83n70f2fytx" path="res://0x72_DungeonTilesetII_v1.7/atlas_floor-16x16.png" id="1_feb5d"]
 [ext_resource type="Texture2D" uid="uid://3k0ovnuclnc3" path="res://0x72_DungeonTilesetII_v1.7/atlas_walls_low-16x16.png" id="2_fc0e3"]
 [ext_resource type="Texture2D" uid="uid://8cdv8xoxg1dd" path="res://mapa/wall.png" id="3_fc0e3"]
@@ -11,148 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bfvguhtgwbnmi" path="res://moje_grafika/GUI/big_panel.png" id="10_hve3p"]
 [ext_resource type="Script" uid="uid://bcdj6j2tjndgm" path="res://level_up_menu.gd" id="11_iotsf"]
 [ext_resource type="Texture2D" uid="uid://cnxe7bkmg2vaa" path="res://moje_grafika/others/bord.png" id="11_mfdv2"]
-
-[sub_resource type="GDScript" id="GDScript_mfdv2"]
-script/source = "extends Node2D
-
-@onready var path_follow = %PathFollow2D
-@onready var timer = $GlobalTimer
-@onready var healthTimer = $IncreseHealthTimer
-@onready var level_menu = $LevelUpMenu
-@onready var healthBar = $player/HealthBar
-
-var player
-var kills_panel
-
-var slimeHealthBonus := 0
-var slimeSpeedBonus := 0
-
-var maxSlimes := 5
-var currentSlimes := 0
-var kills := 0
-var is_paused := false
-
-func _ready():
-	player = get_tree().current_scene.get_node(\"player\")
-	kills_panel = player.get_node(\"KillsPanel\")
-	kills_panel.set_kills(0)
-
-	player.add_to_group(\"player\")
-	player.level_up.connect(_on_player_level_up)
-
-func _process(_delta):
-	if Input.is_action_just_pressed(\"pause_menu\"):
-		is_paused = true
-		get_tree().paused = true
-		$PauseMenu.visible = true
-
-
-func spawn_mob():
-	if currentSlimes >= maxSlimes:
-		return
-	
-	var mob = preload(\"res://slime.tscn\").instantiate()
-	path_follow.progress_ratio = randf()
-	mob.global_position = path_follow.global_position
-	
-	mob.health += slimeHealthBonus
-	mob.speed += slimeSpeedBonus
-	
-	add_child(mob)
-	currentSlimes += 1
-	
-	# Po zničení slima se počet sníží
-	mob.tree_exited.connect(_on_slime_removed)
-
-
-func _on_slime_removed():
-	kills += 1
-	currentSlimes -= 1
-	kills_panel.set_kills(kills)
-
-
-func _on_global_timer_timeout() -> void:
-	spawn_mob()	
-
-
-func _on_player_health_depleted() -> void:
-	show_game_over()
-
-
-func _on_button_try_again_pressed() -> void:
-	Input.flush_buffered_events()
-	get_tree().paused = false
-	get_tree().reload_current_scene()
-
-
-func _on_increse_health_timer_timeout() -> void:
-	slimeHealthBonus += 2
-	slimeSpeedBonus += 5.0
-	maxSlimes += 2
-	player.damageRate += 5.0
-
-
-func _on_button_quit_game_pressed() -> void:
-	Input.flush_buffered_events() 
-	get_tree().quit()
-
-
-func _on_button_restart_pressed() -> void:
-	Input.flush_buffered_events()
-	get_tree().paused = false
-	get_tree().reload_current_scene()
-
-
-func _on_button_resume_pressed() -> void:
-	Input.flush_buffered_events()
-	is_paused = false
-	get_tree().paused = false
-	$PauseMenu.visible = false
-
-
-func show_game_over():
-	%GameOver.visible = true
-	get_tree().paused = true
-
-	var status = %GameOver/ColorRect
-	var slime_label = status.get_node(\"SlimeKills\")
-	var time_label = status.get_node(\"DeadTime\")
-
-	slime_label.text = \"Slimes killed: \" + str(kills)
-
-	if player.has_node(\"Time/Panel\"):
-		var time_panel = player.get_node(\"Time/Panel\")
-		time_label.text = \"Time survived: \" + time_panel.get_time_formatted()
-	else:
-		time_label.text = \"Time survived: 00:00\"
-
-func show_level_up_menu():
-	level_menu.visible = true
-	get_tree().paused = true
-
-
-func _on_button_pressed() -> void:
-	var upgrade_amount := 10
-	player.increase_max_health(upgrade_amount)
-	
-	if healthBar:
-		var base_width := 200.0
-		var scale_factor := 2.0
-		var new_width: float = base_width + player.max_health * scale_factor
-		
-		var tween = create_tween()
-		tween.tween_property(healthBar, \"custom_min_size:x\", new_width, 0.5)
-	
-	level_menu.visible = false
-	get_tree().paused = false
-
-
-func _on_player_level_up() -> void:
-	show_level_up_menu()
-
-#přidej po dalším zmáčkutí tabu tak se zase zpustí hra
-#dodělej text když se zvíší obtížnost
-"
+[ext_resource type="Script" uid="uid://j1iijasnxofw" path="res://choose_health.gd" id="13_lc2xo"]
 
 [sub_resource type="Curve2D" id="Curve2D_j5wjh"]
 _data = {
@@ -978,7 +838,7 @@ sources/2 = SubResource("TileSetAtlasSource_eow3j")
 [node name="game" type="Node2D"]
 y_sort_enabled = true
 position = Vector2(506, 284)
-script = SubResource("GDScript_mfdv2")
+script = ExtResource("1_eow3j")
 metadata/_edit_horizontal_guides_ = [791.0]
 
 [node name="Path2D" type="Path2D" parent="."]
@@ -999,6 +859,7 @@ y_sort_enabled = true
 position = Vector2(76, 85)
 scale = Vector2(1.42254, 1.5)
 collision_mask = 25
+movementSpeed = 100.0
 
 [node name="tilemap" type="Node" parent="."]
 
@@ -1040,6 +901,22 @@ autostart = true
 wait_time = 20.0
 autostart = true
 
+[node name="Options" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 76.0
+offset_top = 63.0
+offset_right = 116.0
+offset_bottom = 103.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
 [node name="GameOver" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -1070,12 +947,11 @@ text = "Game Over"
 
 [node name="SlimeKills" type="Label" parent="GameOver/ColorRect"]
 layout_mode = 0
-offset_left = 404.0
+offset_left = 456.0
 offset_top = 417.0
-offset_right = 562.0
+offset_right = 614.0
 offset_bottom = 452.0
 scale = Vector2(1.3, 1.01)
-theme_override_font_sizes/font_size = 20
 vertical_alignment = 1
 
 [node name="DeadTime" type="Label" parent="GameOver/ColorRect"]
@@ -1084,8 +960,7 @@ offset_left = 663.0
 offset_top = 417.0
 offset_right = 821.0
 offset_bottom = 452.0
-scale = Vector2(1.11761, 1.01)
-theme_override_font_sizes/font_size = 20
+scale = Vector2(1.3, 1.01)
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -1260,10 +1135,10 @@ texture = ExtResource("11_mfdv2")
 
 [node name="Helth" type="Label" parent="LevelUpMenu/ColorRect/Container/HelthUpgrade"]
 layout_mode = 0
-offset_left = 10.7377
-offset_top = 8.27987
-offset_right = 176.738
-offset_bottom = 31.2799
+offset_left = 10.2127
+offset_top = 9.24578
+offset_right = 73.2127
+offset_bottom = 32.2458
 text = "Incease healt by 10 %"
 
 [node name="Button" type="Button" parent="LevelUpMenu/ColorRect/Container/HelthUpgrade"]
@@ -1276,11 +1151,11 @@ offset_right = 396.0
 offset_bottom = 75.0
 scale = Vector2(0.403738, 0.465223)
 theme = ExtResource("8_j5wjh")
-theme_override_font_sizes/font_size = 25
 text = "Chose"
 icon = ExtResource("9_vef74")
 flat = true
 icon_alignment = 1
+script = ExtResource("13_lc2xo")
 
 [connection signal="health_depleted" from="player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="GlobalTimer" to="." method="_on_global_timer_timeout"]
