@@ -5,9 +5,12 @@ signal level_up
 
 var max_health := 100.0
 var health := 100.0
-var damagePlayer := 25.0
+var damage := 25
 
-@export var movementSpeed := 100.0
+var base_xp_required := 0
+var xp_difficulty_bonus := 0
+
+@export var movementSpeed := 100
 
 @onready var healthBar = get_node("TextureHealhBar")
 const slime_scene = preload("res://slime.tscn")
@@ -23,7 +26,8 @@ var character_direction := Vector2.ZERO
 func _ready():
 	if healthBar:
 		healthBar.max_value = max_health
-		healthBar.value = 0  # naplnění vizuálně začne od 0
+		healthBar.value = 0 # naplnění vizuálně začne od 0
+		update_xp_required()
 
 	# plynulé naplnění
 	var tween = create_tween()
@@ -56,13 +60,15 @@ var level:
 		_level = value
 		levelLabel.text = "Lv " + str(_level)
 		emit_signal("level_up")
+		update_xp_required()
 
 		# Zvýšení max XP podle levelu
-		if _level >= 7:
-			xpBar.max_value = 40
-		elif _level >= 3:
-			xpBar.max_value = 20
-	
+		
+			
+
+func update_xp_required():
+	xpBar.max_value = base_xp_required + (_level * 5) + xp_difficulty_bonus
+
 
 func _physics_process(delta):
 	character_direction = Vector2(
@@ -87,8 +93,13 @@ func _physics_process(delta):
 	update_animation()
 
 func damage_logic(delta):
-	if hurtBox.get_overlapping_bodies().size() > 0:
-		health -= slime_scene.damageSlime * delta   # damage od slima 
+	var bodies = hurtBox.get_overlapping_bodies()
+	if bodies.size() > 0:
+		for body in bodies:
+			if body.is_in_group("slimes"):
+				health -= body.damage * delta
+				break
+
 		healthBar.value = health
 
 		if animace.animation != "hurt":
@@ -96,6 +107,7 @@ func damage_logic(delta):
 
 		if health <= 0:
 			health_depleted.emit()
+
 
 func update_animation():
 	if hurtBox.get_overlapping_bodies().size() > 0:
@@ -112,6 +124,6 @@ func gain_XP(amount):
 	total_XP += amount
 
 func check_XP():
-	if XP >= xpBar.max_value:
+	while XP >= xpBar.max_value:
 		XP -= xpBar.max_value
 		level += 1

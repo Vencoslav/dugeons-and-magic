@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
-var health = 50.0
-var speed = 30.0
-var damage = 20.0
+var health = 50
+var speed = 30
+var damage = 20
 
 @onready var an = $animace
 @onready var player = get_node("/root/game/player")

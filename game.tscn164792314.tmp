@@ -31,23 +31,23 @@ var slimeDamageBonus := 0
 var maxSlimes := 5
 var currentSlimes := 0
 var kills := 0
-var is_paused := false
+
 
 func _ready():
 	player = get_tree().current_scene.get_node(\"player\")
 	healthBar = player.get_node(\"TextureHealhBar\")
 	kills_panel = player.get_node(\"KillsPanel\")
 	kills_panel.set_kills(0)
+	
 
 	player.add_to_group(\"player\")
 	player.level_up.connect(_on_player_level_up)
 
 func _process(_delta):
-	if Input.is_action_just_pressed(\"pause_menu\"):
-		is_paused = true
-		get_tree().paused = true
-		$PauseMenu.visible = true
-
+	Input.is_action_just_pressed(\"pause_menu\")
+	get_tree().paused = true
+	$PauseMenu.visible = true
+	
 func spawn_mob():
 	if currentSlimes >= maxSlimes:
 		return
@@ -102,7 +102,7 @@ func _on_button_restart_pressed() -> void:
 
 func _on_button_resume_pressed() -> void:
 	Input.flush_buffered_events()
-	is_paused = false
+
 	get_tree().paused = false
 	$PauseMenu.visible = false
 
