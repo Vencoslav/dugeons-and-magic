@@ -88,8 +88,7 @@ func _on_increse_difficulty_timer_timeout() -> void:
 	maxSlimes += 2
 	slimeDamageBonus += 5
 	
-	player.xp_difficulty_bonus += 20
-	player.update_xp_required()
+	player.pending_xp_bonus += 20
 	
 func _on_button_quit_game_pressed() -> void:
 	Input.flush_buffered_events() 
@@ -1041,7 +1040,7 @@ wait_time = 5.0
 autostart = true
 
 [node name="IncreseDifficultyTimer" type="Timer" parent="."]
-wait_time = 30.0
+wait_time = 60.0
 autostart = true
 
 [node name="GameOver" type="CanvasLayer" parent="."]

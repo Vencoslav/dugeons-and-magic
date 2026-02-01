@@ -8,6 +8,9 @@ var health := 100.0
 var damage := 25
 
 var xp_difficulty_bonus := 0
+var pending_xp_bonus := 0  
+const base_xp_per_level := 100
+const xp_growth := 25
 
 @export var movementSpeed := 100
 
@@ -56,13 +59,16 @@ var level:
 	set(value):
 		_level = value
 		levelLabel.text = "Lv " + str(_level)
-		emit_signal("level_up")
-		update_xp_required()
 
+		xp_difficulty_bonus += pending_xp_bonus # APPLY pending difficulty increase
+		pending_xp_bonus = 0
+
+		update_xp_required()
+		emit_signal("level_up")
 		# Zvýšení max XP podle levelu
 
 func update_xp_required():
-	xpBar.max_value += xp_difficulty_bonus
+	xpBar.max_value = base_xp_per_level + (_level - 1) * xp_growth + xp_difficulty_bonus
 
 func _physics_process(delta):
 	character_direction = Vector2(
