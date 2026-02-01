@@ -14,7 +14,6 @@ var xp_difficulty_bonus := 0
 @onready var healthBar = get_node("TextureHealhBar")
 const slime_scene = preload("res://slime.tscn")
 
-
 @onready var xpBar = $XpBar
 @onready var levelLabel = $XpBar/Level
 @onready var hurtBox = $hurtBox
@@ -31,7 +30,6 @@ func _ready():
 	# plynulé naplnění
 	var tween = create_tween()
 	tween.tween_property(healthBar, "value", health, 0.5)
-
 
 func increase_max_health(amount: float):
 	max_health += amount
@@ -62,12 +60,9 @@ var level:
 		update_xp_required()
 
 		# Zvýšení max XP podle levelu
-		
-			
 
 func update_xp_required():
 	xpBar.max_value += xp_difficulty_bonus
-
 
 func _physics_process(delta):
 	character_direction = Vector2(
