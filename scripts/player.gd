@@ -7,7 +7,6 @@ var max_health := 100.0
 var health := 100.0
 var damage := 25
 
-var base_xp_required := 0
 var xp_difficulty_bonus := 0
 
 @export var movementSpeed := 100
@@ -67,7 +66,7 @@ var level:
 			
 
 func update_xp_required():
-	xpBar.max_value = base_xp_required + (_level * 5) + xp_difficulty_bonus
+	xpBar.max_value += xp_difficulty_bonus
 
 
 func _physics_process(delta):
