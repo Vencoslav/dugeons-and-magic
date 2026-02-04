@@ -187,6 +187,7 @@ motion_mode = 1
 wall_min_slide_angle = 0.174533
 safe_margin = 1.0
 script = ExtResource("1_onrkg")
+movementSpeed = null
 
 [node name="TextureHealhBar" type="TextureProgressBar" parent="."]
 z_index = 20
@@ -300,16 +301,6 @@ offset_right = 58.0
 offset_bottom = 29.0
 text = "00"
 horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="AutoShootLabel" type="Label" parent="."]
-unique_name_in_owner = true
-z_index = 20
-offset_left = 2.0
-offset_top = -94.0
-offset_right = 33.0
-offset_bottom = -71.0
-scale = Vector2(0.3, 0.3)
 vertical_alignment = 1
 
 [node name="staff" parent="." instance=ExtResource("4_hqtel")]

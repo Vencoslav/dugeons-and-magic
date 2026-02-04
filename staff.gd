@@ -2,6 +2,10 @@ extends Node2D
 
 const BULLET = preload("res://fireball.tscn")
 
+signal auto_shoot_changed(enabled: bool)
+
+var auto_shoot := false
+
 @onready var an = $Marker2D/animace
 @onready var crysta: Marker2D = %shootingPoint
 @onready var fire_timer: Timer = $FireTimer
@@ -11,18 +15,17 @@ func _process(_delta):
 	look_at(get_global_mouse_position())
 
 	rotation_degrees = wrap(rotation_degrees, 0, 360)
-	if rotation_degrees > 90 and rotation_degrees < 270:
-		scale.y = -1
-	else:
-		scale.y = 1
+	scale.y = -1 if rotation_degrees > 90 and rotation_degrees < 270 else 1
 
-	if Input.is_action_just_pressed("fire"):
+	if Input.is_action_just_pressed("auto_shoot"):
+		auto_shoot = !auto_shoot
+		auto_shoot_changed.emit(auto_shoot)
+
+	if Input.is_action_pressed("fire") or auto_shoot:
 		try_shoot()
-	if Input.is_action_pressed("fire"):
-		try_shoot()
-		
+
+
 func try_shoot():
-	# pokud cooldown běží, nestřílej
 	if not fire_timer.is_stopped():
 		return
 

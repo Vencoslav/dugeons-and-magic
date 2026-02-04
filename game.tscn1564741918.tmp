@@ -19,12 +19,10 @@ script/source = "extends Node2D
 @onready var timer = $GlobalTimer
 @onready var healthTimer = $IncreseDifficultyTimer
 @onready var level_menu = $LevelUpMenu
-@onready var auto_shoot_timer = $AutoShootTimer
 
-@onready var auto_label = get_tree().current_scene.get_node(\"player/AutoShootLabel\")
+@onready var auto_label: Label = %AutoShootLabel
 @onready var staff = get_tree().current_scene.get_node(\"player/staff\")
 
-var fade_tween: Tween
 
 var player
 var kills_panel
@@ -41,25 +39,22 @@ var is_paused := false
 
 func _ready():
 	player = get_tree().current_scene.get_node(\"player\")
-	auto_label = player.get_node(\"AutoShootLabel\")
-	staff = player.get_node(\"staff\")
-	staff.auto_shoot_changed.connect(update_auto_shoot_label)
-	update_auto_shoot_label(staff.auto_shoot)
-
 	healthBar = player.get_node(\"TextureHealhBar\")
 	kills_panel = player.get_node(\"KillsPanel\")
 	kills_panel.set_kills(0)
 
 	player.add_to_group(\"player\")
 	player.level_up.connect(_on_player_level_up)
-
 	
-func _process(_delta): 
-	if Input.is_action_just_pressed(\"pause_menu\"): 
-		is_paused = true 
-		get_tree().paused = true 
+	staff.auto_shoot_changed.connect(update_auto_shoot_label)
+	update_auto_shoot_label(false)
+	
+func _process(_delta):
+	if Input.is_action_just_pressed(\"pause_menu\"):
+		is_paused = true
+		get_tree().paused = true
 		$PauseMenu.visible = true
-	
+
 func spawn_mob():
 	if currentSlimes >= maxSlimes:
 		return
@@ -165,23 +160,11 @@ func _on_button_damage_pressed() -> void:
 	level_menu.visible = false
 	get_tree().paused = false
 	
-func update_auto_shoot_label(enabled: bool):
-	if fade_tween and fade_tween.is_running():
-		fade_tween.kill()
-		
-	auto_shoot_timer.stop()
 
-	auto_label.visible = true
+func update_auto_shoot_label(enabled: bool):
 	auto_label.text = \"AUTO SHOOT: ON\" if enabled else \"AUTO SHOOT: OFF\"
 	auto_label.modulate = Color.GREEN if enabled else Color.RED
-	auto_label.modulate.a = 1.0
 
-	auto_shoot_timer.start()
-
-func _on_auto_shoot_timer_timeout() -> void:
-	fade_tween = create_tween()
-	fade_tween.tween_property(auto_label, \"modulate:a\", 0.0, 0.25)
-	fade_tween.tween_callback(func(): auto_label.visible = false)
 	
 #přidej po dalším zmáčkutí tabu tak se zase zpustí hra
 #dodělej text když se zvíší obtížnost
@@ -1010,7 +993,7 @@ sources/2 = SubResource("TileSetAtlasSource_eow3j")
 
 [node name="game" type="Node2D"]
 y_sort_enabled = true
-position = Vector2(506, 281)
+position = Vector2(506, 284)
 script = SubResource("GDScript_mfdv2")
 metadata/_edit_horizontal_guides_ = [791.0]
 
@@ -1064,8 +1047,6 @@ tile_set = SubResource("TileSet_vef74")
 position = Vector2(496, 304)
 tile_map_data = PackedByteArray("AAApAO3/AgACAAMAAADh/wwAAQABAAAAAADh/w0AAQABAAAAAADh/w4AAQABAAAAAADh/w8AAQABAAAAAADh/xAAAQABAAAAAADh/xEAAQABAAAAAADh/xIAAQABAAAAAADh/xMAAQABAAAAAADh/xQAAQABAAAAAADh//7/AQABAAAAAADh////AQABAAAAAADh/wAAAQABAAAAAADh/wEAAQABAAAAAADh/wIAAQABAAAAAADh/wMAAQABAAAAAADh/wQAAQABAAAAAADh/+7/AQABAAAAAADh/+//AQABAAAAAADh//D/AQABAAAAAADh//H/AQABAAAAAADh//L/AQABAAAAAADh//P/AQABAAAAAADh//T/AQABAAAAAADh//X/AQABAAAAAADh//b/AQABAAAAAADh//f/AQABAAAAAADh//j/AQABAAAAAADh//n/AQABAAAAAADh//r/AQABAAAAAADh//v/AQABAAAAAADh//z/AQABAAAAAADh//3/AQABAAAAAADh/+3/AgAGAAIAAADi/+3/AgACAAMAAADj/+3/AgACAAMAAADk/+3/AgACAAMAAADl/+3/AgACAAMAAADm/+3/AgACAAMAAADn/+3/AgACAAMAAADo/+3/AgACAAMAAADp/+3/AgACAAMAAADq/+3/AgACAAMAAADr/+3/AgACAAMAAADs/+3/AgACAAMAAADt/+3/AgACAAMAAADu/+3/AgACAAMAAADv/+3/AgACAAMAAADw/+3/AgACAAMAAADx/+3/AgACAAMAAADy/+3/AgACAAMAAADz/+3/AgACAAMAAAD0/+3/AgACAAMAAAD1/+3/AgACAAMAAAD2/+3/AgACAAMAAAD3/+3/AgACAAMAAAD4/+3/AgACAAMAAAD5/+3/AgACAAMAAAD6/+3/AgACAAMAAAD7/+3/AgACAAMAAAD8/+3/AgACAAMAAAD9/+3/AgACAAMAAAD+/+3/AgACAAMAAAD//+3/AgACAAMAAAAAAO3/AgACAAMAAAABAO3/AgACAAMAAAACAO3/AgACAAMAAAADAO3/AgACAAMAAAAEAO3/AgACAAMAAAAFAO3/AgACAAMAAAAGAO3/AgACAAMAAAAHAO3/AgACAAMAAAAIAO3/AgACAAMAAAAJAO3/AgACAAMAAAAKAO3/AgACAAMAAAALAO3/AgACAAMAAAAMAO3/AgACAAMAAAANAO3/AgACAAMAAAAOAO3/AgACAAMAAAAPAO3/AgACAAMAAAAQAO3/AgACAAMAAAARAO3/AgACAAMAAAASAO3/AgACAAMAAAATAO3/AgACAAMAAAAUAO3/AgACAAMAAAAVAO3/AgACAAMAAAAWAO3/AgACAAMAAAAXAO3/AgACAAMAAAAYAO3/AgACAAMAAAAZAO3/AgACAAMAAAAaAO3/AgACAAMAAAAbAO3/AgACAAMAAAAcAO3/AgACAAMAAAAdAO3/AgACAAMAAAAeAO3/AgACAAMAAAAfAO3/AgACAAMAAAAgAO3/AgACAAMAAAAhAO3/AgACAAMAAAAiAO3/AgACAAMAAAAjAO3/AgACAAMAAAAkAO3/AgACAAMAAAAlAO3/AgACAAMAAAAmAO3/AgACAAMAAAAnAO3/AgACAAMAAADh/wUAAQABAAAAAADh/wYAAQABAAAAAADh/wcAAQABAAAAAADh/wgAAQABAAAAAADh/wkAAQABAAAAAADh/woAAQABAAAAAADh/wsAAQABAAAAAAAwAO7/AQAAAAAAAAAwAO//AQAAAAAAAAAwAPD/AQAAAAAAAAAwAPH/AQAAAAAAAAAwAPL/AQAAAAAAAAAwAPP/AQAAAAAAAAAwAPT/AQAAAAAAAAAwAPX/AQAAAAAAAAAwAPb/AQAAAAAAAAAwAPf/AQAAAAAAAAAwAPj/AQAAAAAAAAAwAPn/AQAAAAAAAAAwAPr/AQAAAAAAAAAwAPv/AQAAAAAAAAAwAPz/AQAAAAAAAAAwAP3/AQAAAAAAAAAwAP7/AQAAAAAAAAAwAP//AQAAAAAAAAAwAAAAAQAAAAAAAAAwAAEAAQAAAAAAAAAwAAIAAQAAAAAAAAAwAAMAAQAAAAAAAAAwAAQAAQAAAAAAAAAwAAUAAQAAAAAAAAAwAAYAAQAAAAAAAAAwAAcAAQAAAAAAAAAwAAgAAQAAAAAAAAAwAAkAAQAAAAAAAAAwAAoAAQAAAAAAAAAwAAsAAQAAAAAAAAAwAAwAAQAAAAAAAAAwAA0AAQAAAAAAAAAwAA4AAQAAAAAAAAAwAA8AAQAAAAAAAAAwABAAAQAAAAAAAAAwABEAAQAAAAAAAAAwABIAAQAAAAAAAAAwABMAAQAAAAAAAAAwABQAAQAAAAAAAAAwABUAAQAAAAAAAAAwABYAAQAAAAAAAAAwABcAAQAAAAAAAAAwABgAAQAAAAAAAAAoAO3/AgACAAMAAAAwAO3/AgAFAAIAAAAqAO3/AgACAAMAAAArAO3/AgACAAMAAAAsAO3/AgACAAMAAAAtAO3/AgACAAMAAAAuAO3/AgACAAMAAAAvAO3/AgACAAMAAAAwABkAAAABAAAAAAAvABkAAgACAAMAAAAuABkAAgACAAMAAAAtABkAAgACAAMAAAAsABkAAgACAAMAAAArABkAAgACAAMAAAAqABkAAgACAAMAAAApABkAAgACAAMAAAAoABkAAgACAAMAAAAnABkAAgACAAMAAAAmABkAAgACAAMAAAAlABkAAgACAAMAAAAkABkAAgACAAMAAAAjABkAAgACAAMAAAAhABkAAgACAAMAAAAgABkAAgACAAMAAAAiABkAAgACAAMAAAAfABkAAgACAAMAAAAeABkAAgACAAMAAAAdABkAAgACAAMAAAAcABkAAgACAAMAAAAbABkAAgACAAMAAAAaABkAAgACAAMAAAAZABkAAgACAAMAAAAYABkAAgACAAMAAAAXABkAAgACAAMAAAAWABkAAgACAAMAAAAVABkAAgACAAMAAAAUABkAAgACAAMAAAATABkAAgACAAMAAAASABkAAgACAAMAAAARABkAAgACAAMAAAAQABkAAgACAAMAAAAPABkAAgACAAMAAAAOABkAAgACAAMAAAANABkAAgACAAMAAAAMABkAAgACAAMAAAALABkAAgACAAMAAAAKABkAAgACAAMAAAAJABkAAgACAAMAAAAIABkAAgACAAMAAAAHABkAAgACAAMAAAAGABkAAgACAAMAAAAFABkAAgACAAMAAAAEABkAAgACAAMAAAADABkAAgACAAMAAAACABkAAgACAAMAAAABABkAAgACAAMAAAAAABkAAgACAAMAAAD//xkAAgACAAMAAAD+/xkAAgACAAMAAAD9/xkAAgACAAMAAAD8/xkAAgACAAMAAAD7/xkAAgACAAMAAAD6/xkAAgACAAMAAAD5/xkAAgACAAMAAAD4/xkAAgACAAMAAAD3/xkAAgACAAMAAAD2/xkAAgACAAMAAAD1/xkAAgACAAMAAAD0/xkAAgACAAMAAADz/xkAAgACAAMAAADy/xkAAgACAAMAAADx/xkAAgACAAMAAADw/xkAAgACAAMAAADv/xkAAgACAAMAAADu/xkAAgACAAMAAADt/xkAAgACAAMAAADs/xkAAgACAAMAAADr/xkAAgACAAMAAADq/xkAAgACAAMAAADp/xkAAgACAAMAAADo/xkAAgACAAMAAADn/xkAAgACAAMAAADm/xkAAgACAAMAAADl/xkAAgACAAMAAADk/xkAAgACAAMAAADj/xkAAgACAAMAAADi/xkAAgACAAMAAADh/xYAAQABAAAAAADh/xkAAAAAAAAAAADh/xUAAQABAAAAAADh/xcAAQABAAAAAADh/xgAAQABAAAAAAA=")
 tile_set = SubResource("TileSet_j5wjh")
-
-[node name="AutoShootTimer" type="Timer" parent="."]
 
 [node name="GlobalTimer" type="Timer" parent="."]
 wait_time = 5.0
@@ -1387,8 +1368,13 @@ icon = ExtResource("9_vef74")
 flat = true
 icon_alignment = 1
 
+[node name="AutoShootLabel" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+
 [connection signal="health_depleted" from="player" to="." method="_on_player_health_depleted"]
-[connection signal="timeout" from="AutoShootTimer" to="." method="_on_auto_shoot_timer_timeout"]
 [connection signal="timeout" from="GlobalTimer" to="." method="_on_global_timer_timeout"]
 [connection signal="timeout" from="IncreseDifficultyTimer" to="." method="_on_increse_difficulty_timer_timeout"]
 [connection signal="pressed" from="GameOver/ColorRect/ButtonTryAgain" to="." method="_on_button_try_again_pressed"]

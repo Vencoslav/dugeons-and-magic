@@ -22,6 +22,7 @@ const slime_scene = preload("res://slime.tscn")
 @onready var hurtBox = $hurtBox
 @onready var animace = $animace
 
+
 var character_direction := Vector2.ZERO
 
 func _ready():
