@@ -5,11 +5,15 @@ const BULLET = preload("res://fireball.tscn")
 signal auto_shoot_changed(enabled: bool)
 
 var auto_shoot := false
+const min_fire_time := 0.1
 
 @onready var an = $Marker2D/animace
 @onready var crysta: Marker2D = %shootingPoint
 @onready var fire_timer: Timer = $FireTimer
 
+func increase_fire_rate():
+	fire_timer.wait_time *= 0.9
+	fire_timer.wait_time = max(fire_timer.wait_time, min_fire_time)
 
 func _process(_delta):
 	look_at(get_global_mouse_position())

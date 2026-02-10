@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://durq4kvfha4di"]
+[gd_scene format=3 uid="uid://durq4kvfha4di"]
 
 [ext_resource type="Script" uid="uid://yxtxck7ost05" path="res://xp.gd" id="1_1jxo8"]
 [ext_resource type="Texture2D" uid="uid://bux3ksg7p0op3" path="res://moje_grafika/others/xp.png" id="2_ipko0"]
@@ -19,17 +19,17 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gxxb8"]
-radius = 4.0
+radius = 5.0
 
-[node name="Xp" type="Area2D"]
+[node name="Xp" type="Area2D" unique_id=936661231]
 collision_layer = 128
 collision_mask = 129
 script = ExtResource("1_1jxo8")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1770497415]
 sprite_frames = SubResource("SpriteFrames_1jxo8")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1206722769]
 shape = SubResource("CircleShape2D_gxxb8")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

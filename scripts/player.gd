@@ -11,6 +11,7 @@ var xp_difficulty_bonus := 0
 var pending_xp_bonus := 0  
 const base_xp_per_level := 100
 const xp_growth := 25
+var pending_level_ups := 0
 
 @export var movementSpeed := 100
 
@@ -51,22 +52,19 @@ var XP:
 	set(value):
 		_xp = value
 		xpBar.value = _xp
+		check_XP()  # automaticky kontrolujeme level-up při změně XP
 
 var total_XP := 0
-
 var _level := 1
 var level:
 	get: return _level
 	set(value):
 		_level = value
 		levelLabel.text = "Lv " + str(_level)
-
-		xp_difficulty_bonus += pending_xp_bonus # APPLY pending difficulty increase
+		xp_difficulty_bonus += pending_xp_bonus
 		pending_xp_bonus = 0
-
 		update_xp_required()
-		emit_signal("level_up")
-		# Zvýšení max XP podle levelu
+		emit_signal("level_up")  # každý level vyvolá signál
 
 func update_xp_required():
 	xpBar.max_value = base_xp_per_level + (_level - 1) * xp_growth + xp_difficulty_bonus
@@ -103,7 +101,7 @@ func damage_logic(delta):
 
 		healthBar.value = health
 
-		if animace.animation != "hurt":
+		if animace.animation != "hurt":	
 			animace.play("hurt")
 
 		if health <= 0:
@@ -127,4 +125,5 @@ func gain_XP(amount):
 func check_XP():
 	while XP >= xpBar.max_value:
 		XP -= xpBar.max_value
-		level += 1
+		pending_level_ups += 1
+		level += 1 
