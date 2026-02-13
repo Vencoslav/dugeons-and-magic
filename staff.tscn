@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://wmfaovfbt162"]
+[gd_scene format=3 uid="uid://wmfaovfbt162"]
 
 [ext_resource type="Script" uid="uid://btdmacebgperi" path="res://staff.gd" id="1_et8ip"]
 [ext_resource type="Texture2D" uid="uid://dto6hpli3g0vt" path="res://animace/my_staff-Sheet.png" id="2_ycvyx"]
@@ -46,21 +46,21 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="staff" type="Node2D"]
+[node name="staff" type="Node2D" unique_id=1573652247]
 script = ExtResource("1_et8ip")
 
-[node name="Marker2D" type="Marker2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1778805220]
 position = Vector2(2, 0)
 
-[node name="animace" type="AnimatedSprite2D" parent="Marker2D"]
+[node name="animace" type="AnimatedSprite2D" parent="Marker2D" unique_id=361439579]
 position = Vector2(1, -5)
 sprite_frames = SubResource("SpriteFrames_ml4kh")
 animation = &"cast"
 
-[node name="shootingPoint" type="Marker2D" parent="Marker2D/animace"]
+[node name="shootingPoint" type="Marker2D" parent="Marker2D/animace" unique_id=1196206201]
 unique_name_in_owner = true
 position = Vector2(0, -1)
 
-[node name="FireTimer" type="Timer" parent="."]
+[node name="FireTimer" type="Timer" parent="." unique_id=987830721]
 wait_time = 2.0
 one_shot = true

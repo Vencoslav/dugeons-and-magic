@@ -1,7 +1,7 @@
 extends Area2D
 
 @export var xp_amount : int = 100
-@export var speed := 100.0
+@export var speed := 100
 
 var player: CharacterBody2D
 var following := false
@@ -25,7 +25,6 @@ func _on_area_entered(area):
 	if area.name == "Magnet":
 		follow(area.get_parent())
 
-# 🔹 SEBRÁNÍ XP
 func _on_body_entered(body):
 	if body.has_method("gain_XP"):
 		body.gain_XP(xp_amount)

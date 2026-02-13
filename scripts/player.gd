@@ -23,19 +23,14 @@ const slime_scene = preload("res://slime.tscn")
 @onready var hurtBox = $hurtBox
 @onready var animace = $animace
 
-
 var character_direction := Vector2.ZERO
 
 func _ready():
 	if healthBar:
 		healthBar.max_value = max_health
-		healthBar.value = 0 # naplnění vizuálně začne od 0
+		healthBar.value = 100 
 		update_xp_required()
-
-	# plynulé naplnění
-	var tween = create_tween()
-	tween.tween_property(healthBar, "value", health, 0.5)
-
+	
 func increase_max_health(amount: float):
 	max_health += amount
 	health += amount

@@ -15,45 +15,39 @@
 [sub_resource type="GDScript" id="GDScript_mfdv2"]
 script/source = "extends Node2D
 
-@onready var path_follow = %PathFollow2D
+@onready var path_follow = $PathFollow2D
 @onready var timer = $GlobalTimer
 @onready var healthTimer = $IncreseDifficultyTimer
 @onready var level_menu = $LevelUpMenu
 @onready var auto_shoot_timer = $AutoShootTimer
 @onready var upgrade_container = $LevelUpMenu/ColorRect/VBoxContainer
+@onready var player = $player
+@onready var auto_label = player.get_node(\"AutoShootLabel\")
+@onready var staff = player.get_node(\"staff\")
+@onready var healthBar = player.get_node(\"TextureHealhBar\")
+@onready var kills_panel = player.get_node(\"KillsPanel\")
 
-@onready var auto_label = get_tree().current_scene.get_node(\"player/AutoShootLabel\")
-@onready var staff = get_tree().current_scene.get_node(\"player/staff\")
+const xp_scene = preload(\"res://xp.tscn\")
 
 var fade_tween: Tween
 
-var player
-var kills_panel
-var healthBar
+var xp_speed_multiplier := 1.0
 
-var fireball_speed_bonus := 1.0
+
 var slimeHealthBonus := 0
 var slimeSpeedBonus := 0
 var slimeDamageBonus := 0
-
 var maxSlimes := 5
 var currentSlimes := 0
 var kills := 0
 var is_paused := false
 
 func _ready():
-	player = get_tree().current_scene.get_node(\"player\")
-	auto_label = player.get_node(\"AutoShootLabel\")
-	staff = player.get_node(\"staff\")
 	staff.auto_shoot_changed.connect(update_auto_shoot_label)
 	update_auto_shoot_label(staff.auto_shoot)
-
-	healthBar = player.get_node(\"TextureHealhBar\")
-	kills_panel = player.get_node(\"KillsPanel\")
-	kills_panel.set_kills(0)
-
 	player.add_to_group(\"player\")
 	player.level_up.connect(_on_player_level_up)
+	kills_panel.set_kills(0)
 
 func _process(_delta): 
 	if Input.is_action_just_pressed(\"pause_menu\"): 
@@ -76,7 +70,6 @@ func spawn_mob():
 	add_child(mob)
 	currentSlimes += 1
 	
-	# Po zničení slima se počet sníží
 	mob.tree_exited.connect(_on_slime_removed)
 
 func _on_slime_removed():
@@ -119,10 +112,10 @@ func _on_button_resume_pressed() -> void:
 	$PauseMenu.visible = false
 
 func show_game_over():
-	%GameOver.visible = true
+	$GameOver.visible = true
 	get_tree().paused = true
 
-	var status = %GameOver/ColorRect
+	var status = $GameOver/ColorRect
 	var slime_label = status.get_node(\"SlimeKills\")
 	var time_label = status.get_node(\"DeadTime\")
 
@@ -155,7 +148,6 @@ func _on_player_level_up() -> void:
 	if player.pending_level_ups > 0 and not level_menu.visible:
 		show_next_level_up()
 		
-		
 func show_random_upgrades():
 	var upgrades = upgrade_container.get_children()
 
@@ -165,13 +157,12 @@ func show_random_upgrades():
 	upgrades.shuffle()
 
 	for i in range(min(3, upgrades.size())):
-		var upgrade_node = upgrades[i]
-		upgrade_node.visible = true
-		upgrade_container.move_child(upgrade_node, i)
+		upgrades[i].visible = true
 
+# ------------------ Level Up Buttons ------------------
 
 func _on_button_health_pressed() -> void:
-	player.increase_max_health(player.max_health * 0.1)
+	player.increase_max_health(10)
 	if healthBar:
 		var base_width := 200.0
 		var scale_factor := 2.0
@@ -181,20 +172,18 @@ func _on_button_health_pressed() -> void:
 	close_level_up_menu()
 
 func _on_button_speed_pressed() -> void:
-	player.movementSpeed *= 1.1 
+	player.movementSpeed *= 1.1
 	close_level_up_menu()
 
 func _on_button_damage_pressed() -> void:
-	player.damage *= 1.1 
+	player.damage *= 1.1
+	xp_speed_multiplier = 5
 	close_level_up_menu()
 
+
+	
 func _on_button_fire_rate_pressed() -> void:
-	var staff = player.get_node(\"staff\")
-	staff.increase_fire_rate() 
-	close_level_up_menu()
-
-func _on_button_bullet_speed_pressed() -> void:
-	fireball_speed_bonus *= 1.1
+	staff.increase_fire_rate()
 	close_level_up_menu()
 
 func update_auto_shoot_label(enabled: bool):
@@ -1451,34 +1440,6 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="BulletSpeedUpdate" type="TextureRect" parent="LevelUpMenu/ColorRect/VBoxContainer" unique_id=2097293878]
-layout_mode = 2
-texture = ExtResource("11_mfdv2")
-
-[node name="BulletSpeed" type="Label" parent="LevelUpMenu/ColorRect/VBoxContainer/BulletSpeedUpdate" unique_id=344097819]
-layout_mode = 0
-offset_left = 10.7377
-offset_top = 8.27987
-offset_right = 176.738
-offset_bottom = 31.2799
-text = "Incease fireball speed by 10 %"
-
-[node name="ButtonBulletSpeed" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/BulletSpeedUpdate" unique_id=1787144023]
-process_mode = 3
-layout_mode = 0
-offset_left = 252.0
-offset_top = 3.0
-offset_right = 396.0
-offset_bottom = 75.0
-scale = Vector2(0.404, 0.465)
-theme = ExtResource("8_j5wjh")
-theme_override_font_sizes/font_size = 25
-text = "Choose"
-icon = ExtResource("9_vef74")
-flat = true
-icon_alignment = 1
-expand_icon = true
-
 [connection signal="health_depleted" from="player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="AutoShootTimer" to="." method="_on_auto_shoot_timer_timeout"]
 [connection signal="timeout" from="GlobalTimer" to="." method="_on_global_timer_timeout"]
@@ -1491,4 +1452,3 @@ expand_icon = true
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/SpeedUpgrade/ButtonSpeed" to="." method="_on_button_speed_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/DamageUpgrade/ButtonDamage" to="." method="_on_button_damage_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/FireRateUpdate/ButtonFireRate" to="." method="_on_button_fire_rate_pressed"]
-[connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/BulletSpeedUpdate/ButtonBulletSpeed" to="." method="_on_button_bullet_speed_pressed"]

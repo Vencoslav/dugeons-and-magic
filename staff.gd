@@ -28,7 +28,6 @@ func _process(_delta):
 	if Input.is_action_pressed("fire") or auto_shoot:
 		try_shoot()
 
-
 func try_shoot():
 	if not fire_timer.is_stopped():
 		return
@@ -36,10 +35,14 @@ func try_shoot():
 	shoot()
 	fire_timer.start()
 
-
 func shoot():
 	an.play("cast")
 	var bullet_instance = BULLET.instantiate()
+	var main_level = get_tree().current_scene
+	
+	if "fireball_speed_bonus" in main_level:
+		bullet_instance.speed = 300 * main_level.fireball_speed_bonus
+
 	get_tree().root.add_child(bullet_instance)
 	bullet_instance.global_position = crysta.global_position
 	bullet_instance.rotation = rotation

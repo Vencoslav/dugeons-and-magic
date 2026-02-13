@@ -22,6 +22,7 @@ script/source = "extends Node2D
 @onready var auto_shoot_timer = $AutoShootTimer
 @onready var upgrade_container = $LevelUpMenu/ColorRect/VBoxContainer
 
+
 @onready var auto_label = get_tree().current_scene.get_node(\"player/AutoShootLabel\")
 @onready var staff = get_tree().current_scene.get_node(\"player/staff\")
 
@@ -31,7 +32,6 @@ var player
 var kills_panel
 var healthBar
 
-var fireball_speed_bonus := 1.0
 var slimeHealthBonus := 0
 var slimeSpeedBonus := 0
 var slimeDamageBonus := 0
@@ -54,6 +54,9 @@ func _ready():
 
 	player.add_to_group(\"player\")
 	player.level_up.connect(_on_player_level_up)
+	
+	add_to_group(\"xp\")
+
 
 func _process(_delta): 
 	if Input.is_action_just_pressed(\"pause_menu\"): 
@@ -162,16 +165,16 @@ func show_random_upgrades():
 	for u in upgrades:
 		u.visible = false
 
+	# náhodně promíchat
 	upgrades.shuffle()
 
+	# zobrazit max 3
 	for i in range(min(3, upgrades.size())):
-		var upgrade_node = upgrades[i]
-		upgrade_node.visible = true
-		upgrade_container.move_child(upgrade_node, i)
+		upgrades[i].visible = true
 
 
 func _on_button_health_pressed() -> void:
-	player.increase_max_health(player.max_health * 0.1)
+	player.increase_max_health(10)
 	if healthBar:
 		var base_width := 200.0
 		var scale_factor := 2.0
@@ -181,20 +184,16 @@ func _on_button_health_pressed() -> void:
 	close_level_up_menu()
 
 func _on_button_speed_pressed() -> void:
-	player.movementSpeed *= 1.1 
+	player.movementSpeed *= 1.1
 	close_level_up_menu()
 
 func _on_button_damage_pressed() -> void:
-	player.damage *= 1.1 
+	player.damage *= 1.1
 	close_level_up_menu()
 
 func _on_button_fire_rate_pressed() -> void:
 	var staff = player.get_node(\"staff\")
-	staff.increase_fire_rate() 
-	close_level_up_menu()
-
-func _on_button_bullet_speed_pressed() -> void:
-	fireball_speed_bonus *= 1.1
+	staff.increase_fire_rate()
 	close_level_up_menu()
 
 func update_auto_shoot_label(enabled: bool):
@@ -210,12 +209,23 @@ func update_auto_shoot_label(enabled: bool):
 	auto_label.modulate.a = 1.0
 
 	auto_shoot_timer.start()
+	
 
 func _on_auto_shoot_timer_timeout() -> void:
 	var auto_label = player.get_node(\"AutoShootLabel\")
 	fade_tween = create_tween()
 	fade_tween.tween_property(auto_label, \"modulate:a\", 0.0, 0.25)
 	fade_tween.tween_callback(func(): auto_label.visible = false)  
+
+
+func _on_button_pickup_speed_update_pressed() -> void:
+	var xp_nodes = get_tree().get_nodes_in_group(\"xp\")
+	for xp in xp_nodes:
+		# kontrola typu, že je to Area2D a má proměnnou speed
+		if xp is Area2D and xp.has(\"speed\"):
+			xp.speed *= 1000  # nebo jiná hodnota pro magnet efekt
+	close_level_up_menu()
+
 "
 
 [sub_resource type="Curve2D" id="Curve2D_j5wjh"]
@@ -1318,7 +1328,6 @@ expand_icon = true
 
 [node name="LevelUpMenu" type="CanvasLayer" parent="." unique_id=1852006315]
 unique_name_in_owner = true
-visible = false
 script = ExtResource("11_iotsf")
 
 [node name="ColorRect" type="ColorRect" parent="LevelUpMenu" unique_id=675283006]
@@ -1451,19 +1460,19 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="BulletSpeedUpdate" type="TextureRect" parent="LevelUpMenu/ColorRect/VBoxContainer" unique_id=2097293878]
+[node name="PickUpSpeedUpdate" type="TextureRect" parent="LevelUpMenu/ColorRect/VBoxContainer" unique_id=144604897]
 layout_mode = 2
 texture = ExtResource("11_mfdv2")
 
-[node name="BulletSpeed" type="Label" parent="LevelUpMenu/ColorRect/VBoxContainer/BulletSpeedUpdate" unique_id=344097819]
+[node name="FireRate" type="Label" parent="LevelUpMenu/ColorRect/VBoxContainer/PickUpSpeedUpdate" unique_id=251679396]
 layout_mode = 0
 offset_left = 10.7377
 offset_top = 8.27987
 offset_right = 176.738
 offset_bottom = 31.2799
-text = "Incease fireball speed by 10 %"
+text = "Incease pick up speed by 10 %"
 
-[node name="ButtonBulletSpeed" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/BulletSpeedUpdate" unique_id=1787144023]
+[node name="ButtonPickupSpeedUpdate" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/PickUpSpeedUpdate" unique_id=1060446789]
 process_mode = 3
 layout_mode = 0
 offset_left = 252.0
@@ -1473,7 +1482,8 @@ offset_bottom = 75.0
 scale = Vector2(0.404, 0.465)
 theme = ExtResource("8_j5wjh")
 theme_override_font_sizes/font_size = 25
-text = "Choose"
+text = "Choose
+"
 icon = ExtResource("9_vef74")
 flat = true
 icon_alignment = 1
@@ -1491,4 +1501,4 @@ expand_icon = true
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/SpeedUpgrade/ButtonSpeed" to="." method="_on_button_speed_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/DamageUpgrade/ButtonDamage" to="." method="_on_button_damage_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/FireRateUpdate/ButtonFireRate" to="." method="_on_button_fire_rate_pressed"]
-[connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/BulletSpeedUpdate/ButtonBulletSpeed" to="." method="_on_button_bullet_speed_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/PickUpSpeedUpdate/ButtonPickupSpeedUpdate" to="." method="_on_button_pickup_speed_update_pressed"]

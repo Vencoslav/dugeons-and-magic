@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dbpflggof3eg6"]
+[gd_scene format=3 uid="uid://dbpflggof3eg6"]
 
 [ext_resource type="Script" uid="uid://bu85mycmvknny" path="res://fireball.gd" id="1_olwj8"]
 [ext_resource type="Texture2D" uid="uid://es7chm4438ox" path="res://animace/my_fireball-Sheet.png" id="1_sf4mh"]
@@ -42,24 +42,24 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_lk87q"]
 radius = 4.0
 
-[node name="fireball" type="Area2D"]
+[node name="fireball" type="Area2D" unique_id=137573349]
 z_index = 9
 collision_layer = 4
 collision_mask = 26
 priority = 1
 script = ExtResource("1_olwj8")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1198669607]
 sprite_frames = SubResource("SpriteFrames_wi6of")
 autoplay = "default"
 frame_progress = 0.119913
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1485903216]
 top_level = true
 position = Vector2(3, 0)
 shape = SubResource("CircleShape2D_lk87q")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=279027214]
 scale = Vector2(1.35, 1.35)
 enable_node_path = NodePath("../CollisionShape2D")
 
