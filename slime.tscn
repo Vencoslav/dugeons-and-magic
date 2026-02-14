@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://d3cv5d6l8jjh8"]
+[gd_scene format=3 uid="uid://d3cv5d6l8jjh8"]
 
 [ext_resource type="Texture2D" uid="uid://drkvcyxjqxs7f" path="res://animace/slime_green-Sheet.png" id="1_2d52u"]
 [ext_resource type="Script" uid="uid://jn6nls41bfe1" path="res://slime.gd" id="1_5jc4t"]
@@ -128,7 +128,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ppcr1"]
 size = Vector2(14.2969, 11.2813)
 
-[node name="slime" type="CharacterBody2D"]
+[node name="slime" type="CharacterBody2D" unique_id=1471273131]
 light_mask = 33
 visibility_layer = 33
 z_index = 4
@@ -139,7 +139,7 @@ wall_min_slide_angle = 0.0
 safe_margin = 1.0
 script = ExtResource("1_5jc4t")
 
-[node name="animace" type="AnimatedSprite2D" parent="."]
+[node name="animace" type="AnimatedSprite2D" parent="." unique_id=237514192]
 material = SubResource("CanvasItemMaterial_4l1t8")
 sprite_frames = SubResource("SpriteFrames_2002g")
 animation = &"move"
@@ -147,7 +147,7 @@ autoplay = "move"
 frame_progress = 0.807643
 speed_scale = 0.8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1748096061]
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_ppcr1")
 one_way_collision_margin = 0.0

@@ -24,6 +24,7 @@ script/source = "extends Node2D
 
 @onready var auto_label = get_tree().current_scene.get_node(\"player/AutoShootLabel\")
 @onready var staff = get_tree().current_scene.get_node(\"player/staff\")
+@onready var magnet = get_tree().current_scene.get_node(\"player/Magnet/CollisionShape2D\")
 
 var fade_tween: Tween
 
@@ -96,11 +97,10 @@ func _on_button_try_again_pressed() -> void:
 	get_tree().reload_current_scene()
 
 func _on_increse_difficulty_timer_timeout() -> void:
-	slimeHealthBonus += 2
+	slimeHealthBonus += 5
 	slimeSpeedBonus += 5
 	maxSlimes += 2
 	slimeDamageBonus += 5
-	
 	player.pending_xp_bonus += 20
 
 func _on_button_quit_game_pressed() -> void:
@@ -176,8 +176,10 @@ func _on_button_health_pressed() -> void:
 		var base_width := 200.0
 		var scale_factor := 2.0
 		var new_width: float = base_width + player.max_health * scale_factor
+
 		var tween = create_tween()
-		tween.tween_property(healthBar, \"custom_min_size:x\", new_width, 0.5)
+		tween.tween_property(healthBar, \"size:x\", new_width, 0.5)
+
 	close_level_up_menu()
 
 func _on_button_speed_pressed() -> void:
@@ -185,7 +187,7 @@ func _on_button_speed_pressed() -> void:
 	close_level_up_menu()
 
 func _on_button_damage_pressed() -> void:
-	player.damage *= 1.1 
+	player.damage *= 1.2
 	close_level_up_menu()
 
 func _on_button_fire_rate_pressed() -> void:
@@ -195,6 +197,11 @@ func _on_button_fire_rate_pressed() -> void:
 
 func _on_button_bullet_speed_pressed() -> void:
 	fireball_speed_bonus *= 1.1
+	close_level_up_menu()
+	
+func _on_button_magnet_size_pressed() -> void:
+	var shape = magnet.shape
+	magnet.shape.radius *= 1.1
 	close_level_up_menu()
 
 func update_auto_shoot_label(enabled: bool):
@@ -1405,7 +1412,7 @@ offset_left = 10.7377
 offset_top = 8.27987
 offset_right = 176.738
 offset_bottom = 31.2799
-text = "Incease damage by 10 %"
+text = "Incease damage by 20 %"
 
 [node name="ButtonDamage" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/DamageUpgrade" unique_id=1690446717]
 process_mode = 3
@@ -1479,6 +1486,34 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
+[node name="MagnetSizeUpdate" type="TextureRect" parent="LevelUpMenu/ColorRect/VBoxContainer" unique_id=1118127494]
+layout_mode = 2
+texture = ExtResource("11_mfdv2")
+
+[node name="MagnetSize" type="Label" parent="LevelUpMenu/ColorRect/VBoxContainer/MagnetSizeUpdate" unique_id=960682314]
+layout_mode = 0
+offset_left = 10.7377
+offset_top = 8.27987
+offset_right = 176.738
+offset_bottom = 31.2799
+text = "Incease magnet size by 10 %"
+
+[node name="ButtonMagnetSize" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/MagnetSizeUpdate" unique_id=2002522013]
+process_mode = 3
+layout_mode = 0
+offset_left = 252.0
+offset_top = 3.0
+offset_right = 396.0
+offset_bottom = 75.0
+scale = Vector2(0.404, 0.465)
+theme = ExtResource("8_j5wjh")
+theme_override_font_sizes/font_size = 25
+text = "Choose"
+icon = ExtResource("9_vef74")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
 [connection signal="health_depleted" from="player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="AutoShootTimer" to="." method="_on_auto_shoot_timer_timeout"]
 [connection signal="timeout" from="GlobalTimer" to="." method="_on_global_timer_timeout"]
@@ -1492,3 +1527,4 @@ expand_icon = true
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/DamageUpgrade/ButtonDamage" to="." method="_on_button_damage_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/FireRateUpdate/ButtonFireRate" to="." method="_on_button_fire_rate_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/BulletSpeedUpdate/ButtonBulletSpeed" to="." method="_on_button_bullet_speed_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/MagnetSizeUpdate/ButtonMagnetSize" to="." method="_on_button_magnet_size_pressed"]
