@@ -25,6 +25,7 @@ script/source = "extends Node2D
 @onready var auto_label = get_tree().current_scene.get_node(\"player/AutoShootLabel\")
 @onready var staff = get_tree().current_scene.get_node(\"player/staff\")
 @onready var magnet = get_tree().current_scene.get_node(\"player/Magnet/CollisionShape2D\")
+@onready var healigTimer = get_tree().current_scene.get_node(\"player/TextureHealhBar/HealingTimer\")
 
 var fade_tween: Tween
 
@@ -204,6 +205,11 @@ func _on_button_magnet_size_pressed() -> void:
 	magnet.shape.radius *= 1.1
 	close_level_up_menu()
 
+func _on_button_healing_pressed() -> void:
+	player.healing += 0.25
+	close_level_up_menu()
+
+	
 func update_auto_shoot_label(enabled: bool):
 	var auto_label = player.get_node(\"AutoShootLabel\")
 	if fade_tween and fade_tween.is_running():
@@ -1341,30 +1347,37 @@ color = Color(0, 0, 0, 0.784314)
 layout_mode = 0
 offset_left = 398.37463
 offset_top = 228.64789
-offset_right = 713.37463
-offset_bottom = 400.6479
-scale = Vector2(1.4, 1.4)
+offset_right = 749.3651
+offset_bottom = 532.6479
+scale = Vector2(1.4102387, 1.4)
 
 [node name="HelthUpgrade" type="TextureRect" parent="LevelUpMenu/ColorRect/VBoxContainer" unique_id=946679591]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("11_mfdv2")
 
-[node name="Helth" type="Label" parent="LevelUpMenu/ColorRect/VBoxContainer/HelthUpgrade" unique_id=977765137]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelUpMenu/ColorRect/VBoxContainer/HelthUpgrade" unique_id=599908566]
+process_mode = 3
 layout_mode = 0
-offset_left = 10.7377
-offset_top = 8.27987
-offset_right = 176.738
-offset_bottom = 31.2799
+offset_left = 10.738007
+offset_top = 8.279999
+offset_right = 260.738
+offset_bottom = 31.279999
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
 text = "Incease healh by 10 %"
+autowrap_trim_flags = 0
+tab_size = 1
 
 [node name="ButtonHealth" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/HelthUpgrade" unique_id=31289169]
 process_mode = 3
 z_index = 20
 layout_mode = 0
-offset_left = 252.0
-offset_top = 3.0
-offset_right = 396.0
-offset_bottom = 75.0
+offset_left = 285.976
+offset_top = 2.514
+offset_right = 429.976
+offset_bottom = 74.514
 scale = Vector2(0.403738, 0.465223)
 theme = ExtResource("8_j5wjh")
 theme_override_font_sizes/font_size = 25
@@ -1376,23 +1389,31 @@ expand_icon = true
 
 [node name="SpeedUpgrade" type="TextureRect" parent="LevelUpMenu/ColorRect/VBoxContainer" unique_id=1283362196]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("11_mfdv2")
 
-[node name="Speed" type="Label" parent="LevelUpMenu/ColorRect/VBoxContainer/SpeedUpgrade" unique_id=1508310586]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelUpMenu/ColorRect/VBoxContainer/SpeedUpgrade" unique_id=1574258029]
+process_mode = 3
 layout_mode = 0
-offset_left = 10.7377
-offset_top = 8.27987
-offset_right = 176.738
-offset_bottom = 31.2799
+offset_left = 10.738007
+offset_top = 8.279999
+offset_right = 260.738
+offset_bottom = 31.279999
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
 text = "Incease speed by 10 %"
+scroll_following = true
+autowrap_trim_flags = 0
+tab_size = 1
 
 [node name="ButtonSpeed" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/SpeedUpgrade" unique_id=633111287]
 process_mode = 3
 layout_mode = 0
-offset_left = 252.0
-offset_top = 3.0
-offset_right = 396.0
-offset_bottom = 75.0
+offset_left = 285.976
+offset_top = 2.514
+offset_right = 429.976
+offset_bottom = 74.514
 scale = Vector2(0.404, 0.465)
 theme = ExtResource("8_j5wjh")
 theme_override_font_sizes/font_size = 25
@@ -1404,23 +1425,30 @@ expand_icon = true
 
 [node name="DamageUpgrade" type="TextureRect" parent="LevelUpMenu/ColorRect/VBoxContainer" unique_id=944629333]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("11_mfdv2")
 
-[node name="Damage" type="Label" parent="LevelUpMenu/ColorRect/VBoxContainer/DamageUpgrade" unique_id=2066478495]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelUpMenu/ColorRect/VBoxContainer/DamageUpgrade" unique_id=1682628518]
+process_mode = 3
 layout_mode = 0
-offset_left = 10.7377
-offset_top = 8.27987
-offset_right = 176.738
-offset_bottom = 31.2799
+offset_left = 10.738007
+offset_top = 8.279999
+offset_right = 260.738
+offset_bottom = 31.279999
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
 text = "Incease damage by 20 %"
+autowrap_trim_flags = 0
+tab_size = 1
 
 [node name="ButtonDamage" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/DamageUpgrade" unique_id=1690446717]
 process_mode = 3
 layout_mode = 0
-offset_left = 252.0
-offset_top = 3.0
-offset_right = 396.0
-offset_bottom = 75.0
+offset_left = 285.976
+offset_top = 2.514
+offset_right = 429.976
+offset_bottom = 74.514
 scale = Vector2(0.404, 0.465)
 theme = ExtResource("8_j5wjh")
 theme_override_font_sizes/font_size = 25
@@ -1432,23 +1460,31 @@ expand_icon = true
 
 [node name="FireRateUpdate" type="TextureRect" parent="LevelUpMenu/ColorRect/VBoxContainer" unique_id=135069917]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("11_mfdv2")
 
-[node name="FireRate" type="Label" parent="LevelUpMenu/ColorRect/VBoxContainer/FireRateUpdate" unique_id=1001795049]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelUpMenu/ColorRect/VBoxContainer/FireRateUpdate" unique_id=1126696061]
+process_mode = 3
 layout_mode = 0
-offset_left = 10.7377
-offset_top = 8.27987
-offset_right = 176.738
-offset_bottom = 31.2799
-text = "Incease fire rate by 10 %"
+offset_left = 10.738007
+offset_top = 8.279999
+offset_right = 260.738
+offset_bottom = 31.279999
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
+text = "Incease fire rate by 10 %
+"
+autowrap_trim_flags = 0
+tab_size = 1
 
 [node name="ButtonFireRate" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/FireRateUpdate" unique_id=1074743766]
 process_mode = 3
 layout_mode = 0
-offset_left = 252.0
-offset_top = 3.0
-offset_right = 396.0
-offset_bottom = 75.0
+offset_left = 285.976
+offset_top = 2.514
+offset_right = 429.976
+offset_bottom = 74.514
 scale = Vector2(0.404, 0.465)
 theme = ExtResource("8_j5wjh")
 theme_override_font_sizes/font_size = 25
@@ -1460,23 +1496,31 @@ expand_icon = true
 
 [node name="BulletSpeedUpdate" type="TextureRect" parent="LevelUpMenu/ColorRect/VBoxContainer" unique_id=2097293878]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("11_mfdv2")
 
-[node name="BulletSpeed" type="Label" parent="LevelUpMenu/ColorRect/VBoxContainer/BulletSpeedUpdate" unique_id=344097819]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelUpMenu/ColorRect/VBoxContainer/BulletSpeedUpdate" unique_id=1745929346]
+process_mode = 3
 layout_mode = 0
-offset_left = 10.7377
-offset_top = 8.27987
-offset_right = 176.738
-offset_bottom = 31.2799
-text = "Incease fireball speed by 10 %"
+offset_left = 10.738007
+offset_top = 8.279999
+offset_right = 260.738
+offset_bottom = 31.279999
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
+text = "Incease fireball speed by 10 %
+"
+autowrap_trim_flags = 0
+tab_size = 1
 
 [node name="ButtonBulletSpeed" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/BulletSpeedUpdate" unique_id=1787144023]
 process_mode = 3
 layout_mode = 0
-offset_left = 252.0
-offset_top = 3.0
-offset_right = 396.0
-offset_bottom = 75.0
+offset_left = 285.976
+offset_top = 2.514
+offset_right = 429.976
+offset_bottom = 74.514
 scale = Vector2(0.404, 0.465)
 theme = ExtResource("8_j5wjh")
 theme_override_font_sizes/font_size = 25
@@ -1488,24 +1532,68 @@ expand_icon = true
 
 [node name="MagnetSizeUpdate" type="TextureRect" parent="LevelUpMenu/ColorRect/VBoxContainer" unique_id=1118127494]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("11_mfdv2")
 
-[node name="MagnetSize" type="Label" parent="LevelUpMenu/ColorRect/VBoxContainer/MagnetSizeUpdate" unique_id=960682314]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelUpMenu/ColorRect/VBoxContainer/MagnetSizeUpdate" unique_id=1465470767]
+process_mode = 3
 layout_mode = 0
-offset_left = 10.7377
-offset_top = 8.27987
-offset_right = 176.738
-offset_bottom = 31.2799
+offset_left = 10.738007
+offset_top = 8.279999
+offset_right = 260.738
+offset_bottom = 31.279999
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
 text = "Incease magnet size by 10 %"
+autowrap_trim_flags = 0
+tab_size = 1
 
 [node name="ButtonMagnetSize" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/MagnetSizeUpdate" unique_id=2002522013]
 process_mode = 3
 layout_mode = 0
-offset_left = 252.0
-offset_top = 3.0
-offset_right = 396.0
-offset_bottom = 75.0
+offset_left = 285.97604
+offset_top = 2.5144718
+offset_right = 429.97604
+offset_bottom = 74.51447
 scale = Vector2(0.404, 0.465)
+mouse_filter = 1
+theme = ExtResource("8_j5wjh")
+theme_override_font_sizes/font_size = 25
+text = "Choose"
+icon = ExtResource("9_vef74")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="HealingUpdate" type="TextureRect" parent="LevelUpMenu/ColorRect/VBoxContainer" unique_id=1367576252]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("11_mfdv2")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelUpMenu/ColorRect/VBoxContainer/HealingUpdate" unique_id=1969505683]
+process_mode = 3
+layout_mode = 0
+offset_left = 10.738
+offset_top = 8.28
+offset_right = 260.738
+offset_bottom = 31.279999
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
+text = "Incease healing by 0.25 hp per second"
+autowrap_trim_flags = 0
+tab_size = 1
+
+[node name="ButtonHealing" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/HealingUpdate" unique_id=238339797]
+process_mode = 3
+layout_mode = 0
+offset_left = 285.976
+offset_top = 2.5140076
+offset_right = 429.976
+offset_bottom = 74.51401
+scale = Vector2(0.404, 0.465)
+mouse_force_pass_scroll_events = false
 theme = ExtResource("8_j5wjh")
 theme_override_font_sizes/font_size = 25
 text = "Choose"
@@ -1528,3 +1616,4 @@ expand_icon = true
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/FireRateUpdate/ButtonFireRate" to="." method="_on_button_fire_rate_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/BulletSpeedUpdate/ButtonBulletSpeed" to="." method="_on_button_bullet_speed_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/MagnetSizeUpdate/ButtonMagnetSize" to="." method="_on_button_magnet_size_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/HealingUpdate/ButtonHealing" to="." method="_on_button_healing_pressed"]

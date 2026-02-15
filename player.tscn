@@ -206,6 +206,9 @@ offset_bottom = 23.0
 scale = Vector2(0.274495, 0.240646)
 text = "HP"
 
+[node name="HealingTimer" type="Timer" parent="TextureHealhBar" unique_id=2024050836]
+autostart = true
+
 [node name="animace" type="AnimatedSprite2D" parent="." unique_id=1362128896]
 unique_name_in_owner = true
 position = Vector2(1, -15)
@@ -333,3 +336,4 @@ position = Vector2(2, -10)
 shape = SubResource("CircleShape2D_nvl01")
 
 [connection signal="level_up" from="." to="." method="_on_level_up"]
+[connection signal="timeout" from="TextureHealhBar/HealingTimer" to="." method="_on_healing_timer_timeout"]

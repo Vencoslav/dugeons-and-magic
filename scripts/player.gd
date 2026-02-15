@@ -6,6 +6,8 @@ signal level_up
 var max_health := 100.0
 var health := 100.0
 var damage := 25
+var healing := 0.25
+
 
 var xp_difficulty_bonus := 0
 var pending_xp_bonus := 0  
@@ -40,6 +42,8 @@ func increase_max_health(amount: float):
 		# Nastavení hodnot
 		healthBar.max_value = max_health
 		healthBar.value = health
+		
+	
 		
 var _xp := 0
 var XP:
@@ -122,3 +126,12 @@ func check_XP():
 		XP -= xpBar.max_value
 		pending_level_ups += 1
 		level += 1 
+
+
+func _on_healing_timer_timeout() -> void:
+	if health < max_health:
+		health += healing
+		health = min(health, max_health)
+
+		if healthBar:
+			healthBar.value = health
