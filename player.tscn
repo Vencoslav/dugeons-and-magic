@@ -232,9 +232,9 @@ zoom = Vector2(2.5, 2.5)
 [node name="KillsPanel" type="Panel" parent="." unique_id=810250833]
 unique_name_in_owner = true
 z_index = 20
-offset_left = 140.0
+offset_left = 134.0
 offset_top = -94.0
-offset_right = 194.0
+offset_right = 203.29858
 offset_bottom = -52.0
 scale = Vector2(0.346327, 0.209533)
 size_flags_horizontal = 0
@@ -243,11 +243,14 @@ script = ExtResource("12_ivps1")
 
 [node name="KillsLabel" type="Label" parent="KillsPanel" unique_id=1034298420]
 layout_mode = 0
-offset_left = 5.77491
+offset_left = 2.8874657
 offset_top = 4.77252
-offset_right = 45.7749
-offset_bottom = 27.7725
+offset_right = 68.032974
+offset_bottom = 27.77252
 scale = Vector2(0.753491, 1.31119)
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="XpBar" type="TextureProgressBar" parent="." unique_id=193956060]
 unique_name_in_owner = true
