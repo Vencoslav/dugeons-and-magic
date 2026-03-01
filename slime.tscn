@@ -3,10 +3,19 @@
 [ext_resource type="Texture2D" uid="uid://drkvcyxjqxs7f" path="res://animace/slime_green-Sheet.png" id="1_2d52u"]
 [ext_resource type="Script" uid="uid://jn6nls41bfe1" path="res://slime.gd" id="1_5jc4t"]
 [ext_resource type="Texture2D" uid="uid://6xkyli3a04ah" path="res://animace/slime_hurt_last-Sheet.png" id="2_4l1t8"]
+[ext_resource type="Texture2D" uid="uid://le7ggt1xdw07" path="res://animace/slime_crit_Sheet.png" id="2_jayke"]
 [ext_resource type="Texture2D" uid="uid://gghanfrwyk5o" path="res://animace/smoke_Sheet.png" id="4_ppcr1"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4l1t8"]
 resource_local_to_scene = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b48k4"]
+atlas = ExtResource("2_jayke")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31ce7"]
+atlas = ExtResource("2_jayke")
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2002g"]
 atlas = ExtResource("2_4l1t8")
@@ -67,6 +76,17 @@ region = Rect2(224, 0, 32, 16)
 [sub_resource type="SpriteFrames" id="SpriteFrames_2002g"]
 resource_local_to_scene = true
 animations = [{
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_b48k4")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_31ce7")
+}],
+"loop": false,
+"name": &"crit_hit",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 0.5,
 "texture": SubResource("AtlasTexture_2002g")
@@ -142,9 +162,8 @@ script = ExtResource("1_5jc4t")
 [node name="animace" type="AnimatedSprite2D" parent="." unique_id=237514192]
 material = SubResource("CanvasItemMaterial_4l1t8")
 sprite_frames = SubResource("SpriteFrames_2002g")
-animation = &"move"
+animation = &"crit_hit"
 autoplay = "move"
-frame_progress = 0.807643
 speed_scale = 0.8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1748096061]

@@ -5,8 +5,10 @@ signal level_up
 
 var max_health := 100.0
 var health := 100.0
-var damage := 25
 var healing := 0.25
+var damage := 25
+var crit_rate := 0.1
+var crit_damage := 1.5
 
 
 var xp_difficulty_bonus := 0
@@ -14,7 +16,6 @@ var pending_xp_bonus := 0
 const base_xp_per_level := 100
 const xp_growth := 25
 var pending_level_ups := 0
-
 @export var movementSpeed := 100
 
 @onready var healthBar = get_node("TextureHealhBar")
@@ -32,6 +33,7 @@ func _ready():
 		healthBar.max_value = max_health
 		healthBar.value = 100 
 		update_xp_required()
+		randomize()
 	
 func increase_max_health(amount: float):
 	max_health += amount
@@ -135,3 +137,14 @@ func _on_healing_timer_timeout() -> void:
 
 		if healthBar:
 			healthBar.value = health
+			
+			
+func calculate_damage():
+	var final_damage = damage
+	var is_crit = false
+	
+	if randf() < crit_rate:
+		final_damage *= crit_damage
+		is_crit = true
+	
+	return [final_damage, is_crit]

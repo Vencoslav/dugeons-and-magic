@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var health = 50
+var health = 40
 var speed = 30
 var damage = 20
 
@@ -18,10 +18,18 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func take_damage():
-	health -= player.damage
-	
+	var result = player.calculate_damage()
+	var final_damage = result[0]
+	var is_crit = result[1]
+
+	health -= final_damage
+
 	if health <= 0:
 		var death_position = global_position 
+		
+		if is_crit:
+			an.play("crit_hit")
+			await an.animation_finished
 		
 		xp_drop(death_position)
 		an.play("smoke")
@@ -31,11 +39,15 @@ func take_damage():
 		queue_free()
 		return
 		
-	an.play("hurt")	
-	await an.animation_finished
+	if is_crit:
+		an.play("crit_hit")
+		await an.animation_finished
+	else:
+		an.play("hurt")
+		await an.animation_finished
+
 	an.play("move")
 
-	
 func xp_drop(pos: Vector2):
 	call_deferred("_spawn_xp", pos)
 

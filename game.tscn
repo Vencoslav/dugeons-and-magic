@@ -216,6 +216,15 @@ func _on_button_healing_pressed() -> void:
 	player.healing += 0.25
 	close_level_up_menu()
 	
+func _on_button_crit_rate_pressed() -> void:
+	player.crit_rate += 0.025
+	player.crit_rate = clamp(player.crit_rate, 0, 1)
+	close_level_up_menu()
+
+
+func _on_button_crit_damage_pressed() -> void:
+	player.crit_damage += 0.05
+	close_level_up_menu()
 	
 func _on_button_reroll_pressed() -> void:
 	if reroll_used:
@@ -1629,6 +1638,76 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
+[node name="CritRateUpdate" type="TextureRect" parent="LevelUpMenu/ColorRect/VBoxContainer" unique_id=223169894]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("11_mfdv2")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelUpMenu/ColorRect/VBoxContainer/CritRateUpdate" unique_id=1761058434]
+process_mode = 3
+layout_mode = 0
+offset_left = 10.738
+offset_top = 8.28
+offset_right = 260.738
+offset_bottom = 31.28
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
+text = "Incease crit rate by 2,5 %"
+tab_size = 1
+
+[node name="ButtonCritRate" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/CritRateUpdate" unique_id=223428921]
+process_mode = 3
+layout_mode = 0
+offset_left = 285.976
+offset_top = 2.51401
+offset_right = 429.976
+offset_bottom = 74.514
+scale = Vector2(0.404, 0.465)
+mouse_force_pass_scroll_events = false
+theme = ExtResource("8_j5wjh")
+theme_override_font_sizes/font_size = 25
+text = "Choose"
+icon = ExtResource("9_vef74")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="CritDamageUpdate" type="TextureRect" parent="LevelUpMenu/ColorRect/VBoxContainer" unique_id=1856983017]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("11_mfdv2")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelUpMenu/ColorRect/VBoxContainer/CritDamageUpdate" unique_id=1700237835]
+process_mode = 3
+layout_mode = 0
+offset_left = 10.738
+offset_top = 8.28
+offset_right = 260.738
+offset_bottom = 31.28
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
+text = "Incease crit damage by 5 %"
+tab_size = 1
+
+[node name="ButtonCritDamage" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/CritDamageUpdate" unique_id=507064492]
+process_mode = 3
+layout_mode = 0
+offset_left = 285.976
+offset_top = 2.51401
+offset_right = 429.976
+offset_bottom = 74.514
+scale = Vector2(0.404, 0.465)
+mouse_force_pass_scroll_events = false
+theme = ExtResource("8_j5wjh")
+theme_override_font_sizes/font_size = 25
+text = "Choose"
+icon = ExtResource("9_vef74")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
 [node name="ButtonReroll" type="Button" parent="LevelUpMenu/ColorRect" unique_id=443150847]
 process_mode = 3
 z_index = 20
@@ -1660,4 +1739,6 @@ expand_icon = true
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/BulletSpeedUpdate/ButtonBulletSpeed" to="." method="_on_button_bullet_speed_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/MagnetSizeUpdate/ButtonMagnetSize" to="." method="_on_button_magnet_size_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/HealingUpdate/ButtonHealing" to="." method="_on_button_healing_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/CritRateUpdate/ButtonCritRate" to="." method="_on_button_crit_rate_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/CritDamageUpdate/ButtonCritDamage" to="." method="_on_button_crit_damage_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/ButtonReroll" to="." method="_on_button_reroll_pressed"]
