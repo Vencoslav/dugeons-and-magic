@@ -55,3 +55,6 @@ func _spawn_xp(pos: Vector2):
 	var xp = xp_scene.instantiate()
 	get_parent().get_parent().add_child(xp)
 	xp.global_position = pos
+	
+	var game = get_tree().current_scene
+	xp.set_speed(xp.speed * game.xp_pickup_speed_bonus)

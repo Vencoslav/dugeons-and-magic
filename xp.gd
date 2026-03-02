@@ -12,15 +12,21 @@ func _ready():
 
 func _physics_process(delta):
 	if following and player:
+		var game = get_tree().current_scene
+		var final_speed = speed * game.xp_pickup_speed_bonus
+		
 		global_position = global_position.move_toward(
 			player.global_position,
-			speed * delta
+			final_speed * delta
 		)
 
 func follow(target):
 	player = target
 	following = true
 	
+func set_speed(new_speed: float):
+	speed = new_speed
+
 func _on_area_entered(area):
 	if area.name == "Magnet":
 		follow(area.get_parent())
