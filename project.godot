@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Dugeons and Magic"
-run/main_scene="uid://ds3td1sio5svj"
+run/main_scene="uid://b71wu4i3ep1d"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

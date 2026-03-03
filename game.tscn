@@ -258,6 +258,10 @@ func _on_auto_shoot_timer_timeout() -> void:
 	fade_tween = create_tween()
 	fade_tween.tween_property(auto_label, \"modulate:a\", 0.0, 0.25)
 	fade_tween.tween_callback(func(): auto_label.visible = false)  
+
+
+func _on_button_main_menu_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://main_menu.tscn\")
 "
 
 [sub_resource type="Curve2D" id="Curve2D_j5wjh"]
@@ -1771,6 +1775,7 @@ expand_icon = true
 [connection signal="pressed" from="GameOver/ColorRect/ButtonTryAgain" to="." method="_on_button_try_again_pressed"]
 [connection signal="pressed" from="PauseMenu/ColorRect/ButtonResume" to="." method="_on_button_resume_pressed"]
 [connection signal="pressed" from="PauseMenu/ColorRect/ButtonRestart" to="." method="_on_button_restart_pressed"]
+[connection signal="pressed" from="PauseMenu/ColorRect/ButtonMainMenu" to="." method="_on_button_main_menu_pressed"]
 [connection signal="pressed" from="PauseMenu/ColorRect/ButtonQuitGame" to="." method="_on_button_quit_game_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/HelthUpgrade/ButtonHealth" to="." method="_on_button_health_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/SpeedUpgrade/ButtonSpeed" to="." method="_on_button_speed_pressed"]

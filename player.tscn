@@ -235,22 +235,28 @@ z_index = 20
 offset_left = 134.0
 offset_top = -94.0
 offset_right = 203.29858
-offset_bottom = -52.0
+offset_bottom = -51.047363
 scale = Vector2(0.346327, 0.209533)
-size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("12_ivps1")
 
 [node name="KillsLabel" type="Label" parent="KillsPanel" unique_id=1034298420]
-layout_mode = 0
-offset_left = 2.8874657
-offset_top = 4.77252
-offset_right = 68.032974
-offset_bottom = 27.77252
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.64919
+offset_top = -21.476286
+offset_right = 57.32054
+offset_bottom = 11.282257
+grow_horizontal = 2
+grow_vertical = 2
 scale = Vector2(0.753491, 1.31119)
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 2
 
 [node name="XpBar" type="TextureProgressBar" parent="." unique_id=193956060]
 unique_name_in_owner = true
