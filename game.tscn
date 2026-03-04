@@ -7,10 +7,12 @@
 [ext_resource type="Texture2D" uid="uid://2wm5t7tca8ht" path="res://mapa/corners.png" id="4_7jktm"]
 [ext_resource type="Texture2D" uid="uid://ixfbmamd7215" path="res://0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7.png" id="5_ryrav"]
 [ext_resource type="Theme" uid="uid://d022i4cmvv35p" path="res://Default.tres" id="8_j5wjh"]
+[ext_resource type="FontFile" uid="uid://cftgc8pvv8clu" path="res://Daydream DEMO.otf" id="9_iotsf"]
 [ext_resource type="Texture2D" uid="uid://cxtlraaqh3si7" path="res://moje_grafika/GUI/Sprite-0001.png" id="9_vef74"]
 [ext_resource type="Texture2D" uid="uid://bfvguhtgwbnmi" path="res://moje_grafika/GUI/big_panel.png" id="10_hve3p"]
 [ext_resource type="Script" uid="uid://bcdj6j2tjndgm" path="res://level_up_menu.gd" id="11_iotsf"]
 [ext_resource type="Texture2D" uid="uid://cnxe7bkmg2vaa" path="res://moje_grafika/others/bord.png" id="11_mfdv2"]
+[ext_resource type="Texture2D" uid="uid://spp6rii5775f" path="res://moje_grafika/others/heart.png" id="13_lc2xo"]
 
 [sub_resource type="GDScript" id="GDScript_mfdv2"]
 script/source = "extends Node2D
@@ -20,7 +22,8 @@ script/source = "extends Node2D
 @onready var healthTimer = $IncreseDifficultyTimer
 @onready var level_menu = $LevelUpMenu
 @onready var auto_shoot_timer = $AutoShootTimer
-@onready var upgrade_container = $LevelUpMenu/ColorRect/VBoxContainer
+@onready var upgrade_container2 = $LevelUpMenu/ColorRect/VBoxContainer
+@onready var upgrade_container = $LevelUpMenu/ColorRect2/HBoxContainer
 
 @onready var auto_label = get_tree().current_scene.get_node(\"player/AutoShootLabel\")
 @onready var staff = get_tree().current_scene.get_node(\"player/staff\")
@@ -237,7 +240,8 @@ func _on_button_reroll_pressed() -> void:
 	
 	reroll_used = true
 	show_random_upgrades()
-	$LevelUpMenu/ColorRect/ButtonReroll.visible = false
+	#$LevelUpMenu/ColorRect/ButtonReroll.visible = false
+	$LevelUpMenu/ColorRect2/ButtonReroll.visible = false
 
 func update_auto_shoot_label(enabled: bool):
 	var auto_label = player.get_node(\"AutoShootLabel\")
@@ -1085,6 +1089,42 @@ sources/0 = SubResource("TileSetAtlasSource_7jktm")
 sources/1 = SubResource("TileSetAtlasSource_ryrav")
 sources/2 = SubResource("TileSetAtlasSource_eow3j")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfdv2"]
+bg_color = Color(0.27058825, 0.3529412, 0.39215687, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+corner_detail = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iotsf"]
+bg_color = Color(0.49660063, 0.60488254, 0.65719885, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lc2xo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lc2xo"]
+bg_color = Color(0.27058825, 0.3529412, 0.39215687, 1)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [node name="game" type="Node2D" unique_id=380965398]
 y_sort_enabled = true
 position = Vector2(506, 281)
@@ -1159,6 +1199,7 @@ unique_name_in_owner = true
 visible = false
 
 [node name="ColorRect" type="ColorRect" parent="GameOver" unique_id=106243103]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1266,11 +1307,123 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
+[node name="ColorRect2" type="ColorRect" parent="GameOver" unique_id=1279396187]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.69803923)
+
+[node name="GameOver" type="Label" parent="GameOver/ColorRect2" unique_id=1954349106]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -383.0
+offset_top = -126.0
+offset_right = 397.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 10
+theme_override_fonts/font = ExtResource("9_iotsf")
+theme_override_font_sizes/font_size = 84
+text = "Game over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeadTime" type="Label" parent="GameOver/ColorRect2" unique_id=543956021]
+layout_mode = 0
+offset_left = 652.0
+offset_top = 386.0
+offset_right = 849.0
+offset_bottom = 414.0
+theme_override_font_sizes/font_size = 20
+text = "Time survived: 00:00"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SlimeKills" type="Label" parent="GameOver/ColorRect2" unique_id=1169397632]
+layout_mode = 0
+offset_left = 461.0
+offset_top = 386.0
+offset_right = 626.0
+offset_bottom = 414.0
+theme_override_font_sizes/font_size = 20
+text = "Slimes killed: 145"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DosazeniLevel" type="Label" parent="GameOver/ColorRect2" unique_id=1947914880]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.0
+offset_top = 80.0
+offset_right = 84.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "Level reached: 25"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ButtonTryAgain" type="Button" parent="GameOver/ColorRect2" unique_id=376117885]
+process_mode = 3
+layout_mode = 0
+offset_left = 426.0
+offset_top = 490.0
+offset_right = 586.0
+offset_bottom = 550.0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Try again
+"
+
+[node name="ButtonMainMenu" type="Button" parent="GameOver/ColorRect2" unique_id=1965689963]
+process_mode = 3
+layout_mode = 0
+offset_left = 688.0
+offset_top = 490.0
+offset_right = 866.0
+offset_bottom = 550.0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Main menu
+"
+
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=129988489]
 unique_name_in_owner = true
 visible = false
 
 [node name="ColorRect" type="ColorRect" parent="PauseMenu" unique_id=370685185]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1374,12 +1527,87 @@ grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.52196, 1.58029)
 theme = ExtResource("8_j5wjh")
-text = "Quit game
-"
+text = " Quit game"
 icon = ExtResource("9_vef74")
 flat = true
 icon_alignment = 1
 expand_icon = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu" unique_id=1266916009]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.1575
+offset_top = -102.435486
+offset_right = 106.1575
+offset_bottom = 102.435486
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.0079365, 1.0689656)
+size_flags_horizontal = 4
+theme_override_constants/separation = 12
+
+[node name="ButtonResume" type="Button" parent="PauseMenu/VBoxContainer" unique_id=1751402284]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Resume"
+
+[node name="ButtonRestart" type="Button" parent="PauseMenu/VBoxContainer" unique_id=1158036781]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Restart"
+
+[node name="ButtonMainMenu" type="Button" parent="PauseMenu/VBoxContainer" unique_id=2026696408]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Main menu"
+
+[node name="ButtonQuitGame" type="Button" parent="PauseMenu/VBoxContainer" unique_id=126848399]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = " Quit game"
 
 [node name="LevelUpMenu" type="CanvasLayer" parent="." unique_id=1974640521]
 unique_name_in_owner = true
@@ -1387,6 +1615,7 @@ visible = false
 script = ExtResource("11_iotsf")
 
 [node name="ColorRect" type="ColorRect" parent="LevelUpMenu" unique_id=979371352]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1418,7 +1647,7 @@ offset_bottom = 31.28
 theme_override_font_sizes/normal_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/mono_font_size = 16
-text = "Incease healh by 10 %"
+text = "Increase healh by 10 %"
 tab_size = 1
 
 [node name="ButtonHealth" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/HelthUpgrade" unique_id=946809222]
@@ -1453,7 +1682,7 @@ offset_bottom = 31.28
 theme_override_font_sizes/normal_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/mono_font_size = 16
-text = "Incease speed by 10 %"
+text = "Increase speed by 10 %"
 scroll_following = true
 tab_size = 1
 
@@ -1488,7 +1717,7 @@ offset_bottom = 31.28
 theme_override_font_sizes/normal_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/mono_font_size = 16
-text = "Incease damage by 20 %"
+text = "Increase damage by 20 %"
 tab_size = 1
 
 [node name="ButtonDamage" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/DamageUpgrade" unique_id=1170605615]
@@ -1522,8 +1751,7 @@ offset_bottom = 31.28
 theme_override_font_sizes/normal_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/mono_font_size = 16
-text = "Incease fire rate by 10 %
-"
+text = "Increase fire rate by 10 %"
 tab_size = 1
 
 [node name="ButtonFireRate" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/FireRateUpdate" unique_id=1786117794]
@@ -1557,7 +1785,7 @@ offset_bottom = 31.28
 theme_override_font_sizes/normal_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/mono_font_size = 16
-text = "Incease fireball speed by 10 %
+text = "Increase fireball speed by 10 %
 "
 tab_size = 1
 
@@ -1592,7 +1820,7 @@ offset_bottom = 31.28
 theme_override_font_sizes/normal_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/mono_font_size = 16
-text = "Incease magnet size by 10 %"
+text = "Increase magnet size by 10 %"
 tab_size = 1
 
 [node name="ButtonMagnetSize" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/MagnetSizeUpdate" unique_id=1916698851]
@@ -1627,7 +1855,7 @@ offset_bottom = 31.28
 theme_override_font_sizes/normal_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/mono_font_size = 16
-text = "Incease healing by 0.25 hp per second"
+text = "Increase healing by 0.25 hp per second"
 tab_size = 1
 
 [node name="ButtonHealing" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/HealingUpdate" unique_id=537472401]
@@ -1662,7 +1890,7 @@ offset_bottom = 31.28
 theme_override_font_sizes/normal_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/mono_font_size = 16
-text = "Incease crit rate by 2,5 %"
+text = "Increase crit rate by 2,5 %"
 tab_size = 1
 
 [node name="ButtonCritRate" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/CritRateUpdate" unique_id=223428921]
@@ -1697,7 +1925,7 @@ offset_bottom = 31.28
 theme_override_font_sizes/normal_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/mono_font_size = 16
-text = "Incease crit damage by 5 %"
+text = "Increase crit damage by 5 %"
 tab_size = 1
 
 [node name="ButtonCritDamage" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/CritDamageUpdate" unique_id=507064492]
@@ -1732,7 +1960,7 @@ offset_bottom = 31.28
 theme_override_font_sizes/normal_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/mono_font_size = 16
-text = "Incease pick up speed by 10  %"
+text = "Increase pick up speed by 10  %"
 tab_size = 1
 
 [node name="ButtonPickUpSpeed" type="Button" parent="LevelUpMenu/ColorRect/VBoxContainer/PickUpSpeedUpdate" unique_id=1217039697]
@@ -1768,15 +1996,728 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
+[node name="ColorRect2" type="ColorRect" parent="LevelUpMenu" unique_id=1269067139]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.00408, 1.00154)
+color = Color(0, 0, 0, 0.784314)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LevelUpMenu/ColorRect2" unique_id=765939984]
+custom_minimum_size = Vector2(1286, 185)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -700.75214
+offset_top = -189.26291
+offset_right = 585.2479
+offset_bottom = -4.262909
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.0888755, 1.2392946)
+alignment = 1
+
+[node name="PanelHealthUpdate" type="Panel" parent="LevelUpMenu/ColorRect2/HBoxContainer" unique_id=1751042899]
+custom_minimum_size = Vector2(125, 185)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
+
+[node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/PanelHealthUpdate" unique_id=1612460716]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.024559
+offset_top = 6.989237
+offset_right = 19.024559
+offset_bottom = 40.93696
+grow_horizontal = 2
+texture = ExtResource("13_lc2xo")
+
+[node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/PanelHealthUpdate" unique_id=2063096857]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.5
+offset_top = -43.5
+offset_right = 46.1221
+offset_bottom = 31.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "Increase healh by 10 %"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+justification_flags = 3
+
+[node name="ButtonHealth" type="Button" parent="LevelUpMenu/ColorRect2/HBoxContainer/PanelHealthUpdate" unique_id=638933842]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.853683
+offset_top = -51.920044
+offset_right = 41.82936
+offset_bottom = -14.293167
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.92286116, 0.8832998)
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Choose"
+
+[node name="SpeedUpgrade" type="Panel" parent="LevelUpMenu/ColorRect2/HBoxContainer" unique_id=1938185893]
+custom_minimum_size = Vector2(125, 185)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
+
+[node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/SpeedUpgrade" unique_id=2129409239]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.024559
+offset_top = 6.989237
+offset_right = 19.024559
+offset_bottom = 40.93696
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/SpeedUpgrade" unique_id=114782712]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.5
+offset_top = -43.5
+offset_right = 46.1221
+offset_bottom = 57.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "Increase speed by 10 %
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+justification_flags = 3
+
+[node name="ButtonSpeed" type="Button" parent="LevelUpMenu/ColorRect2/HBoxContainer/SpeedUpgrade" unique_id=1842538207]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.853683
+offset_top = -51.920044
+offset_right = 41.82936
+offset_bottom = -14.293167
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.92286116, 0.8832998)
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Choose"
+
+[node name="DamageUpgrade" type="Panel" parent="LevelUpMenu/ColorRect2/HBoxContainer" unique_id=1318079247]
+custom_minimum_size = Vector2(125, 185)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
+
+[node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/DamageUpgrade" unique_id=602241247]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.024559
+offset_top = 6.989237
+offset_right = 19.024559
+offset_bottom = 40.93696
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/DamageUpgrade" unique_id=1578025758]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.5
+offset_top = -43.5
+offset_right = 46.1221
+offset_bottom = 31.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "Increase damage by 20 %"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+justification_flags = 3
+
+[node name="ButtonDamage" type="Button" parent="LevelUpMenu/ColorRect2/HBoxContainer/DamageUpgrade" unique_id=1711573427]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.853683
+offset_top = -51.920044
+offset_right = 41.82936
+offset_bottom = -14.293167
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.92286116, 0.8832998)
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Choose"
+
+[node name="FireRateUpdate" type="Panel" parent="LevelUpMenu/ColorRect2/HBoxContainer" unique_id=187388249]
+custom_minimum_size = Vector2(125, 185)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
+
+[node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/FireRateUpdate" unique_id=600615033]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.024559
+offset_top = 6.989237
+offset_right = 19.024559
+offset_bottom = 40.93696
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/FireRateUpdate" unique_id=701419394]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.5
+offset_top = -43.5
+offset_right = 46.1221
+offset_bottom = 31.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "Increase fire rate by 10 %"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+justification_flags = 3
+
+[node name="ButtonFireRate" type="Button" parent="LevelUpMenu/ColorRect2/HBoxContainer/FireRateUpdate" unique_id=1426887794]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.853683
+offset_top = -51.920044
+offset_right = 41.82936
+offset_bottom = -14.293167
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.92286116, 0.8832998)
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Choose"
+
+[node name="BulletSpeedUpdate" type="Panel" parent="LevelUpMenu/ColorRect2/HBoxContainer" unique_id=1799344969]
+custom_minimum_size = Vector2(125, 185)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
+
+[node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/BulletSpeedUpdate" unique_id=2113675241]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.024559
+offset_top = 6.989237
+offset_right = 19.024559
+offset_bottom = 40.93696
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/BulletSpeedUpdate" unique_id=23784149]
+clip_contents = true
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.221
+offset_top = -56.24487
+offset_right = 56.22132
+offset_bottom = 70.75513
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "Increase fireball speed by 10 %
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+justification_flags = 3
+
+[node name="ButtonBulletSpeed" type="Button" parent="LevelUpMenu/ColorRect2/HBoxContainer/BulletSpeedUpdate" unique_id=1253067909]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -36.120052
+offset_top = -52.204514
+offset_right = 41.56299
+offset_bottom = -14.577637
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.92286116, 0.8832998)
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Choose"
+
+[node name="MagnetSizeUpdate" type="Panel" parent="LevelUpMenu/ColorRect2/HBoxContainer" unique_id=1988541041]
+custom_minimum_size = Vector2(125, 185)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
+
+[node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/MagnetSizeUpdate" unique_id=1209977222]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.024559
+offset_top = 6.989237
+offset_right = 19.024559
+offset_bottom = 40.93696
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/MagnetSizeUpdate" unique_id=1895454769]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.129654
+offset_top = -51.410843
+offset_right = 48.129654
+offset_bottom = 40.44771
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "Increase magnet size by 10 %"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+justification_flags = 3
+
+[node name="ButtonMagnetSize" type="Button" parent="LevelUpMenu/ColorRect2/HBoxContainer/MagnetSizeUpdate" unique_id=1620719164]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.853683
+offset_top = -51.920044
+offset_right = 41.82936
+offset_bottom = -14.293167
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.92286116, 0.8832998)
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Choose"
+
+[node name="HealingUpdate" type="Panel" parent="LevelUpMenu/ColorRect2/HBoxContainer" unique_id=2050055501]
+custom_minimum_size = Vector2(125, 185)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
+
+[node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/HealingUpdate" unique_id=1351894465]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.024559
+offset_top = 6.989237
+offset_right = 19.024559
+offset_bottom = 40.93696
+grow_horizontal = 2
+texture = ExtResource("13_lc2xo")
+
+[node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/HealingUpdate" unique_id=1890685026]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -51.896454
+offset_top = -55.43919
+offset_right = 51.896454
+offset_bottom = 45.560806
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 14
+text = "Increase healing by 0.25 hp per second"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+justification_flags = 3
+
+[node name="ButtonHealing" type="Button" parent="LevelUpMenu/ColorRect2/HBoxContainer/HealingUpdate" unique_id=435651495]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.853683
+offset_top = -51.920044
+offset_right = 41.82936
+offset_bottom = -14.293167
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.92286116, 0.8832998)
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Choose"
+
+[node name="CritRateUpdate" type="Panel" parent="LevelUpMenu/ColorRect2/HBoxContainer" unique_id=2095192311]
+custom_minimum_size = Vector2(125, 185)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
+
+[node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/CritRateUpdate" unique_id=189418090]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.024559
+offset_top = 6.989237
+offset_right = 19.024559
+offset_bottom = 40.93696
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/CritRateUpdate" unique_id=433609187]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.311
+offset_top = -43.575
+offset_right = 46.311104
+offset_bottom = 31.425003
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "Increase crit rate by 2,5 %"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+justification_flags = 3
+
+[node name="ButtonCritRate" type="Button" parent="LevelUpMenu/ColorRect2/HBoxContainer/CritRateUpdate" unique_id=1031106287]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.853683
+offset_top = -51.920044
+offset_right = 41.82936
+offset_bottom = -14.293167
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.92286116, 0.8832998)
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Choose"
+
+[node name="CritDamageUpdate" type="Panel" parent="LevelUpMenu/ColorRect2/HBoxContainer" unique_id=1980954784]
+custom_minimum_size = Vector2(125, 185)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
+
+[node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/CritDamageUpdate" unique_id=123357665]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.024559
+offset_top = 6.989237
+offset_right = 19.024559
+offset_bottom = 40.93696
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/CritDamageUpdate" unique_id=1257055779]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.274353
+offset_top = -56.244858
+offset_right = 50.274353
+offset_bottom = 44.755142
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "Increase crit damage by 5 %"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+justification_flags = 3
+
+[node name="ButtonCritDamage" type="Button" parent="LevelUpMenu/ColorRect2/HBoxContainer/CritDamageUpdate" unique_id=2025134425]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.853683
+offset_top = -51.920044
+offset_right = 41.82936
+offset_bottom = -14.293167
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.92286116, 0.8832998)
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Choose"
+
+[node name="PickUpSpeedUpdate" type="Panel" parent="LevelUpMenu/ColorRect2/HBoxContainer" unique_id=1104982319]
+custom_minimum_size = Vector2(125, 185)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
+
+[node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/PickUpSpeedUpdate" unique_id=1476859680]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.024559
+offset_top = 6.989237
+offset_right = 19.024559
+offset_bottom = 40.93696
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/PickUpSpeedUpdate" unique_id=75772488]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -53.818542
+offset_top = -56.244858
+offset_right = 53.818542
+offset_bottom = 44.755127
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "Increase pick up speed by 10  %"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+justification_flags = 3
+
+[node name="ButtonPickUpSpeed" type="Button" parent="LevelUpMenu/ColorRect2/HBoxContainer/PickUpSpeedUpdate" unique_id=1325786851]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.853683
+offset_top = -51.920044
+offset_right = 41.82936
+offset_bottom = -14.293167
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.92286116, 0.8832998)
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Choose"
+
+[node name="ButtonReroll" type="Button" parent="LevelUpMenu/ColorRect2" unique_id=914794090]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.03516
+offset_top = 88.30963
+offset_right = 68.03516
+offset_bottom = 151.69
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Reroll"
+
 [connection signal="health_depleted" from="player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="AutoShootTimer" to="." method="_on_auto_shoot_timer_timeout"]
 [connection signal="timeout" from="GlobalTimer" to="." method="_on_global_timer_timeout"]
 [connection signal="timeout" from="IncreseDifficultyTimer" to="." method="_on_increse_difficulty_timer_timeout"]
 [connection signal="pressed" from="GameOver/ColorRect/ButtonTryAgain" to="." method="_on_button_try_again_pressed"]
+[connection signal="pressed" from="GameOver/ColorRect2/ButtonTryAgain" to="." method="_on_button_try_again_pressed"]
+[connection signal="pressed" from="GameOver/ColorRect2/ButtonMainMenu" to="." method="_on_button_main_menu_pressed"]
 [connection signal="pressed" from="PauseMenu/ColorRect/ButtonResume" to="." method="_on_button_resume_pressed"]
 [connection signal="pressed" from="PauseMenu/ColorRect/ButtonRestart" to="." method="_on_button_restart_pressed"]
 [connection signal="pressed" from="PauseMenu/ColorRect/ButtonMainMenu" to="." method="_on_button_main_menu_pressed"]
 [connection signal="pressed" from="PauseMenu/ColorRect/ButtonQuitGame" to="." method="_on_button_quit_game_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonResume" to="." method="_on_button_resume_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonRestart" to="." method="_on_button_restart_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonMainMenu" to="." method="_on_button_main_menu_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonQuitGame" to="." method="_on_button_quit_game_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/HelthUpgrade/ButtonHealth" to="." method="_on_button_health_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/SpeedUpgrade/ButtonSpeed" to="." method="_on_button_speed_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/DamageUpgrade/ButtonDamage" to="." method="_on_button_damage_pressed"]
@@ -1788,3 +2729,14 @@ expand_icon = true
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/CritDamageUpdate/ButtonCritDamage" to="." method="_on_button_crit_damage_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/VBoxContainer/PickUpSpeedUpdate/ButtonPickUpSpeed" to="." method="_on_button_pick_up_speed_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/ButtonReroll" to="." method="_on_button_reroll_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect2/HBoxContainer/PanelHealthUpdate/ButtonHealth" to="." method="_on_button_health_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect2/HBoxContainer/SpeedUpgrade/ButtonSpeed" to="." method="_on_button_speed_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect2/HBoxContainer/DamageUpgrade/ButtonDamage" to="." method="_on_button_damage_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect2/HBoxContainer/FireRateUpdate/ButtonFireRate" to="." method="_on_button_fire_rate_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect2/HBoxContainer/BulletSpeedUpdate/ButtonBulletSpeed" to="." method="_on_button_bullet_speed_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect2/HBoxContainer/MagnetSizeUpdate/ButtonMagnetSize" to="." method="_on_button_magnet_size_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect2/HBoxContainer/HealingUpdate/ButtonHealing" to="." method="_on_button_healing_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect2/HBoxContainer/CritRateUpdate/ButtonCritRate" to="." method="_on_button_crit_rate_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect2/HBoxContainer/CritDamageUpdate/ButtonCritDamage" to="." method="_on_button_crit_damage_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect2/HBoxContainer/PickUpSpeedUpdate/ButtonPickUpSpeed" to="." method="_on_button_pick_up_speed_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ColorRect2/ButtonReroll" to="." method="_on_button_reroll_pressed"]
