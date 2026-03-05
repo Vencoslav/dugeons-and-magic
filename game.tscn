@@ -13,6 +13,13 @@
 [ext_resource type="Script" uid="uid://bcdj6j2tjndgm" path="res://level_up_menu.gd" id="11_iotsf"]
 [ext_resource type="Texture2D" uid="uid://cnxe7bkmg2vaa" path="res://moje_grafika/others/bord.png" id="11_mfdv2"]
 [ext_resource type="Texture2D" uid="uid://spp6rii5775f" path="res://moje_grafika/others/heart.png" id="13_lc2xo"]
+[ext_resource type="Texture2D" uid="uid://n3xvntki635h" path="res://moje_grafika/others/movement.png" id="14_215e1"]
+[ext_resource type="Texture2D" uid="uid://c8qyja1k5d7y6" path="res://moje_grafika/others/critRate.png" id="15_7sc4i"]
+[ext_resource type="Texture2D" uid="uid://bwtwnsm0rtu8i" path="res://moje_grafika/others/attack.png" id="15_e8heu"]
+[ext_resource type="Texture2D" uid="uid://ba7uiefma8fi3" path="res://moje_grafika/others/magnet.png" id="16_80cx4"]
+[ext_resource type="Texture2D" uid="uid://bq3ahls453eld" path="res://moje_grafika/others/fireballSpeed.png" id="16_boyg6"]
+[ext_resource type="Texture2D" uid="uid://4cpyqnik6qto" path="res://moje_grafika/others/fireRate.png" id="16_e36ub"]
+[ext_resource type="Texture2D" uid="uid://crctkdso3shjx" path="res://moje_grafika/others/critDamage.png" id="18_rvswv"]
 
 [sub_resource type="GDScript" id="GDScript_mfdv2"]
 script/source = "extends Node2D
@@ -2096,14 +2103,18 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
 
 [node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/SpeedUpgrade" unique_id=2129409239]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -19.024559
-offset_top = 6.989237
-offset_right = 19.024559
-offset_bottom = 40.93696
+anchor_bottom = 0.5
+offset_left = -51.559036
+offset_top = -106.1964
+offset_right = 38.07634
+offset_bottom = -27.240746
 grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("14_215e1")
 
 [node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/SpeedUpgrade" unique_id=114782712]
 clip_contents = true
@@ -2162,14 +2173,18 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
 
 [node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/DamageUpgrade" unique_id=602241247]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -19.024559
-offset_top = 6.989237
-offset_right = 19.024559
-offset_bottom = 40.93696
+anchor_bottom = 0.5
+offset_left = -25.983746
+offset_top = -88.471664
+offset_right = 25.594467
+offset_bottom = -41.48103
 grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_e8heu")
 
 [node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/DamageUpgrade" unique_id=1578025758]
 clip_contents = true
@@ -2230,11 +2245,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -19.024559
-offset_top = 6.989237
-offset_right = 19.024559
-offset_bottom = 40.93696
+offset_left = -27.259415
+offset_top = 5.6396775
+offset_right = 27.259415
+offset_bottom = 51.824646
 grow_horizontal = 2
+texture = ExtResource("16_e36ub")
 
 [node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/FireRateUpdate" unique_id=701419394]
 clip_contents = true
@@ -2292,14 +2308,18 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
 
 [node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/BulletSpeedUpdate" unique_id=2113675241]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -19.024559
-offset_top = 6.989237
-offset_right = 19.024559
-offset_bottom = 40.93696
+anchor_bottom = 0.5
+offset_left = -33.986115
+offset_top = -84.44331
+offset_right = 33.986115
+offset_bottom = -39.86968
 grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_boyg6")
 
 [node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/BulletSpeedUpdate" unique_id=23784149]
 clip_contents = true
@@ -2357,16 +2377,20 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
 
-[node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/MagnetSizeUpdate" unique_id=1209977222]
+[node name="TextureRect1" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/MagnetSizeUpdate" unique_id=190448166]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -19.024559
-offset_top = 6.989237
-offset_right = 19.024559
-offset_bottom = 40.93696
+anchor_bottom = 0.5
+offset_left = -24.752747
+offset_top = -83.637634
+offset_right = 24.752625
+offset_bottom = -42.28669
 grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_80cx4")
 
 [node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/MagnetSizeUpdate" unique_id=1895454769]
 clip_contents = true
@@ -2490,14 +2514,18 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
 
 [node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/CritRateUpdate" unique_id=189418090]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -19.024559
-offset_top = 6.989237
-offset_right = 19.024559
-offset_bottom = 40.93696
+anchor_bottom = 0.5
+offset_left = -25.244781
+offset_top = -86.86034
+offset_right = 25.244781
+offset_bottom = -43.092392
 grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_7sc4i")
 
 [node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/CritRateUpdate" unique_id=433609187]
 clip_contents = true
@@ -2555,14 +2583,18 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
 
 [node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/CritDamageUpdate" unique_id=123357665]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -19.024559
-offset_top = 6.989237
-offset_right = 19.024559
-offset_bottom = 40.93696
+anchor_bottom = 0.5
+offset_left = -23.44865
+offset_top = -86.86032
+offset_right = 23.347488
+offset_bottom = -47.120693
 grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_rvswv")
 
 [node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/CritDamageUpdate" unique_id=1257055779]
 clip_contents = true
@@ -2620,14 +2652,18 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
 
 [node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect2/HBoxContainer/PickUpSpeedUpdate" unique_id=1476859680]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -19.024559
-offset_top = 6.989237
-offset_right = 19.024559
-offset_bottom = 40.93696
+anchor_bottom = 0.5
+offset_left = -24.752686
+offset_top = -86.86032
+offset_right = 24.752686
+offset_bottom = -45.50937
 grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_80cx4")
 
 [node name="Label" type="Label" parent="LevelUpMenu/ColorRect2/HBoxContainer/PickUpSpeedUpdate" unique_id=75772488]
 clip_contents = true
