@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bq3ahls453eld" path="res://moje_grafika/others/fireballSpeed.png" id="16_boyg6"]
 [ext_resource type="AudioStream" uid="uid://fxisb6kniqsg" path="res://audio/freesound_community-pixel-death-66829.mp3" id="16_e8heu"]
 [ext_resource type="Texture2D" uid="uid://4cpyqnik6qto" path="res://moje_grafika/others/fireRate.png" id="16_e36ub"]
+[ext_resource type="AudioStream" uid="uid://buggbwo8b60mv" path="res://audio/Pixel Gauntlet (1).mp3" id="17_e8heu"]
 [ext_resource type="Texture2D" uid="uid://crctkdso3shjx" path="res://moje_grafika/others/critDamage.png" id="18_rvswv"]
 
 [sub_resource type="GDScript" id="GDScript_mfdv2"]
@@ -2142,6 +2143,12 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
 theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
 text = "Reroll"
+
+[node name="PixelGauntletB" type="AudioStreamPlayer2D" parent="." unique_id=2115900757]
+process_mode = 3
+stream = ExtResource("17_e8heu")
+autoplay = true
+bus = &"Music"
 
 [connection signal="health_depleted" from="player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="AutoShootTimer" to="." method="_on_auto_shoot_timer_timeout"]

@@ -218,7 +218,7 @@ autostart = true
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="." unique_id=1802536546]
 stream = ExtResource("5_u1c27")
-volume_db = 4.0
+bus = &"SFX"
 
 [node name="animace" type="AnimatedSprite2D" parent="." unique_id=1362128896]
 unique_name_in_owner = true

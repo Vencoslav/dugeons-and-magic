@@ -176,13 +176,13 @@ one_way_collision_margin = 0.0
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="." unique_id=951707084]
 stream = ExtResource("6_2002g")
-volume_db = 4.0
+bus = &"SFX"
 
 [node name="CritSound" type="AudioStreamPlayer2D" parent="." unique_id=1559379058]
 stream = ExtResource("7_bratd")
-volume_db = 4.0
+bus = &"SFX"
 
 [node name="DeadSound" type="AudioStreamPlayer2D" parent="." unique_id=245145164]
 process_mode = 3
 stream = ExtResource("8_5b0gg")
-volume_db = 8.0
+bus = &"SFX"

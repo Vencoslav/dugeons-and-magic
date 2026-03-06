@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://buggbwo8b60mv"
+path="res://.godot/imported/Pixel Gauntlet (1).mp3-1bf764ca995ae2316b6642e6eda573b1.mp3str"
+
+[deps]
+
+source_file="res://audio/Pixel Gauntlet (1).mp3"
+dest_files=["res://.godot/imported/Pixel Gauntlet (1).mp3-1bf764ca995ae2316b6642e6eda573b1.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

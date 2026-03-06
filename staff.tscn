@@ -52,7 +52,7 @@ script = ExtResource("1_et8ip")
 
 [node name="CastSound" type="AudioStreamPlayer2D" parent="." unique_id=1154653167]
 stream = ExtResource("2_et8ip")
-volume_db = -4.0
+bus = &"SFX"
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=1778805220]
 position = Vector2(2, 0)

@@ -28,12 +28,10 @@ var pending_level_ups := 0
 @onready var hurtBox = $hurtBox
 @onready var animace = $animace
 @onready var hurtSound = $HurtSound
-@onready var deadSound = $DeadSound
 
 const slime_scene = preload("res://slime.tscn")
 
 var character_direction := Vector2.ZERO
-
 
 func _ready():
 	if healthBar:
@@ -42,7 +40,6 @@ func _ready():
 	
 	update_xp_required()
 	randomize()
-
 
 func increase_max_health(amount: float):
 	max_health += amount
@@ -72,7 +69,6 @@ var level:
 		pending_xp_bonus = 0
 		update_xp_required()
 		emit_signal("level_up")
-
 
 func update_xp_required():
 	xpBar.max_value = base_xp_per_level + (_level - 1) * xp_growth + xp_difficulty_bonus
