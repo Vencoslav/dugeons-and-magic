@@ -1139,7 +1139,6 @@ script = SubResource("GDScript_mfdv2")
 metadata/_edit_horizontal_guides_ = [791.0]
 
 [node name="DeadSound" type="AudioStreamPlayer2D" parent="." unique_id=1574772142]
-process_mode = 3
 position = Vector2(3.0517578e-05, 0)
 scale = Vector2(0.99999994, 1)
 stream = ExtResource("16_e8heu")

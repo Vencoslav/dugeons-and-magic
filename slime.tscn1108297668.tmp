@@ -182,7 +182,7 @@ volume_db = 4.0
 stream = ExtResource("7_bratd")
 volume_db = 4.0
 
-[node name="DeadSound" type="AudioStreamPlayer2D" parent="." unique_id=245145164]
-process_mode = 3
+[node name="DeadSound" type="AudioStreamPlayer2D" parent="." unique_id=572052029]
 stream = ExtResource("8_5b0gg")
 volume_db = 8.0
+pitch_scale = 1.1

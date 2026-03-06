@@ -28,6 +28,7 @@ var pending_level_ups := 0
 @onready var hurtBox = $hurtBox
 @onready var animace = $animace
 @onready var hurtSound = $HurtSound
+@onready var deadSound = $DeadSound
 
 const slime_scene = preload("res://slime.tscn")
 
@@ -124,7 +125,6 @@ func damage_logic(delta):
 
 			if health <= 0:
 				health_depleted.emit()
-				
 			break
 
 func update_animation():

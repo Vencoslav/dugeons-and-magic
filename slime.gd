@@ -8,6 +8,7 @@ var damage = 20
 @onready var player = get_node("/root/game/player")
 @onready var hurtSound = $HurtSound
 @onready var critSound = $CritSound
+@onready var deathSound = $DeadSound
 
 const xp_scene = preload("res://xp.tscn")
 
@@ -17,7 +18,7 @@ func _ready():
 
 func _physics_process(_delta):
 	var direction = global_position.direction_to(player.global_position)
-	velocity = direction.normalized() * speed  # opravuje 2x rychlost když jdeš směrem do rohu
+	velocity = direction.normalized() * speed
 	move_and_slide()
 
 func take_damage():
@@ -27,44 +28,50 @@ func take_damage():
 
 	health -= final_damage
 
-	if is_crit:
-		if not critSound.playing:
+	if health > 0:
+		if is_crit and critSound and not critSound.playing:
 			critSound.play()
-	else:
-		if not hurtSound.playing:
+		elif hurtSound and not hurtSound.playing:
 			hurtSound.play()
 
-	if health <= 0:
-		var death_position = global_position 
-		
 		if is_crit:
 			an.play("crit_hit")
 			await an.animation_finished
-		
-		xp_drop(death_position)
-		an.play("smoke")
-		await an.animation_finished
-		
-		velocity = Vector2.ZERO
-		queue_free()
-		return
-		
-	if is_crit:
-		an.play("crit_hit")
-		await an.animation_finished
-	else:
-		an.play("hurt")
-		await an.animation_finished
+		else:
+			an.play("hurt")
+			await an.animation_finished
 
-	an.play("move")
+		an.play("move")
+		return
+
+	if deathSound:
+		var ds = deathSound.duplicate() # vytvoříme kopii zvuku
+		get_tree().current_scene.add_child(ds)
+		ds.global_position = global_position
+		ds.play()
+
+	xp_drop(global_position)
+
+	an.play("smoke")
+	await an.animation_finished
+
+	velocity = Vector2.ZERO
+	queue_free()
 
 func xp_drop(pos: Vector2):
-	call_deferred("_spawn_xp", pos)
+	_spawn_xp(pos)
 
 func _spawn_xp(pos: Vector2):
+	if not xp_scene:
+		return
+
 	var xp = xp_scene.instantiate()
-	get_parent().get_parent().add_child(xp)
+	var game_root = get_tree().current_scene
+	game_root.add_child(xp)
+
 	xp.global_position = pos
-	
-	var game = get_tree().current_scene
-	xp.set_speed(xp.speed * game.xp_pickup_speed_bonus)
+
+	if game_root.has_method("xp_pickup_speed_bonus"):
+		xp.set_speed(xp.speed * game_root.xp_pickup_speed_bonus)
+	else:
+		xp.set_speed(xp.speed)
