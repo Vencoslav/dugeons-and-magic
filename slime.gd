@@ -6,6 +6,9 @@ var damage = 20
 
 @onready var an = $animace
 @onready var player = get_node("/root/game/player")
+@onready var hurtSound = $HurtSound
+@onready var critSound = $CritSound
+
 const xp_scene = preload("res://xp.tscn")
 
 func _ready():
@@ -23,6 +26,13 @@ func take_damage():
 	var is_crit = result[1]
 
 	health -= final_damage
+
+	if is_crit:
+		if not critSound.playing:
+			critSound.play()
+	else:
+		if not hurtSound.playing:
+			hurtSound.play()
 
 	if health <= 0:
 		var death_position = global_position 

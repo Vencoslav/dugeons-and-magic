@@ -10,6 +10,7 @@ const min_fire_time := 0.1
 @onready var an = $Marker2D/animace
 @onready var crysta: Marker2D = %shootingPoint
 @onready var fire_timer: Timer = $FireTimer
+@onready var castSound = $CastSound
 
 func increase_fire_rate():
 	fire_timer.wait_time *= 0.9
@@ -33,6 +34,7 @@ func try_shoot():
 		return
 
 	shoot()
+	castSound.play()
 	fire_timer.start()
 
 func shoot():

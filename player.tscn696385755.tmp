@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://blo40plabamqx" path="res://animace/wizzard_idle_red_Sheet.png" id="4_dw050"]
 [ext_resource type="PackedScene" uid="uid://wmfaovfbt162" path="res://staff.tscn" id="4_hqtel"]
 [ext_resource type="Script" uid="uid://d0qneubpjqwtk" path="res://panel.gd" id="5_2hs0m"]
-[ext_resource type="AudioStream" uid="uid://dvyumi754yfb" path="res://audio/driken5482-retro-hurt-2-236675.mp3" id="5_u1c27"]
 [ext_resource type="Texture2D" uid="uid://c4kuxuga3vvjh" path="res://animace/wizzard_run_red_Sheet.png" id="6_b26j0"]
 [ext_resource type="Texture2D" uid="uid://ccfkb8higklv" path="res://moje_grafika/others/hp_under_bar_new.png" id="7_606se"]
 [ext_resource type="Texture2D" uid="uid://diajnyvf86lo" path="res://moje_grafika/others/xp_under_bar_new.png" id="7_nvl01"]
@@ -97,14 +96,8 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dw050")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1jxqw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dw050")
 }],
-"loop": false,
+"loop": true,
 "name": &"hurt",
 "speed": 10.0
 }, {
@@ -216,16 +209,14 @@ text = "HP"
 [node name="HealingTimer" type="Timer" parent="TextureHealhBar" unique_id=2024050836]
 autostart = true
 
-[node name="HurtSound" type="AudioStreamPlayer2D" parent="." unique_id=1802536546]
-stream = ExtResource("5_u1c27")
-volume_db = 4.0
-
 [node name="animace" type="AnimatedSprite2D" parent="." unique_id=1362128896]
 unique_name_in_owner = true
 position = Vector2(1, -15)
 sprite_frames = SubResource("SpriteFrames_lhvu3")
-animation = &"hurt"
+animation = &"runRed"
 autoplay = "idleRed"
+frame = 2
+frame_progress = 0.167382
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1915842795]
 visibility_layer = 0

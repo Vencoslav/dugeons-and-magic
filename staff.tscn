@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://wmfaovfbt162"]
 
 [ext_resource type="Script" uid="uid://btdmacebgperi" path="res://staff.gd" id="1_et8ip"]
+[ext_resource type="AudioStream" uid="uid://lk0rjl5q5q0i" path="res://audio/floraphonic-fireball-whoosh-2-179126.mp3" id="2_et8ip"]
 [ext_resource type="Texture2D" uid="uid://dto6hpli3g0vt" path="res://animace/my_staff-Sheet.png" id="2_ycvyx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ycvyx"]
@@ -48,6 +49,10 @@ animations = [{
 
 [node name="staff" type="Node2D" unique_id=1573652247]
 script = ExtResource("1_et8ip")
+
+[node name="CastSound" type="AudioStreamPlayer2D" parent="." unique_id=1154653167]
+stream = ExtResource("2_et8ip")
+volume_db = -4.0
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=1778805220]
 position = Vector2(2, 0)
