@@ -4,8 +4,9 @@
 [ext_resource type="Script" uid="uid://ba5kmkdd18tjv" path="res://main_menu.gd" id="1_fu7sn"]
 [ext_resource type="FontFile" uid="uid://cftgc8pvv8clu" path="res://Daydream DEMO.otf" id="2_7vrkn"]
 [ext_resource type="AudioStream" uid="uid://b726xkd0wv27o" path="res://audio/Pixel Gauntlet.mp3" id="4_qe12f"]
-[ext_resource type="Script" uid="uid://dpgjwe4nik6ac" path="res://input_remap_button.gd" id="7_qe12f"]
+[ext_resource type="Script" uid="uid://b7d6jn4j41jd2" path="res://remapper.gd" id="7_8qtwp"]
 [ext_resource type="Script" uid="uid://b0mxgpejfk406" path="res://audio_control.gd" id="8_8qtwp"]
+[ext_resource type="Script" uid="uid://ccwuxsirc7ls" path="res://remapping.gd" id="8_dy7ct"]
 [ext_resource type="Script" uid="uid://t6k8ul1gtg2l" path="res://check_button.gd" id="9_dy7ct"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7vrkn"]
@@ -45,6 +46,12 @@ thickness = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8qtwp"]
 bg_color = Color(0, 0, 0, 0.39215687)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0k4wn"]
+bg_color = Color(0, 0, 0, 0.627451)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j5v2v"]
+bg_color = Color(1, 1, 1, 0.627451)
 
 [node name="MainMenu" type="Control" unique_id=1871468697]
 process_mode = 3
@@ -164,6 +171,7 @@ bus = &"Music"
 
 [node name="Options" type="Panel" parent="." unique_id=1650062803]
 process_mode = 3
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -341,7 +349,7 @@ anchor_bottom = 0.5
 offset_left = -191.5
 offset_top = -61.0
 offset_right = 191.5
-offset_bottom = 329.0
+offset_bottom = 265.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8qtwp")
@@ -369,11 +377,9 @@ theme_override_constants/separation = 60
 
 [node name="ButtonOptions" type="Button" parent="KeyBinds/HBoxContainer" unique_id=928991215]
 process_mode = 3
-z_index = 19
 custom_minimum_size = Vector2(92, 28)
 layout_mode = 2
 size_flags_vertical = 3
-focus_mode = 1
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
@@ -387,11 +393,9 @@ text = "Options"
 
 [node name="ButtonKeyBinds" type="Button" parent="KeyBinds/HBoxContainer" unique_id=1013984053]
 process_mode = 3
-z_index = 19
 custom_minimum_size = Vector2(108, 28)
 layout_mode = 2
 size_flags_vertical = 3
-focus_mode = 1
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
@@ -403,132 +407,40 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_fu7sn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_jix8l")
 text = "Key binds"
 
-[node name="VBoxButtons" type="VBoxContainer" parent="KeyBinds" unique_id=900696]
-layout_mode = 0
-offset_left = 220.5
-offset_top = 102.0
-offset_right = 321.5
-offset_bottom = 301.0
-theme_override_constants/separation = 2
-
-[node name="ButtonMoveLeft" type="Button" parent="KeyBinds/VBoxButtons" unique_id=1500090418]
-process_mode = 3
-z_index = 20
-custom_minimum_size = Vector2(50, 25)
-layout_mode = 2
-script = ExtResource("7_qe12f")
-action = "move_left"
-
-[node name="ButtonMoveRight" type="Button" parent="KeyBinds/VBoxButtons" unique_id=125955954]
-process_mode = 3
-z_index = 20
-custom_minimum_size = Vector2(50, 25)
-layout_mode = 2
-script = ExtResource("7_qe12f")
-action = "move_right"
-
-[node name="ButtonMoveUp" type="Button" parent="KeyBinds/VBoxButtons" unique_id=287920986]
-process_mode = 3
-z_index = 20
-custom_minimum_size = Vector2(50, 25)
-layout_mode = 2
-script = ExtResource("7_qe12f")
-action = "move_up"
-
-[node name="ButtonMoveDown" type="Button" parent="KeyBinds/VBoxButtons" unique_id=1840579794]
-process_mode = 3
-z_index = 20
-custom_minimum_size = Vector2(50, 25)
-layout_mode = 2
-script = ExtResource("7_qe12f")
-action = "move_down"
-
-[node name="ButtonFire" type="Button" parent="KeyBinds/VBoxButtons" unique_id=1477521555]
-process_mode = 3
-z_index = 20
-custom_minimum_size = Vector2(50, 25)
-layout_mode = 2
-script = ExtResource("7_qe12f")
-action = "fire"
-
-[node name="ButtonAutoShoot" type="Button" parent="KeyBinds/VBoxButtons" unique_id=1340712272]
-process_mode = 3
-z_index = 20
-custom_minimum_size = Vector2(50, 25)
-layout_mode = 2
-script = ExtResource("7_qe12f")
-action = "auto_shoot"
-
-[node name="ButtonPauseMenu" type="Button" parent="KeyBinds/VBoxButtons" unique_id=111796630]
-process_mode = 3
-z_index = 20
-custom_minimum_size = Vector2(50, 25)
-layout_mode = 2
-script = ExtResource("7_qe12f")
-action = "pause_menu"
-
-[node name="VBoxLabels" type="VBoxContainer" parent="KeyBinds" unique_id=1931977905]
-layout_mode = 0
-offset_left = 68.5
-offset_top = 102.0
-offset_right = 168.5
-offset_bottom = 287.0
-theme_override_constants/separation = 10
-
-[node name="Label" type="Label" parent="KeyBinds/VBoxLabels" unique_id=1540895036]
-layout_mode = 2
-text = "Move left:"
-
-[node name="Label2" type="Label" parent="KeyBinds/VBoxLabels" unique_id=1454719975]
-layout_mode = 2
-text = "Move right:"
-
-[node name="Label3" type="Label" parent="KeyBinds/VBoxLabels" unique_id=1031297304]
-layout_mode = 2
-text = "Move up:"
-
-[node name="Label4" type="Label" parent="KeyBinds/VBoxLabels" unique_id=1592498432]
-layout_mode = 2
-text = "Move down:"
-
-[node name="Label5" type="Label" parent="KeyBinds/VBoxLabels" unique_id=2097585819]
-layout_mode = 2
-text = "Fire:"
-
-[node name="Label6" type="Label" parent="KeyBinds/VBoxLabels" unique_id=1918280356]
-layout_mode = 2
-text = "Auto shoot:"
-
-[node name="Label7" type="Label" parent="KeyBinds/VBoxLabels" unique_id=1347230399]
-layout_mode = 2
-text = "Pause menu:"
-
-[node name="ButtonBack" type="Button" parent="KeyBinds" unique_id=1608538316]
-process_mode = 3
+[node name="InputMapper" type="Control" parent="KeyBinds" unique_id=699121820]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -68.5
-offset_top = -45.0
-offset_right = 68.5
-offset_bottom = -11.0
+offset_top = 90.0
 grow_horizontal = 2
-grow_vertical = 0
-size_flags_vertical = 3
-focus_mode = 1
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_fu7sn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_fu7sn")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_jix8l")
-text = "Back"
+grow_vertical = 2
+
+[node name="Up" type="Button" parent="KeyBinds/InputMapper" unique_id=1369167784]
+custom_minimum_size = Vector2(56, 28)
+layout_mode = 0
+offset_left = 255.5
+offset_top = 30.0
+offset_right = 263.5
+offset_bottom = 38.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_0k4wn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_j5v2v")
+theme_override_styles/hover = SubResource("StyleBoxFlat_j5v2v")
+script = ExtResource("7_8qtwp")
+action = "Up"
+
+[node name="Down" type="Button" parent="KeyBinds/InputMapper" unique_id=1142416691]
+custom_minimum_size = Vector2(56, 28)
+layout_mode = 0
+offset_left = 255.5
+offset_top = 73.0
+offset_right = 311.5
+offset_bottom = 101.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_0k4wn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_j5v2v")
+theme_override_styles/hover = SubResource("StyleBoxFlat_j5v2v")
+script = ExtResource("8_dy7ct")
+action = "Down"
 
 [connection signal="pressed" from="MainButtons/ButtonStartGame" to="." method="_on_button_start_game_pressed"]
 [connection signal="pressed" from="MainButtons/ButtonSettings" to="." method="_on_button_settings_pressed"]
@@ -541,4 +453,3 @@ text = "Back"
 [connection signal="toggled" from="Options/FullscreenControl" to="Options/FullscreenControl" method="_on_toggled"]
 [connection signal="pressed" from="KeyBinds/HBoxContainer/ButtonOptions" to="." method="_on_button_options_pressed"]
 [connection signal="pressed" from="KeyBinds/HBoxContainer/ButtonKeyBinds" to="." method="_on_button_key_binds_pressed"]
-[connection signal="pressed" from="KeyBinds/ButtonBack" to="." method="_on_button_back_pressed"]

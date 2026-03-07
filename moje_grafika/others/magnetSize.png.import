@@ -2,22 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wh8m5rwlpe1q"
-path="res://.godot/imported/Sprite-0002.png-6efc70c97d30f03f02ee6ae760a1644a.ctex"
+uid="uid://dcpph5amlrmjx"
+path="res://.godot/imported/magnetSize.png-e27d7fcec08c3caeef5af3e6db63ce68.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://moje_grafika/GUI/Sprite-0002.png"
-dest_files=["res://.godot/imported/Sprite-0002.png-6efc70c97d30f03f02ee6ae760a1644a.ctex"]
+source_file="res://moje_grafika/others/magnetSize.png"
+dest_files=["res://.godot/imported/magnetSize.png-e27d7fcec08c3caeef5af3e6db63ce68.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
@@ -25,6 +27,10 @@ mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

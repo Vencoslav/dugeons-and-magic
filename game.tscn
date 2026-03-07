@@ -9,13 +9,15 @@
 [ext_resource type="FontFile" uid="uid://cftgc8pvv8clu" path="res://Daydream DEMO.otf" id="9_iotsf"]
 [ext_resource type="Texture2D" uid="uid://spp6rii5775f" path="res://moje_grafika/others/heart.png" id="13_lc2xo"]
 [ext_resource type="Texture2D" uid="uid://n3xvntki635h" path="res://moje_grafika/others/movement.png" id="14_215e1"]
+[ext_resource type="Texture2D" uid="uid://dcpph5amlrmjx" path="res://moje_grafika/others/magnetSize.png" id="14_boyg6"]
 [ext_resource type="Texture2D" uid="uid://c8qyja1k5d7y6" path="res://moje_grafika/others/critRate.png" id="15_7sc4i"]
 [ext_resource type="Texture2D" uid="uid://bwtwnsm0rtu8i" path="res://moje_grafika/others/attack.png" id="15_e8heu"]
-[ext_resource type="Texture2D" uid="uid://ba7uiefma8fi3" path="res://moje_grafika/others/magnet.png" id="16_80cx4"]
+[ext_resource type="Texture2D" uid="uid://boa6idm6hsg0x" path="res://moje_grafika/others/healing.png" id="15_rvswv"]
 [ext_resource type="Texture2D" uid="uid://bq3ahls453eld" path="res://moje_grafika/others/fireballSpeed.png" id="16_boyg6"]
 [ext_resource type="AudioStream" uid="uid://fxisb6kniqsg" path="res://audio/freesound_community-pixel-death-66829.mp3" id="16_e8heu"]
 [ext_resource type="Texture2D" uid="uid://4cpyqnik6qto" path="res://moje_grafika/others/fireRate.png" id="16_e36ub"]
 [ext_resource type="AudioStream" uid="uid://buggbwo8b60mv" path="res://audio/Pixel Gauntlet (1).mp3" id="17_e8heu"]
+[ext_resource type="Texture2D" uid="uid://dkc3dmysuo7st" path="res://moje_grafika/others/pickUpSpeed.png" id="18_boyg6"]
 [ext_resource type="Texture2D" uid="uid://crctkdso3shjx" path="res://moje_grafika/others/critDamage.png" id="18_rvswv"]
 
 [sub_resource type="GDScript" id="GDScript_mfdv2"]
@@ -248,7 +250,6 @@ func _on_button_reroll_pressed() -> void:
 	
 	reroll_used = true
 	show_random_upgrades()
-	#$LevelUpMenu/ColorRect/ButtonReroll.visible = false
 	$LevelUpMenu/ColorRect/ButtonReroll.visible = false
 
 func update_auto_shoot_label(enabled: bool):
@@ -1402,7 +1403,8 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
 theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
-text = " Quit game"
+text = "Quit game
+"
 
 [node name="LevelUpMenu" type="CanvasLayer" parent="." unique_id=1974640521]
 unique_name_in_owner = true
@@ -1795,7 +1797,7 @@ offset_right = 24.752625
 offset_bottom = -42.28669
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("16_80cx4")
+texture = ExtResource("14_boyg6")
 
 [node name="Label" type="Label" parent="LevelUpMenu/ColorRect/HBoxContainer/MagnetSizeUpdate" unique_id=1895454769]
 clip_contents = true
@@ -1856,12 +1858,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -19.024559
-offset_top = 6.989237
-offset_right = 19.024559
-offset_bottom = 40.93696
+offset_left = -26.634155
+offset_top = 8.862357
+offset_right = 26.634155
+offset_bottom = 42.81008
 grow_horizontal = 2
-texture = ExtResource("13_lc2xo")
+texture = ExtResource("15_rvswv")
 
 [node name="Label" type="Label" parent="LevelUpMenu/ColorRect/HBoxContainer/HealingUpdate" unique_id=1890685026]
 clip_contents = true
@@ -2057,18 +2059,15 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_lc2xo")
 
 [node name="TextureRect" type="TextureRect" parent="LevelUpMenu/ColorRect/HBoxContainer/PickUpSpeedUpdate" unique_id=1476859680]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.752686
-offset_top = -86.86032
-offset_right = 24.752686
-offset_bottom = -45.50937
+offset_left = -27.141987
+offset_top = -7.251042
+offset_right = 38.71263
+offset_bottom = 49.145855
 grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("16_80cx4")
+texture = ExtResource("18_boyg6")
 
 [node name="Label" type="Label" parent="LevelUpMenu/ColorRect/HBoxContainer/PickUpSpeedUpdate" unique_id=75772488]
 clip_contents = true
@@ -2159,6 +2158,7 @@ bus = &"Music"
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonResume" to="." method="_on_button_resume_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonRestart" to="." method="_on_button_restart_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonMainMenu" to="." method="_on_button_main_menu_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonQuitGame" to="." method="_on_button_settings_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonQuitGame" to="." method="_on_button_quit_game_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/HBoxContainer/PanelHealthUpdate/ButtonHealth" to="." method="_on_button_health_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/HBoxContainer/SpeedUpgrade/ButtonSpeed" to="." method="_on_button_speed_pressed"]

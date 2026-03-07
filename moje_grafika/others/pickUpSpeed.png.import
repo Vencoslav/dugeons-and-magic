@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbqirwg1hoh3j"
-path="res://.godot/imported/fireballSpeed.png-f84fcaec3d46f9420b1741621e6cbadb.ctex"
+uid="uid://dkc3dmysuo7st"
+path="res://.godot/imported/pickUpSpeed.png-0868ff4968efeabd46b78de43ad29102.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://animace/fireballSpeed.png"
-dest_files=["res://.godot/imported/fireballSpeed.png-f84fcaec3d46f9420b1741621e6cbadb.ctex"]
+source_file="res://moje_grafika/others/pickUpSpeed.png"
+dest_files=["res://.godot/imported/pickUpSpeed.png-0868ff4968efeabd46b78de43ad29102.ctex"]
 
 [params]
 

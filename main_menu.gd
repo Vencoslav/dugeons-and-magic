@@ -25,20 +25,17 @@ func _on_button_exit_pressed() -> void:
 
 
 func _on_button_back_pressed() -> void:
-	_ready()
+	mainButtons.visible = true
+	options.visible = false
+	keyBinds.visible = false
 	
-
-
 func _on_button_options_pressed() -> void:
 	mainButtons.visible = false
-	options.visible = true
 	keyBinds.visible = false
+	options.visible = true
+	
 	
 func _on_button_key_binds_pressed() -> void:
 	keyBinds.visible = true
 	mainButtons.visible = false
 	options.visible = false
-
-
-func _on_game_music_control_pressed() -> void:
-	pass # Replace with function body.
