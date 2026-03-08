@@ -59,7 +59,7 @@ func take_damage():
 	queue_free()
 
 func xp_drop(pos: Vector2):
-	_spawn_xp(pos)
+	call_deferred("_spawn_xp", pos)a
 
 func _spawn_xp(pos: Vector2):
 	if not xp_scene:
@@ -70,6 +70,7 @@ func _spawn_xp(pos: Vector2):
 	game_root.add_child(xp)
 
 	xp.global_position = pos
+	xp.z_index = 10
 
 	if game_root.has_method("xp_pickup_speed_bonus"):
 		xp.set_speed(xp.speed * game_root.xp_pickup_speed_bonus)

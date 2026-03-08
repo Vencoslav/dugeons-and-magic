@@ -416,6 +416,7 @@ process_mode = 3
 z_index = 20
 custom_minimum_size = Vector2(50, 25)
 layout_mode = 2
+focus_mode = 1
 script = ExtResource("7_qe12f")
 action = "move_left"
 
@@ -424,6 +425,7 @@ process_mode = 3
 z_index = 20
 custom_minimum_size = Vector2(50, 25)
 layout_mode = 2
+focus_mode = 1
 script = ExtResource("7_qe12f")
 action = "move_right"
 
@@ -432,6 +434,7 @@ process_mode = 3
 z_index = 20
 custom_minimum_size = Vector2(50, 25)
 layout_mode = 2
+focus_mode = 1
 script = ExtResource("7_qe12f")
 action = "move_up"
 
@@ -440,6 +443,7 @@ process_mode = 3
 z_index = 20
 custom_minimum_size = Vector2(50, 25)
 layout_mode = 2
+focus_mode = 1
 script = ExtResource("7_qe12f")
 action = "move_down"
 
@@ -448,6 +452,7 @@ process_mode = 3
 z_index = 20
 custom_minimum_size = Vector2(50, 25)
 layout_mode = 2
+focus_mode = 1
 script = ExtResource("7_qe12f")
 action = "fire"
 
@@ -456,6 +461,7 @@ process_mode = 3
 z_index = 20
 custom_minimum_size = Vector2(50, 25)
 layout_mode = 2
+focus_mode = 1
 script = ExtResource("7_qe12f")
 action = "auto_shoot"
 
@@ -464,6 +470,7 @@ process_mode = 3
 z_index = 20
 custom_minimum_size = Vector2(50, 25)
 layout_mode = 2
+focus_mode = 1
 script = ExtResource("7_qe12f")
 action = "pause_menu"
 

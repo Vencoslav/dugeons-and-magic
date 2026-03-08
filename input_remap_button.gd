@@ -41,6 +41,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		InputMap.action_add_event(action, event)
 		release_focus()
 		button_pressed = false
-		update_text()  # ← tady už nebude padat
+		update_text()
 		if manager:
 			manager._save_keybinds()
