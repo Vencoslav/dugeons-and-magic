@@ -1,10 +1,10 @@
 extends CharacterBody2D
 
-var health = 40
-var speed = 30
+var health = 50
+var speed = 20
 var damage = 20
 
-@onready var an = $animace
+@onready var an = $animace_green
 @onready var player = get_node("/root/game/player")
 @onready var hurtSound = $HurtSound
 @onready var critSound = $CritSound
@@ -16,10 +16,19 @@ func _ready():
 	an.play("move")
 	add_to_group("slimes")
 
-func _physics_process(_delta):
-	var direction = global_position.direction_to(player.global_position)
-	velocity = direction.normalized() * speed
+func _physics_process(delta):
+	var target_dir = global_position.direction_to(player.global_position)
+	
+	var target_velocity = target_dir * speed
+	
+	velocity = velocity.lerp(target_velocity, delta * 5.0)
+	
 	move_and_slide()
+	
+	if velocity.x > 0:
+		an.flip_h = false # doprava
+	elif velocity.x < 0:
+		an.flip_h = true  # doleva
 
 func take_damage():
 	var result = player.calculate_damage()
@@ -59,7 +68,7 @@ func take_damage():
 	queue_free()
 
 func xp_drop(pos: Vector2):
-	call_deferred("_spawn_xp", pos)a
+	call_deferred("_spawn_xp", pos)
 
 func _spawn_xp(pos: Vector2):
 	if not xp_scene:

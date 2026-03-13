@@ -44,17 +44,28 @@ var kills_panel
 var healthBar
 
 var fireball_speed_bonus := 1.0
+var xp_pickup_speed_bonus := 1.0
+
+# zelení sliime
 var slimeHealthBonus := 0
 var slimeSpeedBonus := 0
 var slimeDamageBonus := 0
-var xp_pickup_speed_bonus := 1.0
 
-var maxSlimes := 5
+# červení slime
+var redHealthBonus := 0
+var redDamageBonus := 0
+var redSpeedBonus := 0
+
+# žlutý slime
+var yellowHealthBonus := 0
+var yellowSpeedBonus := 0
+var yellowDamageBonus := 0
+
+var maxSlimes := 10
 var currentSlimes := 0
 var kills := 0
 var is_paused := false
 var reroll_used := false
-
 func _ready():
 	player = get_tree().current_scene.get_node(\"player\")
 	auto_label = player.get_node(\"AutoShootLabel\")
@@ -78,19 +89,37 @@ func _process(_delta):
 func spawn_mob():
 	if currentSlimes >= maxSlimes:
 		return
+		
+	var slime_types = [
+		\"res://slime.tscn\", \"res://slime.tscn\",
+		\"res://slime_yellow.tscn\", \"res://slime_yellow.tscn\",
+		\"res://slime_red.tscn\" 
+	]
 	
-	var mob = preload(\"res://slime.tscn\").instantiate()
+	var random_path = slime_types.pick_random()
+	var resource = load(random_path)
+
+	var mob = resource.instantiate()
+	
 	path_follow.progress_ratio = randf()
 	mob.global_position = path_follow.global_position
 	
-	mob.health += slimeHealthBonus
-	mob.speed += slimeSpeedBonus
-	mob.damage += slimeDamageBonus
+	match random_path:
+		\"res://slime.tscn\":
+			mob.health += slimeHealthBonus
+			mob.speed += slimeSpeedBonus
+			mob.damage += slimeDamageBonus
+		\"res://slime_red.tscn\":
+			mob.health += redHealthBonus
+			mob.speed += redSpeedBonus
+			mob.damage += redDamageBonus
+		\"res://slime_yellow.tscn\":
+			mob.health += yellowHealthBonus
+			mob.speed += yellowSpeedBonus
+			mob.damage += yellowDamageBonus
 	
 	add_child(mob)
 	currentSlimes += 1
-	
-	# Po zničení slima se počet sníží
 	mob.tree_exited.connect(_on_slime_removed)
 
 func _on_slime_removed():
@@ -110,11 +139,23 @@ func _on_button_try_again_pressed() -> void:
 	get_tree().reload_current_scene()
 
 func _on_increse_difficulty_timer_timeout() -> void:
+	maxSlimes += 3
+	player.pending_xp_bonus += 10
+	
+	# zelení sliime
 	slimeHealthBonus += 5
 	slimeSpeedBonus += 5
-	maxSlimes += 2
 	slimeDamageBonus += 5
-	player.pending_xp_bonus += 20
+	
+	# červený slime
+	redHealthBonus += 15
+	redDamageBonus += 10
+	redSpeedBonus += 3
+	
+	# žlutí slime
+	yellowSpeedBonus += 15
+	yellowHealthBonus += 3
+	yellowDamageBonus += 3
 
 func _on_button_quit_game_pressed() -> void:
 	Input.flush_buffered_events() 
@@ -1207,7 +1248,7 @@ wait_time = 5.0
 autostart = true
 
 [node name="IncreseDifficultyTimer" type="Timer" parent="." unique_id=1733514089]
-wait_time = 60.0
+wait_time = 20.0
 autostart = true
 
 [node name="GameOver" type="CanvasLayer" parent="." unique_id=601820663]

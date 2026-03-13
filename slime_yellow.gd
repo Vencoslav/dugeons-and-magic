@@ -1,0 +1,87 @@
+extends CharacterBody2D
+
+var health = 30
+var speed = 35
+var damage = 25
+
+@onready var an = $animace_yellow
+@onready var player = get_node("/root/game/player")
+@onready var hurtSound = $HurtSound
+@onready var critSound = $CritSound
+@onready var deathSound = $DeadSound
+
+const xp_scene = preload("res://xp.tscn")
+
+func _ready():
+	an.play("move")
+	add_to_group("slimes")
+
+func _physics_process(delta):
+	var target_dir = global_position.direction_to(player.global_position)
+	
+	var target_velocity = target_dir * speed
+	
+	velocity = velocity.lerp(target_velocity, delta * 5.0)
+	
+	move_and_slide()
+	
+	if velocity.x > 0:
+		an.flip_h = false # doprava
+	elif velocity.x < 0:
+		an.flip_h = true  # doleva
+
+func take_damage():
+	var result = player.calculate_damage()
+	var final_damage = result[0]
+	var is_crit = result[1]
+
+	health -= final_damage
+
+	if health > 0:
+		if is_crit and critSound and not critSound.playing:
+			critSound.play()
+		elif hurtSound and not hurtSound.playing:
+			hurtSound.play()
+
+		if is_crit:
+			an.play("crit_hit")
+			await an.animation_finished
+		else:
+			an.play("hurt")
+			await an.animation_finished
+
+		an.play("move")
+		return
+
+	if deathSound:
+		var ds = deathSound.duplicate() # vytvoříme kopii zvuku
+		get_tree().current_scene.add_child(ds)
+		ds.global_position = global_position
+		ds.play()
+
+	xp_drop(global_position)
+
+	an.play("smoke")
+	await an.animation_finished
+
+	velocity = Vector2.ZERO
+	queue_free()
+
+func xp_drop(pos: Vector2):
+	call_deferred("_spawn_xp", pos)
+
+func _spawn_xp(pos: Vector2):
+	if not xp_scene:
+		return
+
+	var xp = xp_scene.instantiate()
+	var game_root = get_tree().current_scene
+	game_root.add_child(xp)
+
+	xp.global_position = pos
+	xp.z_index = 10
+
+	if game_root.has_method("xp_pickup_speed_bonus"):
+		xp.set_speed(xp.speed * game_root.xp_pickup_speed_bonus)
+	else:
+		xp.set_speed(xp.speed)

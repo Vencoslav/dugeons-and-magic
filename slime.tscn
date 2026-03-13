@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://d3cv5d6l8jjh8"]
 
-[ext_resource type="Texture2D" uid="uid://drkvcyxjqxs7f" path="res://animace/slime_green-Sheet.png" id="1_2d52u"]
 [ext_resource type="Script" uid="uid://jn6nls41bfe1" path="res://slime.gd" id="1_5jc4t"]
 [ext_resource type="Texture2D" uid="uid://6xkyli3a04ah" path="res://animace/slime_hurt_last-Sheet.png" id="2_4l1t8"]
 [ext_resource type="Texture2D" uid="uid://le7ggt1xdw07" path="res://animace/slime_crit_Sheet.png" id="2_jayke"]
+[ext_resource type="Texture2D" uid="uid://drkvcyxjqxs7f" path="res://animace/slime_green-Sheet.png" id="4_5b0gg"]
 [ext_resource type="Texture2D" uid="uid://gghanfrwyk5o" path="res://animace/smoke_Sheet.png" id="4_ppcr1"]
 [ext_resource type="AudioStream" uid="uid://bloect2q2qllt" path="res://audio/driken5482-retro-hurt-1-236672.mp3" id="6_2002g"]
 [ext_resource type="AudioStream" uid="uid://kbt8aiiqseg6" path="res://audio/dogwolf123-retro-hurt-sound-04-474785.mp3" id="7_bratd"]
@@ -28,20 +28,20 @@ region = Rect2(0, 0, 32, 32)
 atlas = ExtResource("2_4l1t8")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5jc4t"]
-atlas = ExtResource("1_2d52u")
+[sub_resource type="AtlasTexture" id="AtlasTexture_nowxr"]
+atlas = ExtResource("4_5b0gg")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4l1t8"]
-atlas = ExtResource("1_2d52u")
+[sub_resource type="AtlasTexture" id="AtlasTexture_yfmhs"]
+atlas = ExtResource("4_5b0gg")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ppcr1"]
-atlas = ExtResource("1_2d52u")
+[sub_resource type="AtlasTexture" id="AtlasTexture_hagqt"]
+atlas = ExtResource("4_5b0gg")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jayke"]
-atlas = ExtResource("1_2d52u")
+[sub_resource type="AtlasTexture" id="AtlasTexture_pwq85"]
+atlas = ExtResource("4_5b0gg")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5b0gg"]
@@ -103,16 +103,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5jc4t")
+"texture": SubResource("AtlasTexture_nowxr")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4l1t8")
+"texture": SubResource("AtlasTexture_yfmhs")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ppcr1")
+"texture": SubResource("AtlasTexture_hagqt")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jayke")
+"texture": SubResource("AtlasTexture_pwq85")
 }],
 "loop": true,
 "name": &"move",
@@ -151,7 +151,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ppcr1"]
 size = Vector2(14.2969, 11.2813)
 
-[node name="slime" type="CharacterBody2D" unique_id=1471273131]
+[node name="slime_green" type="CharacterBody2D" unique_id=1471273131]
 light_mask = 33
 visibility_layer = 33
 z_index = 4
@@ -162,7 +162,7 @@ wall_min_slide_angle = 0.0
 safe_margin = 1.0
 script = ExtResource("1_5jc4t")
 
-[node name="animace" type="AnimatedSprite2D" parent="." unique_id=237514192]
+[node name="animace_green" type="AnimatedSprite2D" parent="." unique_id=237514192]
 material = SubResource("CanvasItemMaterial_4l1t8")
 sprite_frames = SubResource("SpriteFrames_2002g")
 animation = &"crit_hit"
