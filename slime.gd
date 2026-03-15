@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var health = 50
-var speed = 20
+var speed = 25
 var damage = 20
 
 @onready var an = $animace_green
@@ -17,25 +17,50 @@ func _ready():
 	add_to_group("slimes")
 
 func _physics_process(delta):
-	var target_dir = global_position.direction_to(player.global_position)
+	var dist_to_player = global_position.distance_to(player.global_position)
+	var direction = global_position.direction_to(player.global_position)
+	var orbit_dir = Vector2(-direction.y, direction.x) 
 	
-	var target_velocity = target_dir * speed
+	var steering = direction
+	if dist_to_player < 100:
+		steering = (direction + orbit_dir * 0.5).normalized()
 	
-	velocity = velocity.lerp(target_velocity, delta * 5.0)
+	var target_velocity = steering * speed
+	var bounce_impulse = Vector2.ZERO
+	var neighbors = get_tree().get_nodes_in_group("slimes")
+	
+	for slime in neighbors:
+		if slime != self:
+			var dist = global_position.distance_to(slime.global_position)
+			if dist < 17:
+				var push_dir = (global_position - slime.global_position).normalized()
+				bounce_impulse += push_dir * (17 - dist) * 25.0 
+	
+	velocity += bounce_impulse
+	
+	if dist_to_player < 25:
+		velocity += -direction * (25 - dist_to_player) * 10.0
+
+	velocity = velocity.lerp(target_velocity, delta * 3.0)
 	
 	move_and_slide()
 	
-	if velocity.x > 0:
-		an.flip_h = false # doprava
-	elif velocity.x < 0:
-		an.flip_h = true  # doleva
-
+	if velocity.x > 0: an.flip_h = false
+	elif velocity.x < 0: an.flip_h = true
+	
 func take_damage():
 	var result = player.calculate_damage()
 	var final_damage = result[0]
 	var is_crit = result[1]
 
 	health -= final_damage
+	
+	var knockback_dir = player.global_position.direction_to(global_position)
+	
+	var base_strength = final_damage * 5.0
+	var strength = base_strength + (100.0 if is_crit else 0.0)
+	
+	velocity += knockback_dir * clamp(strength, 50.0, 800.0)
 
 	if health > 0:
 		if is_crit and critSound and not critSound.playing:
@@ -54,17 +79,14 @@ func take_damage():
 		return
 
 	if deathSound:
-		var ds = deathSound.duplicate() # vytvoříme kopii zvuku
+		var ds = deathSound.duplicate() # vytvoří kopii zvuku
 		get_tree().current_scene.add_child(ds)
 		ds.global_position = global_position
 		ds.play()
 
 	xp_drop(global_position)
-
 	an.play("smoke")
 	await an.animation_finished
-
-	velocity = Vector2.ZERO
 	queue_free()
 
 func xp_drop(pos: Vector2):

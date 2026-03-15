@@ -144,7 +144,7 @@ func _on_increse_difficulty_timer_timeout() -> void:
 	
 	# zelení sliime
 	slimeHealthBonus += 5
-	slimeSpeedBonus += 5
+	slimeSpeedBonus += 8
 	slimeDamageBonus += 5
 	
 	# červený slime
@@ -154,7 +154,7 @@ func _on_increse_difficulty_timer_timeout() -> void:
 	
 	# žlutí slime
 	yellowSpeedBonus += 15
-	yellowHealthBonus += 3
+	yellowHealthBonus += 5
 	yellowDamageBonus += 3
 
 func _on_button_quit_game_pressed() -> void:
@@ -1187,6 +1187,7 @@ position = Vector2(3.0517578e-05, 0)
 scale = Vector2(0.99999994, 1)
 stream = ExtResource("16_e8heu")
 volume_db = 8.0
+bus = &"SFX"
 
 [node name="Path2D" type="Path2D" parent="." unique_id=1630926006]
 visibility_layer = 3

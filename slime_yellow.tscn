@@ -137,8 +137,8 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hrjbr"]
-size = Vector2(14.2969, 11.2813)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u6ijx"]
+size = Vector2(13, 18)
 
 [node name="slime_yellow" type="CharacterBody2D" unique_id=1180821747]
 z_index = 4
@@ -152,8 +152,9 @@ animation = &"crit_hit"
 autoplay = "move"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=777254052]
-position = Vector2(0, 6)
-shape = SubResource("RectangleShape2D_hrjbr")
+position = Vector2(1, 4.5)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_u6ijx")
 one_way_collision_margin = 0.0
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="." unique_id=719923927]
