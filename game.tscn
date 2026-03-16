@@ -1449,7 +1449,6 @@ text = "Quit game
 
 [node name="LevelUpMenu" type="CanvasLayer" parent="." unique_id=1974640521]
 unique_name_in_owner = true
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="LevelUpMenu" unique_id=1269067139]
 anchors_preset = 15
@@ -1468,13 +1467,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -700.75214
-offset_top = -189.26291
-offset_right = 585.2479
-offset_bottom = -4.262909
+offset_left = -961.6875
+offset_top = -209.23218
+offset_right = 324.3125
+offset_bottom = -24.232178
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.0888755, 1.2392946)
+scale = Vector2(1.4920014, 1.680196)
 alignment = 1
 
 [node name="PanelHealthUpdate" type="Panel" parent="LevelUpMenu/ColorRect/HBoxContainer" unique_id=1751042899]
@@ -2167,9 +2166,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -68.03516
-offset_top = 88.30963
+offset_top = 166.1897
 offset_right = 68.03516
-offset_bottom = 151.69
+offset_bottom = 229.57007
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
