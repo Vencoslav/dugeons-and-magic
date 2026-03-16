@@ -196,6 +196,7 @@ safe_margin = 1.0
 script = ExtResource("1_onrkg")
 
 [node name="TextureHealhBar" type="TextureProgressBar" parent="." unique_id=181144996]
+process_mode = 3
 z_index = 20
 offset_left = -178.0
 offset_top = -94.0

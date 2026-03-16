@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://8cdv8xoxg1dd" path="res://mapa/wall.png" id="3_fc0e3"]
 [ext_resource type="Texture2D" uid="uid://2wm5t7tca8ht" path="res://mapa/corners.png" id="4_7jktm"]
 [ext_resource type="Texture2D" uid="uid://ixfbmamd7215" path="res://0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7.png" id="5_ryrav"]
+[ext_resource type="Texture2D" uid="uid://bdnf512d07bnh" path="res://animace/snail_sheet.png" id="9_e36ub"]
 [ext_resource type="FontFile" uid="uid://cftgc8pvv8clu" path="res://Daydream DEMO.otf" id="9_iotsf"]
 [ext_resource type="Texture2D" uid="uid://spp6rii5775f" path="res://moje_grafika/others/heart.png" id="13_lc2xo"]
 [ext_resource type="Texture2D" uid="uid://n3xvntki635h" path="res://moje_grafika/others/movement.png" id="14_215e1"]
@@ -19,6 +20,9 @@
 [ext_resource type="AudioStream" uid="uid://buggbwo8b60mv" path="res://audio/Pixel Gauntlet (1).mp3" id="17_e8heu"]
 [ext_resource type="Texture2D" uid="uid://dkc3dmysuo7st" path="res://moje_grafika/others/pickUpSpeed.png" id="18_boyg6"]
 [ext_resource type="Texture2D" uid="uid://crctkdso3shjx" path="res://moje_grafika/others/critDamage.png" id="18_rvswv"]
+[ext_resource type="Script" uid="uid://b0mxgpejfk406" path="res://audio_control.gd" id="21_qhcbd"]
+[ext_resource type="Script" uid="uid://t6k8ul1gtg2l" path="res://check_button.gd" id="22_f1jbl"]
+[ext_resource type="Script" uid="uid://dpgjwe4nik6ac" path="res://input_remap_button.gd" id="23_vaj68"]
 
 [sub_resource type="GDScript" id="GDScript_mfdv2"]
 script/source = "extends Node2D
@@ -26,9 +30,12 @@ script/source = "extends Node2D
 @onready var path_follow = %PathFollow2D
 @onready var timer = $GlobalTimer
 @onready var healthTimer = $IncreseDifficultyTimer
-@onready var level_menu = $LevelUpMenu
-@onready var auto_shoot_timer = $AutoShootTimer
-@onready var upgrade_container = $LevelUpMenu/ColorRect/HBoxContainer
+@onready var levelMenu = $LevelUpMenu
+@onready var autoShootTimer = $AutoShootTimer
+@onready var upgradeContainer = $LevelUpMenu/ColorRect/HBoxContainer
+
+@onready var settings = $SettingsLayer
+@onready var keyBinds = $KeyBindsLayer
 
 @onready var auto_label = get_tree().current_scene.get_node(\"player/AutoShootLabel\")
 @onready var staff = get_tree().current_scene.get_node(\"player/staff\")
@@ -66,6 +73,7 @@ var currentSlimes := 0
 var kills := 0
 var is_paused := false
 var reroll_used := false
+
 func _ready():
 	player = get_tree().current_scene.get_node(\"player\")
 	auto_label = player.get_node(\"AutoShootLabel\")
@@ -79,6 +87,10 @@ func _ready():
 
 	player.add_to_group(\"player\")
 	player.level_up.connect(_on_player_level_up)
+	
+	settings.visible = false
+	keyBinds.visible = false
+	levelMenu.visible = false
 
 func _process(_delta): 
 	if Input.is_action_just_pressed(\"pause_menu\"): 
@@ -91,7 +103,7 @@ func spawn_mob():
 		return
 		
 	var slime_types = [
-		\"res://slime.tscn\", \"res://slime.tscn\",
+		\"res://slime.tscn\", \"res://slime.tscn\", \"res://slime.tscn\",
 		\"res://slime_yellow.tscn\", \"res://slime_yellow.tscn\",
 		\"res://slime_red.tscn\" 
 	]
@@ -171,11 +183,30 @@ func _on_button_resume_pressed() -> void:
 	is_paused = false
 	get_tree().paused = false
 	$PauseMenu.visible = false
+	
+func _on_button_settings_pressed() -> void:
+	Input.flush_buffered_events()
+	get_tree().paused = true
+	$PauseMenu.visible = false
+	settings.visible = true
+	keyBinds.visible = false
+
+func _on_button_key_binds_pressed() -> void:
+	Input.flush_buffered_events()
+	get_tree().paused = true
+	settings.visible = false
+	keyBinds.visible = true
+	
+func _on_button_back_pressed() -> void:
+	Input.flush_buffered_events()
+	get_tree().paused = true
+	settings.visible = false
+	keyBinds.visible = false
+	$PauseMenu.visible = true
 
 func show_game_over():
 	%GameOver.visible = true
 	deadSound.play()
-	
 
 	var status = %GameOver/ColorRect
 	var slime_label = status.get_node(\"SlimeKills\")
@@ -199,7 +230,7 @@ func show_next_level_up():
 		return
 
 	player.pending_level_ups -= 1
-	level_menu.visible = true
+	levelMenu.visible = true
 	get_tree().paused = true
 	
 	reroll_used = false
@@ -208,19 +239,19 @@ func show_next_level_up():
 	show_random_upgrades()
 
 func close_level_up_menu():
-	level_menu.visible = false
+	levelMenu.visible = false
 	get_tree().paused = false
 
 	if player.pending_level_ups > 0:
 		show_next_level_up()
 
 func _on_player_level_up() -> void:
-	if player.pending_level_ups > 0 and not level_menu.visible:
+	if player.pending_level_ups > 0 and not levelMenu.visible:
 		show_next_level_up()
 		
 		
 func show_random_upgrades():
-	var upgrades = upgrade_container.get_children()
+	var upgrades = upgradeContainer.get_children()
 
 	for u in upgrades:
 		u.visible = false
@@ -230,7 +261,7 @@ func show_random_upgrades():
 	for i in range(min(3, upgrades.size())):
 		var upgrade_node = upgrades[i]
 		upgrade_node.visible = true
-		upgrade_container.move_child(upgrade_node, i)
+		upgradeContainer.move_child(upgrade_node, i)
 
 
 func _on_button_health_pressed() -> void:
@@ -298,14 +329,14 @@ func update_auto_shoot_label(enabled: bool):
 	if fade_tween and fade_tween.is_running():
 		fade_tween.kill()
 		
-	auto_shoot_timer.stop()
+	autoShootTimer.stop()
 
 	auto_label.visible = true
 	auto_label.text = \"AUTO SHOOT: ON\" if enabled else \"AUTO SHOOT: OFF\"
 	auto_label.modulate = Color.GREEN if enabled else Color.RED
 	auto_label.modulate.a = 1.0
 
-	auto_shoot_timer.start()
+	autoShootTimer.start()
 
 func _on_auto_shoot_timer_timeout() -> void:
 	var auto_label = player.get_node(\"AutoShootLabel\")
@@ -1162,6 +1193,98 @@ shadow_offset = Vector2(0, 3.41)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lc2xo"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0o4t1"]
+atlas = ExtResource("9_e36ub")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0k4wn"]
+atlas = ExtResource("9_e36ub")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5v2v"]
+atlas = ExtResource("9_e36ub")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iotk1"]
+atlas = ExtResource("9_e36ub")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w44g7"]
+atlas = ExtResource("9_e36ub")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cm266"]
+atlas = ExtResource("9_e36ub")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g8g3n"]
+atlas = ExtResource("9_e36ub")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8u0te"]
+atlas = ExtResource("9_e36ub")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oiatc"]
+atlas = ExtResource("9_e36ub")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mg3m2"]
+atlas = ExtResource("9_e36ub")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojb7r"]
+atlas = ExtResource("9_e36ub")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5qqf"]
+atlas = ExtResource("9_e36ub")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hb5m1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0o4t1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0k4wn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j5v2v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iotk1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w44g7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cm266")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g8g3n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8u0te")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oiatc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mg3m2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojb7r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5qqf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lc2xo"]
 bg_color = Color(0.27058825, 0.3529412, 0.39215687, 1)
 border_width_left = 2
@@ -1173,6 +1296,60 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qhcbd"]
+bg_color = Color(0, 0, 0, 0.39215687)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1jbl"]
+bg_color = Color(0.27058825, 0.3529412, 0.39215687, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vaj68"]
+bg_color = Color(0.49660063, 0.60488254, 0.65719885, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i2p71"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_xa8c5"]
+color = Color(1, 1, 1, 1)
+thickness = 6
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_5b14r"]
+color = Color(0.15294118, 0.5411765, 0.9411765, 1)
+thickness = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dhpj7"]
+bg_color = Color(0, 0, 0, 0.39215687)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xa8c5"]
+bg_color = Color(0.27058825, 0.3529412, 0.39215687, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5b14r"]
+bg_color = Color(0.49660063, 0.60488254, 0.65719885, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bnpwn"]
 
 [node name="game" type="Node2D" unique_id=380965398]
 y_sort_enabled = true
@@ -1187,6 +1364,13 @@ scale = Vector2(0.99999994, 1)
 stream = ExtResource("16_e8heu")
 volume_db = 8.0
 bus = &"SFX"
+
+[node name="PixelGauntletB" type="AudioStreamPlayer2D" parent="." unique_id=2115900757]
+process_mode = 3
+stream = ExtResource("17_e8heu")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
 
 [node name="Path2D" type="Path2D" parent="." unique_id=1630926006]
 visibility_layer = 3
@@ -1366,6 +1550,14 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
 text = "Main menu
 "
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameOver" unique_id=1551644496]
+process_mode = 3
+position = Vector2(308, 237.00002)
+scale = Vector2(2.282335, 2.282335)
+sprite_frames = SubResource("SpriteFrames_hb5m1")
+autoplay = "default"
+speed_scale = 0.8
+
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=129988489]
 unique_name_in_owner = true
 visible = false
@@ -1431,6 +1623,21 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
 text = "Main menu"
 
+[node name="ButtonSettings" type="Button" parent="PauseMenu/VBoxContainer" unique_id=526551257]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfdv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
+text = "Settings"
+
 [node name="ButtonQuitGame" type="Button" parent="PauseMenu/VBoxContainer" unique_id=126848399]
 process_mode = 3
 layout_mode = 2
@@ -1449,6 +1656,7 @@ text = "Quit game
 
 [node name="LevelUpMenu" type="CanvasLayer" parent="." unique_id=1974640521]
 unique_name_in_owner = true
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="LevelUpMenu" unique_id=1269067139]
 anchors_preset = 15
@@ -2183,12 +2391,404 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
 text = "Reroll"
 
-[node name="PixelGauntletB" type="AudioStreamPlayer2D" parent="." unique_id=2115900757]
+[node name="SettingsLayer" type="CanvasLayer" parent="." unique_id=64259460]
+
+[node name="Settings" type="Panel" parent="SettingsLayer" unique_id=2138816270]
 process_mode = 3
-stream = ExtResource("17_e8heu")
-autoplay = true
-bus = &"Music"
-parameters/looping = true
+z_index = 21
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -251.0
+offset_top = -209.0
+offset_right = 132.0
+offset_bottom = 81.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.237477, 1.237477)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_qhcbd")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsLayer/Settings" unique_id=581887885]
+process_mode = 3
+z_index = 21
+layout_mode = 0
+offset_left = 68.5
+offset_top = 57.0
+offset_right = 328.5
+offset_bottom = 85.0
+theme_override_constants/separation = 60
+
+[node name="ButtonSettings" type="Button" parent="SettingsLayer/Settings/HBoxContainer" unique_id=936841940]
+process_mode = 3
+custom_minimum_size = Vector2(92, 28)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1jbl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vaj68")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vaj68")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i2p71")
+text = "Settings"
+
+[node name="ButtonKeyBinds" type="Button" parent="SettingsLayer/Settings/HBoxContainer" unique_id=827006102]
+process_mode = 3
+custom_minimum_size = Vector2(108, 28)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1jbl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vaj68")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vaj68")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i2p71")
+text = "Key binds"
+
+[node name="LabelOptions" type="Label" parent="SettingsLayer/Settings" unique_id=1108068640]
+process_mode = 3
+z_index = 21
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 49.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelMusic" type="Label" parent="SettingsLayer/Settings" unique_id=1967333018]
+process_mode = 3
+z_index = 21
+layout_mode = 0
+offset_left = 47.5
+offset_top = 108.0
+offset_right = 99.5
+offset_bottom = 131.0
+text = "Music:"
+
+[node name="LabelSFX" type="Label" parent="SettingsLayer/Settings" unique_id=1202073430]
+process_mode = 3
+z_index = 21
+layout_mode = 0
+offset_left = 47.5
+offset_top = 139.0
+offset_right = 99.5
+offset_bottom = 162.0
+text = "SFX:"
+
+[node name="ButtonBack" type="Button" parent="SettingsLayer/Settings" unique_id=1068859898]
+process_mode = 3
+z_index = 21
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -68.5
+offset_top = -54.0
+offset_right = 68.5
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1jbl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vaj68")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vaj68")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i2p71")
+text = "Back"
+
+[node name="MusicControl" type="HSlider" parent="SettingsLayer/Settings" unique_id=747026322]
+process_mode = 3
+z_index = 21
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -37.0
+offset_right = 147.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/slider = SubResource("StyleBoxLine_xa8c5")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_5b14r")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_5b14r")
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = ExtResource("21_qhcbd")
+audioBusName = "Music"
+
+[node name="SFXControl" type="HSlider" parent="SettingsLayer/Settings" unique_id=1873431675]
+process_mode = 3
+z_index = 21
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -6.0
+offset_right = 147.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/slider = SubResource("StyleBoxLine_xa8c5")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_5b14r")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_5b14r")
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = ExtResource("21_qhcbd")
+audioBusName = "SFX"
+
+[node name="FullscreenControl" type="CheckButton" parent="SettingsLayer/Settings" unique_id=1713050951]
+process_mode = 3
+z_index = 21
+layout_mode = 0
+offset_left = 40.5
+offset_top = 171.0
+offset_right = 349.5
+offset_bottom = 202.0
+text = "Fullscreen"
+script = ExtResource("22_f1jbl")
+
+[node name="KeyBindsLayer" type="CanvasLayer" parent="." unique_id=2134636841]
+
+[node name="KeyBinds" type="Panel" parent="KeyBindsLayer" unique_id=1003034139]
+z_index = 21
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -236.0
+offset_top = -236.0
+offset_right = 147.0
+offset_bottom = 154.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.149214, 1.149214)
+theme_override_styles/panel = SubResource("StyleBoxFlat_dhpj7")
+
+[node name="LabelKeyBinds" type="Label" parent="KeyBindsLayer/KeyBinds" unique_id=1649308237]
+z_index = 20
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 49.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "Key binds"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="KeyBindsLayer/KeyBinds" unique_id=1532860849]
+z_index = 20
+layout_mode = 0
+offset_left = 64.59404
+offset_top = 57.0
+offset_right = 324.59406
+offset_bottom = 85.0
+theme_override_constants/separation = 60
+
+[node name="ButtonSettings" type="Button" parent="KeyBindsLayer/KeyBinds/HBoxContainer" unique_id=1847153235]
+process_mode = 3
+z_index = 19
+custom_minimum_size = Vector2(92, 28)
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 1
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_xa8c5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5b14r")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5b14r")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bnpwn")
+text = "Settings"
+
+[node name="ButtonKeyBinds" type="Button" parent="KeyBindsLayer/KeyBinds/HBoxContainer" unique_id=890740563]
+process_mode = 3
+z_index = 19
+custom_minimum_size = Vector2(108, 28)
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 1
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_xa8c5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5b14r")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5b14r")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bnpwn")
+text = "Key binds"
+
+[node name="VBoxButtons" type="VBoxContainer" parent="KeyBindsLayer/KeyBinds" unique_id=859097393]
+layout_mode = 0
+offset_left = 220.5
+offset_top = 102.0
+offset_right = 321.5
+offset_bottom = 301.0
+theme_override_constants/separation = 2
+
+[node name="ButtonMoveLeft" type="Button" parent="KeyBindsLayer/KeyBinds/VBoxButtons" unique_id=1560772880]
+process_mode = 3
+z_index = 20
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 2
+focus_mode = 1
+mouse_filter = 1
+script = ExtResource("23_vaj68")
+action = "move_left"
+
+[node name="ButtonMoveRight" type="Button" parent="KeyBindsLayer/KeyBinds/VBoxButtons" unique_id=1661038995]
+process_mode = 3
+z_index = 20
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 2
+focus_mode = 1
+mouse_filter = 1
+script = ExtResource("23_vaj68")
+action = "move_right"
+
+[node name="ButtonMoveUp" type="Button" parent="KeyBindsLayer/KeyBinds/VBoxButtons" unique_id=195780027]
+process_mode = 3
+z_index = 20
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 2
+focus_mode = 1
+mouse_filter = 1
+script = ExtResource("23_vaj68")
+action = "move_up"
+
+[node name="ButtonMoveDown" type="Button" parent="KeyBindsLayer/KeyBinds/VBoxButtons" unique_id=365710318]
+process_mode = 3
+z_index = 20
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 2
+focus_mode = 1
+mouse_filter = 1
+script = ExtResource("23_vaj68")
+action = "move_down"
+
+[node name="ButtonFire" type="Button" parent="KeyBindsLayer/KeyBinds/VBoxButtons" unique_id=1119471949]
+process_mode = 3
+z_index = 20
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 2
+focus_mode = 1
+mouse_filter = 1
+script = ExtResource("23_vaj68")
+action = "fire"
+
+[node name="ButtonAutoShoot" type="Button" parent="KeyBindsLayer/KeyBinds/VBoxButtons" unique_id=1068154233]
+process_mode = 3
+z_index = 20
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 2
+focus_mode = 1
+mouse_filter = 1
+script = ExtResource("23_vaj68")
+action = "auto_shoot"
+
+[node name="ButtonPauseMenu" type="Button" parent="KeyBindsLayer/KeyBinds/VBoxButtons" unique_id=654600049]
+process_mode = 3
+z_index = 20
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 2
+focus_mode = 1
+mouse_filter = 1
+script = ExtResource("23_vaj68")
+action = "pause_menu"
+
+[node name="VBoxLabels" type="VBoxContainer" parent="KeyBindsLayer/KeyBinds" unique_id=1112985352]
+layout_mode = 0
+offset_left = 68.5
+offset_top = 102.0
+offset_right = 168.5
+offset_bottom = 287.0
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="KeyBindsLayer/KeyBinds/VBoxLabels" unique_id=958094249]
+layout_mode = 2
+mouse_filter = 1
+text = "Move left:"
+
+[node name="Label2" type="Label" parent="KeyBindsLayer/KeyBinds/VBoxLabels" unique_id=717109044]
+layout_mode = 2
+text = "Move right:"
+
+[node name="Label3" type="Label" parent="KeyBindsLayer/KeyBinds/VBoxLabels" unique_id=415886709]
+layout_mode = 2
+text = "Move up:"
+
+[node name="Label4" type="Label" parent="KeyBindsLayer/KeyBinds/VBoxLabels" unique_id=2061289877]
+layout_mode = 2
+text = "Move down:"
+
+[node name="Label5" type="Label" parent="KeyBindsLayer/KeyBinds/VBoxLabels" unique_id=1936997273]
+layout_mode = 2
+text = "Fire:"
+
+[node name="Label6" type="Label" parent="KeyBindsLayer/KeyBinds/VBoxLabels" unique_id=61482474]
+layout_mode = 2
+text = "Auto shoot:"
+
+[node name="Label7" type="Label" parent="KeyBindsLayer/KeyBinds/VBoxLabels" unique_id=1227374922]
+layout_mode = 2
+text = "Pause menu:"
+
+[node name="ButtonBack" type="Button" parent="KeyBindsLayer/KeyBinds" unique_id=573283115]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -68.5
+offset_top = -45.0
+offset_right = 68.5
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+focus_mode = 1
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_xa8c5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5b14r")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5b14r")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bnpwn")
+text = "Back"
 
 [connection signal="health_depleted" from="player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="AutoShootTimer" to="." method="_on_auto_shoot_timer_timeout"]
@@ -2199,6 +2799,7 @@ parameters/looping = true
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonResume" to="." method="_on_button_resume_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonRestart" to="." method="_on_button_restart_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonMainMenu" to="." method="_on_button_main_menu_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonSettings" to="." method="_on_button_settings_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonQuitGame" to="." method="_on_button_settings_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonQuitGame" to="." method="_on_button_quit_game_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/HBoxContainer/PanelHealthUpdate/ButtonHealth" to="." method="_on_button_health_pressed"]
@@ -2212,3 +2813,12 @@ parameters/looping = true
 [connection signal="pressed" from="LevelUpMenu/ColorRect/HBoxContainer/CritDamageUpdate/ButtonCritDamage" to="." method="_on_button_crit_damage_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/HBoxContainer/PickUpSpeedUpdate/ButtonPickUpSpeed" to="." method="_on_button_pick_up_speed_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ColorRect/ButtonReroll" to="." method="_on_button_reroll_pressed"]
+[connection signal="pressed" from="SettingsLayer/Settings/HBoxContainer/ButtonSettings" to="." method="_on_button_settings_pressed"]
+[connection signal="pressed" from="SettingsLayer/Settings/HBoxContainer/ButtonKeyBinds" to="." method="_on_button_key_binds_pressed"]
+[connection signal="pressed" from="SettingsLayer/Settings/ButtonBack" to="." method="_on_button_back_pressed"]
+[connection signal="value_changed" from="SettingsLayer/Settings/MusicControl" to="SettingsLayer/Settings/MusicControl" method="_on_value_changed"]
+[connection signal="value_changed" from="SettingsLayer/Settings/SFXControl" to="SettingsLayer/Settings/SFXControl" method="_on_value_changed"]
+[connection signal="toggled" from="SettingsLayer/Settings/FullscreenControl" to="SettingsLayer/Settings/FullscreenControl" method="_on_toggled"]
+[connection signal="pressed" from="KeyBindsLayer/KeyBinds/HBoxContainer/ButtonSettings" to="." method="_on_button_settings_pressed"]
+[connection signal="pressed" from="KeyBindsLayer/KeyBinds/HBoxContainer/ButtonKeyBinds" to="." method="_on_button_key_binds_pressed"]
+[connection signal="pressed" from="KeyBindsLayer/KeyBinds/ButtonBack" to="." method="_on_button_back_pressed"]

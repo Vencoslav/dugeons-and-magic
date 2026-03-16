@@ -6,11 +6,104 @@
 [ext_resource type="AudioStream" uid="uid://b726xkd0wv27o" path="res://audio/Pixel Gauntlet.mp3" id="4_qe12f"]
 [ext_resource type="Script" uid="uid://dpgjwe4nik6ac" path="res://input_remap_button.gd" id="7_qe12f"]
 [ext_resource type="Script" uid="uid://b0mxgpejfk406" path="res://audio_control.gd" id="8_8qtwp"]
+[ext_resource type="Texture2D" uid="uid://bdnf512d07bnh" path="res://animace/snail_sheet.png" id="8_dy7ct"]
 [ext_resource type="Script" uid="uid://t6k8ul1gtg2l" path="res://check_button.gd" id="9_dy7ct"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7vrkn"]
 texture = ExtResource("1_06t4h")
 modulate_color = Color(0.56897306, 0.56897265, 0.5689727, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0o4t1"]
+atlas = ExtResource("8_dy7ct")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0k4wn"]
+atlas = ExtResource("8_dy7ct")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5v2v"]
+atlas = ExtResource("8_dy7ct")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iotk1"]
+atlas = ExtResource("8_dy7ct")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w44g7"]
+atlas = ExtResource("8_dy7ct")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cm266"]
+atlas = ExtResource("8_dy7ct")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g8g3n"]
+atlas = ExtResource("8_dy7ct")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8u0te"]
+atlas = ExtResource("8_dy7ct")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oiatc"]
+atlas = ExtResource("8_dy7ct")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mg3m2"]
+atlas = ExtResource("8_dy7ct")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojb7r"]
+atlas = ExtResource("8_dy7ct")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5qqf"]
+atlas = ExtResource("8_dy7ct")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7bbuq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0o4t1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0k4wn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j5v2v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iotk1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w44g7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cm266")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g8g3n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8u0te")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oiatc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mg3m2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojb7r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5qqf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhts7"]
 bg_color = Color(0.27058825, 0.3529412, 0.39215687, 1)
@@ -80,9 +173,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -400.0
-offset_top = -133.0
+offset_top = -165.0
 offset_right = 400.0
-offset_bottom = -61.0
+offset_bottom = -93.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -95,6 +188,15 @@ text = "Dungeons and Magic"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=448386893]
+process_mode = 3
+position = Vector2(314, 195)
+scale = Vector2(2.282335, 2.282335)
+sprite_frames = SubResource("SpriteFrames_7bbuq")
+autoplay = "default"
+frame_progress = 0.8561983
+speed_scale = 0.8
+
 [node name="MainButtons" type="VBoxContainer" parent="." unique_id=535827905]
 process_mode = 3
 layout_mode = 1
@@ -104,9 +206,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -115.0
-offset_top = -20.0
+offset_top = -61.0
 offset_right = 115.0
-offset_bottom = 151.0
+offset_bottom = 110.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
@@ -163,7 +265,7 @@ autoplay = true
 bus = &"Music"
 parameters/looping = true
 
-[node name="Options" type="Panel" parent="." unique_id=1650062803]
+[node name="Settings" type="Panel" parent="." unique_id=1650062803]
 process_mode = 3
 layout_mode = 1
 anchors_preset = 8
@@ -171,15 +273,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -191.5
-offset_top = -61.0
-offset_right = 191.5
-offset_bottom = 229.0
+offset_left = -191.0
+offset_top = -80.0
+offset_right = 192.0
+offset_bottom = 210.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0o4t1")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Options" unique_id=1367092954]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings" unique_id=1367092954]
 process_mode = 3
 layout_mode = 0
 offset_left = 68.5
@@ -188,7 +290,7 @@ offset_right = 328.5
 offset_bottom = 85.0
 theme_override_constants/separation = 60
 
-[node name="ButtonOptions" type="Button" parent="Options/HBoxContainer" unique_id=1934272959]
+[node name="ButtonSettings" type="Button" parent="Settings/HBoxContainer" unique_id=1934272959]
 process_mode = 3
 custom_minimum_size = Vector2(92, 28)
 layout_mode = 2
@@ -202,9 +304,9 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_fu7sn")
 theme_override_styles/hover = SubResource("StyleBoxFlat_fu7sn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_jix8l")
-text = "Options"
+text = "Settings"
 
-[node name="ButtonKeyBinds" type="Button" parent="Options/HBoxContainer" unique_id=278119138]
+[node name="ButtonKeyBinds" type="Button" parent="Settings/HBoxContainer" unique_id=278119138]
 process_mode = 3
 custom_minimum_size = Vector2(108, 28)
 layout_mode = 2
@@ -220,7 +322,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_fu7sn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_jix8l")
 text = "Key binds"
 
-[node name="LabelOptions" type="Label" parent="Options" unique_id=257093613]
+[node name="LabelOptions" type="Label" parent="Settings" unique_id=257093613]
 process_mode = 3
 layout_mode = 1
 anchors_preset = 10
@@ -228,11 +330,11 @@ anchor_right = 1.0
 offset_bottom = 49.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 32
-text = "Options"
+text = "Settings"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LabelMusic" type="Label" parent="Options" unique_id=1147595840]
+[node name="LabelMusic" type="Label" parent="Settings" unique_id=1147595840]
 process_mode = 3
 layout_mode = 0
 offset_left = 47.5
@@ -241,7 +343,7 @@ offset_right = 99.5
 offset_bottom = 131.0
 text = "Music:"
 
-[node name="LabelSFX" type="Label" parent="Options" unique_id=533416800]
+[node name="LabelSFX" type="Label" parent="Settings" unique_id=533416800]
 process_mode = 3
 layout_mode = 0
 offset_left = 47.5
@@ -250,7 +352,7 @@ offset_right = 99.5
 offset_bottom = 162.0
 text = "SFX:"
 
-[node name="ButtonBack" type="Button" parent="Options" unique_id=1481657120]
+[node name="ButtonBack" type="Button" parent="Settings" unique_id=1481657120]
 process_mode = 3
 layout_mode = 1
 anchors_preset = 7
@@ -276,7 +378,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_fu7sn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_jix8l")
 text = "Back"
 
-[node name="MusicControl" type="HSlider" parent="Options" unique_id=1487357305]
+[node name="MusicControl" type="HSlider" parent="Settings" unique_id=1487357305]
 process_mode = 3
 layout_mode = 1
 anchors_preset = 8
@@ -299,7 +401,7 @@ value = 1.0
 script = ExtResource("8_8qtwp")
 audioBusName = "Music"
 
-[node name="SFXControl" type="HSlider" parent="Options" unique_id=263305548]
+[node name="SFXControl" type="HSlider" parent="Settings" unique_id=263305548]
 process_mode = 3
 layout_mode = 1
 anchors_preset = 8
@@ -322,7 +424,7 @@ value = 1.0
 script = ExtResource("8_8qtwp")
 audioBusName = "SFX"
 
-[node name="FullscreenControl" type="CheckButton" parent="Options" unique_id=320645874]
+[node name="FullscreenControl" type="CheckButton" parent="Settings" unique_id=320645874]
 process_mode = 3
 layout_mode = 0
 offset_left = 40.5
@@ -333,16 +435,17 @@ text = "Fullscreen"
 script = ExtResource("9_dy7ct")
 
 [node name="KeyBinds" type="Panel" parent="." unique_id=134156385]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -191.5
-offset_top = -61.0
-offset_right = 191.5
-offset_bottom = 329.0
+offset_left = -191.0
+offset_top = -80.0
+offset_right = 192.0
+offset_bottom = 310.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8qtwp")
@@ -541,12 +644,12 @@ text = "Back"
 [connection signal="pressed" from="MainButtons/ButtonStartGame" to="." method="_on_button_start_game_pressed"]
 [connection signal="pressed" from="MainButtons/ButtonSettings" to="." method="_on_button_settings_pressed"]
 [connection signal="pressed" from="MainButtons/ButtonExit" to="." method="_on_button_exit_pressed"]
-[connection signal="pressed" from="Options/HBoxContainer/ButtonOptions" to="." method="_on_button_options_pressed"]
-[connection signal="pressed" from="Options/HBoxContainer/ButtonKeyBinds" to="." method="_on_button_key_binds_pressed"]
-[connection signal="pressed" from="Options/ButtonBack" to="." method="_on_button_back_pressed"]
-[connection signal="value_changed" from="Options/MusicControl" to="Options/MusicControl" method="_on_value_changed"]
-[connection signal="value_changed" from="Options/SFXControl" to="Options/SFXControl" method="_on_value_changed"]
-[connection signal="toggled" from="Options/FullscreenControl" to="Options/FullscreenControl" method="_on_toggled"]
+[connection signal="pressed" from="Settings/HBoxContainer/ButtonSettings" to="." method="_on_button_settings_pressed"]
+[connection signal="pressed" from="Settings/HBoxContainer/ButtonKeyBinds" to="." method="_on_button_key_binds_pressed"]
+[connection signal="pressed" from="Settings/ButtonBack" to="." method="_on_button_back_pressed"]
+[connection signal="value_changed" from="Settings/MusicControl" to="Settings/MusicControl" method="_on_value_changed"]
+[connection signal="value_changed" from="Settings/SFXControl" to="Settings/SFXControl" method="_on_value_changed"]
+[connection signal="toggled" from="Settings/FullscreenControl" to="Settings/FullscreenControl" method="_on_toggled"]
 [connection signal="pressed" from="KeyBinds/HBoxContainer/ButtonOptions" to="." method="_on_button_options_pressed"]
 [connection signal="pressed" from="KeyBinds/HBoxContainer/ButtonKeyBinds" to="." method="_on_button_key_binds_pressed"]
 [connection signal="pressed" from="KeyBinds/ButtonBack" to="." method="_on_button_back_pressed"]

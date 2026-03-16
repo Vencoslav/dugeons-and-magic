@@ -48,6 +48,7 @@ animations = [{
 }]
 
 [node name="staff" type="Node2D" unique_id=1573652247]
+process_mode = 1
 script = ExtResource("1_et8ip")
 
 [node name="CastSound" type="AudioStreamPlayer2D" parent="." unique_id=1154653167]
