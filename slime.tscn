@@ -149,7 +149,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5b0gg"]
-size = Vector2(12.999998, 17.999996)
+size = Vector2(11.999998, 17.998795)
 
 [node name="slime_green" type="CharacterBody2D" unique_id=1471273131]
 light_mask = 33
@@ -159,18 +159,17 @@ collision_layer = 2
 collision_mask = 19
 motion_mode = 1
 wall_min_slide_angle = 0.0
-safe_margin = 1.0
 script = ExtResource("1_5jc4t")
 
 [node name="animace_green" type="AnimatedSprite2D" parent="." unique_id=237514192]
 material = SubResource("CanvasItemMaterial_4l1t8")
 sprite_frames = SubResource("SpriteFrames_2002g")
-animation = &"crit_hit"
+animation = &"hurt"
 autoplay = "move"
 speed_scale = 0.8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1748096061]
-position = Vector2(1.0003005, 4.5000005)
+position = Vector2(-1.1641532e-10, 7)
 rotation = -1.5701952
 shape = SubResource("RectangleShape2D_5b0gg")
 one_way_collision_margin = 0.0

@@ -138,22 +138,23 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k7set"]
-size = Vector2(13.5, 18)
+size = Vector2(11.999998, 17.998795)
 
 [node name="slime_red" type="CharacterBody2D" unique_id=1203716394]
 z_index = 4
 collision_layer = 2
 collision_mask = 19
+platform_floor_layers = 4294967294
 script = ExtResource("1_eche8")
 
 [node name="animace_red" type="AnimatedSprite2D" parent="." unique_id=80231856]
 sprite_frames = SubResource("SpriteFrames_abskd")
-animation = &"hurt"
+animation = &"crit_hit"
 autoplay = "move"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1203462803]
-position = Vector2(3.774896e-08, 5.75)
-rotation = -1.5707964
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=198115830]
+position = Vector2(1, 6)
+rotation = -1.5701952
 shape = SubResource("RectangleShape2D_k7set")
 one_way_collision_margin = 0.0
 

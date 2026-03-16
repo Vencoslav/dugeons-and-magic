@@ -161,6 +161,7 @@ process_mode = 3
 stream = ExtResource("4_qe12f")
 autoplay = true
 bus = &"Music"
+parameters/looping = true
 
 [node name="Options" type="Panel" parent="." unique_id=1650062803]
 process_mode = 3

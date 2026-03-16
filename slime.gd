@@ -3,6 +3,7 @@ extends CharacterBody2D
 var health = 50
 var speed = 25
 var damage = 20
+var is_taking_damage = false # Nová proměnná pro kontrolu animací
 
 @onready var an = $animace_green
 @onready var player = get_node("/root/game/player")
@@ -19,34 +20,29 @@ func _ready():
 func _physics_process(delta):
 	var dist_to_player = global_position.distance_to(player.global_position)
 	var direction = global_position.direction_to(player.global_position)
-	var orbit_dir = Vector2(-direction.y, direction.x) 
-	
-	var steering = direction
-	if dist_to_player < 100:
-		steering = (direction + orbit_dir * 0.5).normalized()
+
+	var orbit_factor = clamp((dist_to_player - 30.0) / 70.0, 0.0, 1.0)
+	var orbit_dir = Vector2(-direction.y, direction.x)
+	var steering = (direction + orbit_dir * 0.5 * orbit_factor).normalized()
 	
 	var target_velocity = steering * speed
 	var bounce_impulse = Vector2.ZERO
 	var neighbors = get_tree().get_nodes_in_group("slimes")
 	
 	for slime in neighbors:
-		if slime != self:
+		if slime != self and is_instance_valid(slime):
 			var dist = global_position.distance_to(slime.global_position)
-			if dist < 17:
+			if dist < 16:
 				var push_dir = (global_position - slime.global_position).normalized()
-				bounce_impulse += push_dir * (17 - dist) * 25.0 
-	
-	velocity += bounce_impulse
-	
-	if dist_to_player < 25:
-		velocity += -direction * (25 - dist_to_player) * 10.0
+				bounce_impulse += push_dir * (16 - dist) * 15.0 # Snížená síla
 
-	velocity = velocity.lerp(target_velocity, delta * 3.0)
+	velocity += bounce_impulse
+	velocity = velocity.lerp(target_velocity, delta * 4.0)
 	
 	move_and_slide()
 	
-	if velocity.x > 0: an.flip_h = false
-	elif velocity.x < 0: an.flip_h = true
+	if abs(velocity.x) > 1.0:
+		an.flip_h = velocity.x < 0
 	
 func take_damage():
 	var result = player.calculate_damage()

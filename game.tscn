@@ -153,7 +153,7 @@ func _on_increse_difficulty_timer_timeout() -> void:
 	redSpeedBonus += 3
 	
 	# žlutí slime
-	yellowSpeedBonus += 15
+	yellowSpeedBonus += 10
 	yellowHealthBonus += 5
 	yellowDamageBonus += 3
 
@@ -312,7 +312,6 @@ func _on_auto_shoot_timer_timeout() -> void:
 	fade_tween = create_tween()
 	fade_tween.tween_property(auto_label, \"modulate:a\", 0.0, 0.25)
 	fade_tween.tween_callback(func(): auto_label.visible = false)  
-
 
 func _on_button_main_menu_pressed() -> void:
 	get_tree().change_scene_to_file(\"res://main_menu.tscn\")
@@ -2190,6 +2189,7 @@ process_mode = 3
 stream = ExtResource("17_e8heu")
 autoplay = true
 bus = &"Music"
+parameters/looping = true
 
 [connection signal="health_depleted" from="player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="AutoShootTimer" to="." method="_on_auto_shoot_timer_timeout"]
