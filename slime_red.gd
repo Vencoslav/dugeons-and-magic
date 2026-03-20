@@ -10,12 +10,14 @@ var is_taking_damage = false
 @onready var hurtSound = $HurtSound
 @onready var critSound = $CritSound
 @onready var deathSound = $DeadSound
+@onready var slimeLevel = $Level
 
 const xp_scene = preload("res://xp.tscn")
 
 func _ready():
 	an.play("move")
 	add_to_group("slimes")
+	update_level_display()
 
 func _physics_process(delta):
 	var dist_to_player = global_position.distance_to(player.global_position)
@@ -34,7 +36,7 @@ func _physics_process(delta):
 			var dist = global_position.distance_to(slime.global_position)
 			if dist < 16:
 				var push_dir = (global_position - slime.global_position).normalized()
-				bounce_impulse += push_dir * (16 - dist) * 15.0 # Snížená síla
+				bounce_impulse += push_dir * (16 - dist) * 15.0
 
 	velocity += bounce_impulse
 	velocity = velocity.lerp(target_velocity, delta * 4.0)
@@ -43,6 +45,12 @@ func _physics_process(delta):
 	
 	if abs(velocity.x) > 1.0:
 		an.flip_h = velocity.x < 0
+		
+func update_level_display():
+	# základní HP je 70 = Level 1 když se zvýší +1 Level
+	var current_level = 1 + int((health - 70) / 15)
+	if slimeLevel:
+		slimeLevel.text = "Lvl: " + str(max(1, current_level))
 	
 func take_damage():
 	var result = player.calculate_damage()

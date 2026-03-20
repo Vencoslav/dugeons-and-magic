@@ -134,6 +134,10 @@ func spawn_mob():
 			mob.damage += yellowDamageBonus
 	
 	add_child(mob)
+	
+	if mob.has_method(\"update_level_display\"):
+		mob.update_level_display()
+	
 	currentSlimes += 1
 	mob.tree_exited.connect(_on_slime_removed)
 

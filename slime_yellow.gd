@@ -9,12 +9,14 @@ var damage = 25
 @onready var hurtSound = $HurtSound
 @onready var critSound = $CritSound
 @onready var deathSound = $DeadSound
+@onready var slimeLevel = $Level
 
 const xp_scene = preload("res://xp.tscn")
 
 func _ready():
 	an.play("move")
 	add_to_group("slimes")
+	update_level_display()
 
 func _physics_process(delta):
 	var dist_to_player = global_position.distance_to(player.global_position)
@@ -42,6 +44,12 @@ func _physics_process(delta):
 	
 	if abs(velocity.x) > 1.0:
 		an.flip_h = velocity.x < 0
+		
+func update_level_display():
+	# základní HP je 70 = Level 1 když se zvýší +1 Level
+	var current_level = 1 + int((health - 70) / 15)
+	if slimeLevel:
+		slimeLevel.text = "Lvl: " + str(max(1, current_level))
 	
 func take_damage():
 	var result = player.calculate_damage()
@@ -69,35 +77,32 @@ func take_damage():
 		await an.animation_finished
 
 	if health <= 0:
-		if deathSound:
-			var ds = deathSound.duplicate() # vytvoření kopie zvuku
-			get_tree().current_scene.add_child(ds)
-			ds.global_position = global_position
-			ds.play()
-
-		xp_drop(global_position)
-		an.play("smoke")
-		await an.animation_finished
-		queue_free()
+		die()
 	else:
 		an.play("move")
 
+func die():
+	if deathSound:
+		var ds = deathSound.duplicate()
+		get_tree().current_scene.add_child(ds)
+		ds.global_position = global_position
+		ds.play()
+
+	xp_drop(global_position)
+	an.play("smoke")
+	await an.animation_finished
+	queue_free()
 
 func xp_drop(pos: Vector2):
 	call_deferred("_spawn_xp", pos)
 
 func _spawn_xp(pos: Vector2):
-	if not xp_scene:
-		return
-
+	if not xp_scene: return
 	var xp = xp_scene.instantiate()
 	var game_root = get_tree().current_scene
 	game_root.add_child(xp)
-
 	xp.global_position = pos
 	xp.z_index = 10
 
 	if game_root.has_method("xp_pickup_speed_bonus"):
 		xp.set_speed(xp.speed * game_root.xp_pickup_speed_bonus)
-	else:
-		xp.set_speed(xp.speed)

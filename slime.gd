@@ -3,19 +3,21 @@ extends CharacterBody2D
 var health = 50
 var speed = 25
 var damage = 20
-var is_taking_damage = false # Nová proměnná pro kontrolu animací
+var is_taking_damage = false
 
 @onready var an = $animace_green
 @onready var player = get_node("/root/game/player")
 @onready var hurtSound = $HurtSound
 @onready var critSound = $CritSound
 @onready var deathSound = $DeadSound
+@onready var slimeLevel = $Level
 
 const xp_scene = preload("res://xp.tscn")
 
 func _ready():
 	an.play("move")
 	add_to_group("slimes")
+	update_level_display()
 
 func _physics_process(delta):
 	var dist_to_player = global_position.distance_to(player.global_position)
@@ -43,6 +45,12 @@ func _physics_process(delta):
 	
 	if abs(velocity.x) > 1.0:
 		an.flip_h = velocity.x < 0
+		
+func update_level_display():
+	# základní HP je 50 = Level 1 když se zvýší +1 Level
+	var current_level = 1 + int((health - 50) / 5)
+	if slimeLevel:
+		slimeLevel.text = "Lvl: " + str(max(1, current_level))
 	
 func take_damage():
 	var result = player.calculate_damage()

@@ -261,6 +261,7 @@ text = "Exit"
 [node name="PixelGauntletA" type="AudioStreamPlayer2D" parent="." unique_id=64031073]
 process_mode = 3
 stream = ExtResource("4_qe12f")
+volume_db = 1.0
 autoplay = true
 bus = &"Music"
 parameters/looping = true
