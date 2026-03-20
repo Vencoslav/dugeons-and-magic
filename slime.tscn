@@ -164,7 +164,7 @@ script = ExtResource("1_5jc4t")
 [node name="animace_green" type="AnimatedSprite2D" parent="." unique_id=237514192]
 material = SubResource("CanvasItemMaterial_4l1t8")
 sprite_frames = SubResource("SpriteFrames_2002g")
-animation = &"hurt"
+animation = &"crit_hit"
 autoplay = "move"
 speed_scale = 0.8
 

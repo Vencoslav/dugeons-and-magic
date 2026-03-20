@@ -68,7 +68,8 @@ var yellowHealthBonus := 0
 var yellowSpeedBonus := 0
 var yellowDamageBonus := 0
 
-var maxSlimes := 10
+var maxSceneSlimes := 10
+var maxSlimes := 80
 var currentSlimes := 0
 var kills := 0
 var is_paused := false
@@ -99,8 +100,10 @@ func _process(_delta):
 		$PauseMenu.visible = true
 
 func spawn_mob():
-	if currentSlimes >= maxSlimes:
+	if currentSlimes >= maxSceneSlimes or currentSlimes >= maxSlimes:
 		return
+		
+	print(maxSceneSlimes)
 		
 	var slime_types = [
 		\"res://slime.tscn\", \"res://slime.tscn\", \"res://slime.tscn\",
@@ -151,7 +154,7 @@ func _on_button_try_again_pressed() -> void:
 	get_tree().reload_current_scene()
 
 func _on_increse_difficulty_timer_timeout() -> void:
-	maxSlimes += 3
+	maxSceneSlimes = min(maxSceneSlimes + 3, maxSlimes)
 	player.pending_xp_bonus += 10
 	
 	# zelení sliime
@@ -209,9 +212,9 @@ func show_game_over():
 	deadSound.play()
 
 	var status = %GameOver/ColorRect
-	var slime_label = status.get_node(\"SlimeKills\")
-	var time_label = status.get_node(\"DeadTime\")
-	var level_label = status.get_node(\"DosazeniLevel\")
+	var slime_label = status.get_node(\"StatsContainer/SlimeKills\")
+	var time_label = status.get_node(\"StatsContainer/DeadTime\")
+	var level_label = status.get_node(\"StatsContainer/DosazeniLevel\")
 
 	slime_label.text = \"Slimes killed: \" + str(kills)
 	
@@ -564,7 +567,7 @@ texture = ExtResource("5_ryrav")
 3:6/0 = 0
 4:6/0 = 0
 5:6/0 = 0
-5:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 0.5, 6, 0.5, 6, 8, -6, 8)
+5:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 0.5, 6, 0.5, 8, 8, -8, 8)
 6:6/0 = 0
 8:6/0 = 0
 9:6/0 = 0
@@ -587,8 +590,6 @@ texture = ExtResource("5_ryrav")
 28:6/0 = 0
 29:6/0 = 0
 30:6/0 = 0
-5:7/0 = 0
-5:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -7, 7, -6, 5.83603, -5.1147, 5, -4, 3, -3, -3, -3, -5, -4, -5.8339, -5.12543, -7, -6, -8, -7)
 6:7/0 = 0
 8:7/0 = 0
 9:7/0 = 0
@@ -1045,6 +1046,8 @@ texture = ExtResource("5_ryrav")
 14:28/0 = 0
 15:28/0 = 0
 16:28/0 = 0
+5:7/0 = 0
+5:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 6, -5, 3, -3, -3, -3, -6, -5)
 
 [sub_resource type="TileSet" id="TileSet_vef74"]
 physics_layer_0/collision_layer = 16
@@ -1169,30 +1172,6 @@ sources/0 = SubResource("TileSetAtlasSource_7jktm")
 sources/1 = SubResource("TileSetAtlasSource_ryrav")
 sources/2 = SubResource("TileSetAtlasSource_eow3j")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfdv2"]
-bg_color = Color(0.27058825, 0.3529412, 0.39215687, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-corner_detail = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iotsf"]
-bg_color = Color(0.49660063, 0.60488254, 0.65719885, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-shadow_size = 5
-shadow_offset = Vector2(0, 3.41)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lc2xo"]
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_0o4t1"]
 atlas = ExtResource("9_e36ub")
 region = Rect2(0, 0, 32, 32)
@@ -1284,6 +1263,30 @@ animations = [{
 "name": &"default",
 "speed": 10.0
 }]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfdv2"]
+bg_color = Color(0.27058825, 0.3529412, 0.39215687, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+corner_detail = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iotsf"]
+bg_color = Color(0.49660063, 0.60488254, 0.65719885, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lc2xo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lc2xo"]
 bg_color = Color(0.27058825, 0.3529412, 0.39215687, 1)
@@ -1417,7 +1420,7 @@ tile_set = SubResource("TileSet_mfdv2")
 [node name="obtacle" type="TileMapLayer" parent="tilemap" unique_id=783240944]
 z_index = 10
 position = Vector2(0, -1)
-tile_map_data = PackedByteArray("AAACABQAAAAFAAUAAAAGABYAAAAFAAUAAAAHABMAAAAFAAUAAAAMACEAAAAFAAcAAAAPACYAAAAFAAcAAAAZAAkAAAAFAAYAAAAbACMAAAAFAAcAAAAhABsAAAAFAAYAAAAnABEAAAAFAAcAAAAqABQAAAAFAAcAAAAsAAcAAAAFAAcAAAAsAA4AAAAFAAUAAAAvABsAAAAFAAUAAAAvABwAAAAFAAYAAAA1ABgAAAAFAAcAAAA2ABwAAAAFAAUAAAA6ACAAAAAFAAcAAABBACUAAAAFAAUAAAAvAB0AAAAFAAcAAAA2AB0AAAAFAAYAAAA6AB8AAAAFAAYAAAA1ABcAAAAFAAYAAABBACYAAAAFAAYAAABBACcAAAAFAAcAAAAhABwAAAAFAAcAAAAHABQAAAAFAAYAAAACABUAAAAFAAYAAAAGABcAAAAFAAYAAAAsAA8AAAAFAAYAAAA1ABYAAAAFAAUAAAAhABoAAAAFAAUAAAA6AB4AAAAFAAUAAAAnAA8AAAAFAAUAAAAsABAAAAAFAAcAAAAnABAAAAAFAAYAAAAGABgAAAAFAAcAAAACABYAAAAFAAcAAAAHABUAAAAFAAcAAAAZAAoAAAAFAAcAAAAZAAgAAAAFAAUAAAAsAAYAAAAFAAYAAAAsAAUAAAAFAAUAAAAbACIAAAAFAAYAAAAbACEAAAAFAAUAAAAqABMAAAAFAAYAAAAqABIAAAAFAAUAAAAMAB8AAAAFAAUAAAAPACQAAAAFAAUAAAAPACUAAAAFAAYAAAAMACAAAAAFAAYAAAA2AB4AAAAFAAcAAAAqACYAAAAFAAcAAAA3ACgAAAAFAAcAAABGAB4AAAAFAAcAAABDABkAAAAFAAcAAABKAA0AAAAFAAcAAAA6AAgAAAAFAAcAAAA/ABEAAAAFAAcAAAALAAoAAAAFAAcAAAAqACUAAAAFAAYAAAA3ACcAAAAFAAYAAABGAB0AAAAFAAYAAABDABgAAAAFAAYAAAA/ABAAAAAFAAYAAABKAAwAAAAFAAYAAAA6AAcAAAAFAAYAAAALAAkAAAAFAAYAAAAqACQAAAAFAAUAAAA3ACYAAAAFAAUAAABGABwAAAAFAAUAAABDABcAAAAFAAUAAAA/AA8AAAAFAAUAAABKAAsAAAAFAAUAAAA6AAYAAAAFAAUAAAALAAgAAAAFAAUAAAA=")
+tile_map_data = PackedByteArray("AAACABQAAAAFAAUAAAAGABYAAAAFAAUAAAAHABMAAAAFAAUAAAAMACEAAAAFAAcAAAAPACYAAAAFAAcAAAAZAAkAAAAFAAYAAAAbACMAAAAFAAcAAAAhABsAAAAFAAYAAAAnABEAAAAFAAcAAAAsAAcAAAAFAAcAAAAsAA4AAAAFAAUAAAAvABsAAAAFAAUAAAAvABwAAAAFAAYAAAA1ABgAAAAFAAcAAAA2ABwAAAAFAAUAAAA6ACAAAAAFAAcAAABBACUAAAAFAAUAAAAvAB0AAAAFAAcAAAA2AB0AAAAFAAYAAAA6AB8AAAAFAAYAAAA1ABcAAAAFAAYAAABBACYAAAAFAAYAAABBACcAAAAFAAcAAAAhABwAAAAFAAcAAAAHABQAAAAFAAYAAAACABUAAAAFAAYAAAAGABcAAAAFAAYAAAAsAA8AAAAFAAYAAAA1ABYAAAAFAAUAAAAhABoAAAAFAAUAAAA6AB4AAAAFAAUAAAAnAA8AAAAFAAUAAAAsABAAAAAFAAcAAAAnABAAAAAFAAYAAAAGABgAAAAFAAcAAAACABYAAAAFAAcAAAAHABUAAAAFAAcAAAAZAAoAAAAFAAcAAAAZAAgAAAAFAAUAAAAsAAYAAAAFAAYAAAAsAAUAAAAFAAUAAAAbACIAAAAFAAYAAAAbACEAAAAFAAUAAAAqABMAAAAFAAYAAAAqABIAAAAFAAUAAAAMAB8AAAAFAAUAAAAPACQAAAAFAAUAAAAPACUAAAAFAAYAAAAMACAAAAAFAAYAAAA2AB4AAAAFAAcAAAAqACYAAAAFAAcAAAA3ACgAAAAFAAcAAABGAB4AAAAFAAcAAABDABkAAAAFAAcAAABKAA0AAAAFAAcAAAA6AAgAAAAFAAcAAAA/ABEAAAAFAAcAAAALAAoAAAAFAAcAAAAqACUAAAAFAAYAAAA3ACcAAAAFAAYAAABGAB0AAAAFAAYAAABDABgAAAAFAAYAAAA/ABAAAAAFAAYAAABKAAwAAAAFAAYAAAA6AAcAAAAFAAYAAAALAAkAAAAFAAYAAAAqACQAAAAFAAUAAAA3ACYAAAAFAAUAAABGABwAAAAFAAUAAABDABcAAAAFAAUAAAA/AA8AAAAFAAUAAABKAAsAAAAFAAUAAAA6AAYAAAAFAAUAAAALAAgAAAAFAAUAAAAqABQAAAAFAAcAAAA=")
 tile_set = SubResource("TileSet_vef74")
 
 [node name="wall" type="TileMapLayer" parent="tilemap" unique_id=552216186]
@@ -1428,7 +1431,7 @@ tile_set = SubResource("TileSet_j5wjh")
 [node name="AutoShootTimer" type="Timer" parent="." unique_id=1476931403]
 
 [node name="GlobalTimer" type="Timer" parent="." unique_id=332471978]
-wait_time = 5.0
+wait_time = 3.0
 autostart = true
 
 [node name="IncreseDifficultyTimer" type="Timer" parent="." unique_id=1733514089]
@@ -1447,6 +1450,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.69803923)
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameOver/ColorRect" unique_id=1551644496]
+process_mode = 3
+position = Vector2(308, 178.51736)
+scale = Vector2(2.282335, 2.282335)
+sprite_frames = SubResource("SpriteFrames_hb5m1")
+autoplay = "default"
+speed_scale = 0.8
+
 [node name="GameOver" type="Label" parent="GameOver/ColorRect" unique_id=1954349106]
 layout_mode = 1
 anchors_preset = 8
@@ -1455,12 +1466,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -383.0
-offset_top = -126.0
+offset_top = -184.48267
 offset_right = 397.0
-offset_bottom = 11.0
+offset_bottom = -47.482666
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 5
 theme_override_constants/shadow_offset_y = 10
@@ -1470,53 +1481,50 @@ text = "Game over"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DeadTime" type="Label" parent="GameOver/ColorRect" unique_id=543956021]
-layout_mode = 0
-offset_left = 652.0
-offset_top = 386.0
-offset_right = 849.0
-offset_bottom = 414.0
-theme_override_font_sizes/font_size = 20
-text = "Time survived: 00:00"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="SlimeKills" type="Label" parent="GameOver/ColorRect" unique_id=1169397632]
-layout_mode = 0
-offset_left = 461.0
-offset_top = 386.0
-offset_right = 626.0
-offset_bottom = 414.0
-theme_override_font_sizes/font_size = 20
-text = "Slimes killed: 145"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="DosazeniLevel" type="Label" parent="GameOver/ColorRect" unique_id=1947914880]
+[node name="StatsContainer" type="VBoxContainer" parent="GameOver/ColorRect" unique_id=1132034655]
+custom_minimum_size = Vector2(200, 28)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -84.0
-offset_top = 80.0
-offset_right = 84.0
-offset_bottom = 108.0
+offset_left = -100.0
+offset_top = -33.0
+offset_right = 100.0
+offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="DosazeniLevel" type="Label" parent="GameOver/ColorRect/StatsContainer" unique_id=1947914880]
+layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Level reached: 25"
-horizontal_alignment = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeadTime" type="Label" parent="GameOver/ColorRect/StatsContainer" unique_id=543956021]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Time survived: 00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SlimeKills" type="Label" parent="GameOver/ColorRect/StatsContainer" unique_id=1169397632]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Slimes killed: 145"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ButtonTryAgain" type="Button" parent="GameOver/ColorRect" unique_id=376117885]
 process_mode = 3
 layout_mode = 0
 offset_left = 426.0
-offset_top = 490.0
+offset_top = 468.0
 offset_right = 586.0
-offset_bottom = 550.0
+offset_bottom = 528.0
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
@@ -1534,9 +1542,9 @@ text = "Try again
 process_mode = 3
 layout_mode = 0
 offset_left = 688.0
-offset_top = 490.0
+offset_top = 470.0
 offset_right = 866.0
-offset_bottom = 550.0
+offset_bottom = 530.0
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
@@ -1549,14 +1557,6 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_iotsf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
 text = "Main menu
 "
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameOver" unique_id=1551644496]
-process_mode = 3
-position = Vector2(308, 237.00002)
-scale = Vector2(2.282335, 2.282335)
-sprite_frames = SubResource("SpriteFrames_hb5m1")
-autoplay = "default"
-speed_scale = 0.8
 
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=129988489]
 unique_name_in_owner = true
@@ -2392,6 +2392,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
 text = "Reroll"
 
 [node name="SettingsLayer" type="CanvasLayer" parent="." unique_id=64259460]
+visible = false
 
 [node name="Settings" type="Panel" parent="SettingsLayer" unique_id=2138816270]
 process_mode = 3
@@ -2574,6 +2575,7 @@ text = "Fullscreen"
 script = ExtResource("22_f1jbl")
 
 [node name="KeyBindsLayer" type="CanvasLayer" parent="." unique_id=2134636841]
+visible = false
 
 [node name="KeyBinds" type="Panel" parent="KeyBindsLayer" unique_id=1003034139]
 z_index = 21

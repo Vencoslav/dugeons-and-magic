@@ -7,8 +7,8 @@ var max_health := 100.0
 var health := 100.0
 var healing := 0.5
 var damage := 25
-var crit_rate := 0.1
-var crit_damage := 1.5
+var crit_rate := 0.15
+var crit_damage := 1.75
 
 var damage_cooldown := 1.0
 var damage_timer := 0.0

@@ -52,38 +52,36 @@ func take_damage():
 	health -= final_damage
 	
 	var knockback_dir = player.global_position.direction_to(global_position)
-	
 	var base_strength = final_damage * 5.0
 	var strength = base_strength + (100.0 if is_crit else 0.0)
 	
 	velocity += knockback_dir * clamp(strength, 50.0, 800.0)
 
-	if health > 0:
-		if is_crit and critSound and not critSound.playing:
-			critSound.play()
-		elif hurtSound and not hurtSound.playing:
-			hurtSound.play()
+	if is_crit and critSound:
+		critSound.play()
+	elif hurtSound:
+		hurtSound.play()
 
-		if is_crit:
-			an.play("crit_hit")
-			await an.animation_finished
-		else:
-			an.play("hurt")
-			await an.animation_finished
+	if is_crit:
+		an.play("crit_hit")
+		await an.animation_finished
+	elif health > 0: 
+		an.play("hurt")
+		await an.animation_finished
 
+	if health <= 0:
+		if deathSound:
+			var ds = deathSound.duplicate() # vytvoření kopie zvuku
+			get_tree().current_scene.add_child(ds)
+			ds.global_position = global_position
+			ds.play()
+
+		xp_drop(global_position)
+		an.play("smoke")
+		await an.animation_finished
+		queue_free()
+	else:
 		an.play("move")
-		return
-
-	if deathSound:
-		var ds = deathSound.duplicate() # vytvoří kopii zvuku
-		get_tree().current_scene.add_child(ds)
-		ds.global_position = global_position
-		ds.play()
-
-	xp_drop(global_position)
-	an.play("smoke")
-	await an.animation_finished
-	queue_free()
 
 func xp_drop(pos: Vector2):
 	call_deferred("_spawn_xp", pos)
@@ -95,9 +93,8 @@ func _spawn_xp(pos: Vector2):
 	var xp = xp_scene.instantiate()
 	var game_root = get_tree().current_scene
 	game_root.add_child(xp)
-
 	xp.global_position = pos
-	xp.z_index = 10
+	xp.z_index = 1 # určuje orderig vrstev
 
 	if game_root.has_method("xp_pickup_speed_bonus"):
 		xp.set_speed(xp.speed * game_root.xp_pickup_speed_bonus)
