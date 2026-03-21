@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://wmfaovfbt162"]
+
+[ext_resource type="Script" uid="uid://btdmacebgperi" path="res://scenes/staff/staff.gd" id="1_et8ip"]
+[ext_resource type="AudioStream" uid="uid://lk0rjl5q5q0i" path="res://assets/audio/floraphonic-fireball-whoosh-2-179126.mp3" id="2_et8ip"]
+[ext_resource type="Texture2D" uid="uid://dto6hpli3g0vt" path="res://assets/animace/my_staff-Sheet.png" id="2_ycvyx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycvyx"]
+atlas = ExtResource("2_ycvyx")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_et8ip"]
+atlas = ExtResource("2_ycvyx")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvmal"]
+atlas = ExtResource("2_ycvyx")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6mch"]
+atlas = ExtResource("2_ycvyx")
+region = Rect2(48, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxfvw"]
+atlas = ExtResource("2_ycvyx")
+region = Rect2(64, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ml4kh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycvyx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_et8ip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lvmal")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6mch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxfvw")
+}],
+"loop": false,
+"name": &"cast",
+"speed": 10.0
+}]
+
+[node name="staff" type="Node2D" unique_id=1573652247]
+process_mode = 1
+script = ExtResource("1_et8ip")
+
+[node name="CastSound" type="AudioStreamPlayer2D" parent="." unique_id=1154653167]
+stream = ExtResource("2_et8ip")
+bus = &"SFX"
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1778805220]
+position = Vector2(2, 0)
+
+[node name="animace" type="AnimatedSprite2D" parent="Marker2D" unique_id=361439579]
+position = Vector2(1, -5)
+sprite_frames = SubResource("SpriteFrames_ml4kh")
+animation = &"cast"
+
+[node name="shootingPoint" type="Marker2D" parent="Marker2D/animace" unique_id=1196206201]
+unique_name_in_owner = true
+position = Vector2(0, -1)
+
+[node name="FireTimer" type="Timer" parent="." unique_id=987830721]
+wait_time = 2.0
+one_shot = true

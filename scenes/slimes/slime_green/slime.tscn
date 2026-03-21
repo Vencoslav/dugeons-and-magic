@@ -1,0 +1,198 @@
+[gd_scene format=3 uid="uid://d3cv5d6l8jjh8"]
+
+[ext_resource type="Script" uid="uid://jn6nls41bfe1" path="res://scenes/slimes/slime_green/slime.gd" id="1_5jc4t"]
+[ext_resource type="Texture2D" uid="uid://6xkyli3a04ah" path="res://assets/animace/slime_hurt_last-Sheet.png" id="2_4l1t8"]
+[ext_resource type="Texture2D" uid="uid://le7ggt1xdw07" path="res://assets/animace/slime_crit_Sheet.png" id="2_jayke"]
+[ext_resource type="Texture2D" uid="uid://drkvcyxjqxs7f" path="res://assets/animace/slime_green-Sheet.png" id="4_5b0gg"]
+[ext_resource type="Texture2D" uid="uid://gghanfrwyk5o" path="res://assets/animace/smoke_Sheet.png" id="4_ppcr1"]
+[ext_resource type="AudioStream" uid="uid://bloect2q2qllt" path="res://assets/audio/driken5482-retro-hurt-1-236672.mp3" id="6_2002g"]
+[ext_resource type="AudioStream" uid="uid://kbt8aiiqseg6" path="res://assets/audio/dogwolf123-retro-hurt-sound-04-474785.mp3" id="7_bratd"]
+[ext_resource type="AudioStream" uid="uid://c8j52qix2ha2g" path="res://assets/audio/universfield-slime-impact-352473.mp3" id="8_5b0gg"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4l1t8"]
+resource_local_to_scene = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b48k4"]
+atlas = ExtResource("2_jayke")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31ce7"]
+atlas = ExtResource("2_jayke")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2002g"]
+atlas = ExtResource("2_4l1t8")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bratd"]
+atlas = ExtResource("2_4l1t8")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nowxr"]
+atlas = ExtResource("4_5b0gg")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yfmhs"]
+atlas = ExtResource("4_5b0gg")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hagqt"]
+atlas = ExtResource("4_5b0gg")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pwq85"]
+atlas = ExtResource("4_5b0gg")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5b0gg"]
+atlas = ExtResource("4_ppcr1")
+region = Rect2(0, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_da4t2"]
+atlas = ExtResource("4_ppcr1")
+region = Rect2(32, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrxk1"]
+atlas = ExtResource("4_ppcr1")
+region = Rect2(64, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_alucd"]
+atlas = ExtResource("4_ppcr1")
+region = Rect2(96, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8w6w5"]
+atlas = ExtResource("4_ppcr1")
+region = Rect2(128, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lrvan"]
+atlas = ExtResource("4_ppcr1")
+region = Rect2(160, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0gjuw"]
+atlas = ExtResource("4_ppcr1")
+region = Rect2(192, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ggc5"]
+atlas = ExtResource("4_ppcr1")
+region = Rect2(224, 0, 32, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2002g"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_b48k4")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_31ce7")
+}],
+"loop": false,
+"name": &"crit_hit",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_2002g")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_bratd")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nowxr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yfmhs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hagqt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pwq85")
+}],
+"loop": true,
+"name": &"move",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_5b0gg")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_da4t2")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_jrxk1")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_alucd")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_8w6w5")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_lrvan")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_0gjuw")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_6ggc5")
+}],
+"loop": false,
+"name": &"smoke",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5b0gg"]
+size = Vector2(11.999998, 17.998795)
+
+[node name="slime_green" type="CharacterBody2D" unique_id=1471273131]
+light_mask = 33
+visibility_layer = 33
+z_index = 4
+collision_layer = 2
+collision_mask = 19
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_5jc4t")
+
+[node name="animace_green" type="AnimatedSprite2D" parent="." unique_id=237514192]
+material = SubResource("CanvasItemMaterial_4l1t8")
+sprite_frames = SubResource("SpriteFrames_2002g")
+animation = &"crit_hit"
+autoplay = "move"
+speed_scale = 0.8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1748096061]
+position = Vector2(1, 5.9999995)
+rotation = -1.5701952
+shape = SubResource("RectangleShape2D_5b0gg")
+one_way_collision_margin = 0.0
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="." unique_id=951707084]
+stream = ExtResource("6_2002g")
+bus = &"SFX"
+
+[node name="CritSound" type="AudioStreamPlayer2D" parent="." unique_id=1559379058]
+stream = ExtResource("7_bratd")
+bus = &"SFX"
+
+[node name="DeadSound" type="AudioStreamPlayer2D" parent="." unique_id=245145164]
+process_mode = 3
+stream = ExtResource("8_5b0gg")
+bus = &"SFX"
+
+[node name="SlimeLevel" type="Label" parent="." unique_id=1862546019]
+offset_left = -6.0
+offset_top = -14.0
+offset_right = 8.0
+offset_bottom = -2.0
+theme_override_font_sizes/font_size = 8
+text = "Lvl:"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dyxe7gwcds2j4"]
-
-[ext_resource type="Script" uid="uid://cprtkrxlc07hb" path="res://options_menu.gd" id="1_lbr8e"]
-
-[node name="OptionsMenu" type="VBoxContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("1_lbr8e")
