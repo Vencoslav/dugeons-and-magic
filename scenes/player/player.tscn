@@ -186,17 +186,20 @@ size = Vector2(18.25, 22.5)
 [sub_resource type="CircleShape2D" id="CircleShape2D_nvl01"]
 radius = 38.0
 
-[node name="player" type="CharacterBody2D" unique_id=479822114]
+[node name="Player" type="CharacterBody2D" unique_id=479822114]
 z_index = 10
 position = Vector2(714, 278)
 collision_mask = 31
 motion_mode = 1
 wall_min_slide_angle = 0.174533
-safe_margin = 1.0
+safe_margin = 1.5
 script = ExtResource("1_onrkg")
 
+[node name="Staff" parent="." unique_id=1237324527 instance=ExtResource("4_hqtel")]
+position = Vector2(5, -9)
+
 [node name="TextureHealhBar" type="TextureProgressBar" parent="." unique_id=181144996]
-process_mode = 3
+process_mode = 1
 z_index = 20
 offset_left = -178.0
 offset_top = -94.0
@@ -221,7 +224,7 @@ autostart = true
 stream = ExtResource("5_u1c27")
 bus = &"SFX"
 
-[node name="animace" type="AnimatedSprite2D" parent="." unique_id=1362128896]
+[node name="Animace" type="AnimatedSprite2D" parent="." unique_id=1362128896]
 unique_name_in_owner = true
 position = Vector2(1, -15)
 sprite_frames = SubResource("SpriteFrames_lhvu3")
@@ -332,15 +335,12 @@ offset_bottom = -71.0
 scale = Vector2(0.3, 0.3)
 vertical_alignment = 1
 
-[node name="staff" parent="." unique_id=1237324527 instance=ExtResource("4_hqtel")]
-position = Vector2(5, -9)
-
-[node name="hurtBox" type="Area2D" parent="." unique_id=2115805503]
+[node name="HurtBox" type="Area2D" parent="." unique_id=2115805503]
 unique_name_in_owner = true
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtBox" unique_id=1475917003]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=1475917003]
 position = Vector2(2, -10.25)
 shape = SubResource("RectangleShape2D_b26j0")
 one_way_collision_margin = 0.0

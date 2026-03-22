@@ -25,7 +25,7 @@
 [ext_resource type="Script" uid="uid://dpgjwe4nik6ac" path="res://scripts/input_remap_button.gd" id="23_vaj68"]
 
 [sub_resource type="GDScript" id="GDScript_mfdv2"]
-script/source = "extends Node
+script/source = "extends  Node
 
 @onready var path_follow = %PathFollow2D
 @onready var global_timer = $GlobalTimer
@@ -33,8 +33,6 @@ script/source = "extends Node
 @onready var level_menu = $LevelUpMenu
 @onready var auto_shoot_timer = $AutoShootTimer
 @onready var upgrade_container = $LevelUpMenu/ColorRect/HBoxContainer
-@onready var game_over = $GameOver
-@onready var pause_menu = $PauseMenu
 
 @onready var settings_layer = $SettingsLayer
 @onready var key_binds_layer = $KeyBindsLayer
@@ -90,18 +88,15 @@ func _ready():
 	settings_layer.visible = false
 	key_binds_layer.visible = false
 	level_menu.visible = false
-	game_over.visible = false
-	pause_menu.visible = false
-	
 
 func _process(_delta):
 	if Input.is_action_just_pressed(\"pause_menu\"):
 		_pause_game()
 
 func _pause_game():
-	is_paused = !is_paused
-	get_tree().paused = is_paused
-	pause_menu.visible = is_paused
+	is_paused = true
+	get_tree().paused = true
+	$PauseMenu.visible = true
 
 func spawn_mob():
 	if current_slimes >= max_scene_slimes or current_slimes >= MAX_TOTAL_SLIMES:
@@ -241,47 +236,28 @@ func _on_auto_shoot_timer_timeout() -> void:
 	var auto_label = player.get_node(\"AutoShootLabel\")
 	fade_tween = create_tween()
 	fade_tween.tween_property(auto_label, \"modulate:a\", 0.0, 0.25)
-	fade_tween.tween_callback(func(): auto_label.visible = false)
+	fade_tween.tween_callback(func(): auto_label.visible = false)  
 
 func _on_button_main_menu_pressed() -> void:
-	get_tree().paused = false
 	get_tree().change_scene_to_file(\"res://scenes/main_menu/main_menu.tscn\")
-
+	
 func _on_button_settings_pressed():
-	get_tree().paused = true
-	pause_menu.visible = false
 	settings_layer.visible = true
 	key_binds_layer.visible = false
-
+	get_tree().paused = true
+	
 func _on_button_keybinds_pressed():
-	get_tree().paused = true
-	pause_menu.visible = false
-	settings_layer.visible = false
+	settings_layer.visible = falsed
 	key_binds_layer.visible = true
-
+	
 func _on_button_back_pressed():
-	get_tree().paused = true
-	pause_menu.visible = true
 	settings_layer.visible = false
 	key_binds_layer.visible = false
+	get_tree().paused = false
+
 
 func _on_button_quit_game_pressed() -> void:
 	get_tree().quit()
-
-func _on_button_resume_pressed() -> void:
-	pause_menu.visible = false
-	get_tree().paused = false
-	is_paused = false
-
-func _on_button_restart_pressed() -> void:
-	get_tree().paused = false
-	get_tree().reload_current_scene()
-
-func _on_button_key_binds_pressed() -> void:
-	get_tree().paused = true
-	pause_menu.visible = false
-	settings_layer.visible = false
-	key_binds_layer.visible = true
 "
 
 [sub_resource type="Curve2D" id="Curve2D_j5wjh"]
@@ -1373,6 +1349,7 @@ autostart = true
 
 [node name="GameOver" type="CanvasLayer" parent="." unique_id=601820663]
 unique_name_in_owner = true
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="GameOver" unique_id=1279396187]
 anchors_preset = 15
@@ -1492,6 +1469,7 @@ text = "Main menu
 
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=129988489]
 unique_name_in_owner = true
+visible = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu" unique_id=1266916009]
 anchors_preset = 8
@@ -1587,6 +1565,7 @@ text = "Quit game
 
 [node name="LevelUpMenu" type="CanvasLayer" parent="." unique_id=1974640521]
 unique_name_in_owner = true
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="LevelUpMenu" unique_id=1269067139]
 anchors_preset = 15
@@ -2322,6 +2301,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_lc2xo")
 text = "Reroll"
 
 [node name="SettingsLayer" type="CanvasLayer" parent="." unique_id=64259460]
+visible = false
 
 [node name="Settings" type="Panel" parent="SettingsLayer" unique_id=2138816270]
 process_mode = 3
@@ -2504,6 +2484,7 @@ text = "Fullscreen"
 script = ExtResource("22_f1jbl")
 
 [node name="KeyBindsLayer" type="CanvasLayer" parent="." unique_id=2134636841]
+visible = false
 
 [node name="KeyBinds" type="Panel" parent="KeyBindsLayer" unique_id=1003034139]
 z_index = 21

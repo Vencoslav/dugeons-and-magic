@@ -5,11 +5,11 @@ var speed = 15
 var damage = 30
 
 @onready var an = $animace_red
-@onready var player = get_node("/root/game/player")
-@onready var hurtSound = $HurtSound
-@onready var critSound = $CritSound
-@onready var deathSound = $DeadSound
-@onready var slimeLevel = $SlimeLevel
+@onready var player = get_node("/root/Game/Player")
+@onready var hurt_sound = $HurtSound
+@onready var crit_sound = $CritSound
+@onready var death_sound = $DeadSound
+@onready var slime_level = $SlimeLevel
 
 const xp_scene = preload("res://scenes/xp/xp.tscn")
 
@@ -48,8 +48,8 @@ func _physics_process(delta):
 func update_level_display():
 	# základní HP je 50 = Level 1 když se zvýší +1 Level
 	var current_level = 1 + int((health - 70) / 15)
-	if slimeLevel:
-		slimeLevel.text = "Lvl: " + str(max(1, current_level))
+	if slime_level:
+		slime_level.text = "Lvl: " + str(max(1, current_level))
 		
 func take_damage():
 	var result = player.calculate_damage()
@@ -64,10 +64,10 @@ func take_damage():
 	
 	velocity += knockback_dir * clamp(strength, 50.0, 800.0)
 
-	if is_crit and critSound:
-		critSound.play()
-	elif hurtSound:
-		hurtSound.play()
+	if is_crit and crit_sound:
+		crit_sound.play()
+	elif hurt_sound:
+		hurt_sound.play()
 
 	if is_crit:
 		an.play("crit_hit")
@@ -77,8 +77,8 @@ func take_damage():
 		await an.animation_finished
 
 	if health <= 0:
-		if deathSound:
-			var ds = deathSound.duplicate() # vytvoření kopie zvuku
+		if death_sound:
+			var ds = death_sound.duplicate() # vytvoření kopie zvuku
 			get_tree().current_scene.add_child(ds)
 			ds.global_position = global_position
 			ds.play()

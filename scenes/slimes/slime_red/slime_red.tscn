@@ -171,10 +171,10 @@ process_mode = 3
 stream = ExtResource("3_d7y3q")
 bus = &"SFX"
 
-[node name="SlimeLevel" type="Label" parent="." unique_id=821404584]
-offset_left = -6.0
+[node name="SlimeLevel" type="Label" parent="." unique_id=1398834651]
+offset_left = -10.0
 offset_top = -14.0
-offset_right = 8.0
+offset_right = 4.0
 offset_bottom = -2.0
 theme_override_font_sizes/font_size = 8
 text = "Lvl:"

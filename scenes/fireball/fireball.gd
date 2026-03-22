@@ -1,6 +1,5 @@
 extends Area2D
 
-var travelled_distance = 0
 var speed := 300
 
 func _ready():

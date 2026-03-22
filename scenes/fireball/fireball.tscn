@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dbpflggof3eg6"]
 
-[ext_resource type="Script" uid="uid://bu85mycmvknny" path="res://fireball.gd" id="1_olwj8"]
-[ext_resource type="Texture2D" uid="uid://es7chm4438ox" path="res://animace/my_fireball-Sheet.png" id="1_sf4mh"]
+[ext_resource type="Script" uid="uid://bu85mycmvknny" path="res://scenes/fireball/fireball.gd" id="1_olwj8"]
+[ext_resource type="Texture2D" uid="uid://es7chm4438ox" path="res://assets/animace/my_fireball-Sheet.png" id="1_sf4mh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lk87q"]
 radius = 3.0
@@ -42,7 +42,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="fireball" type="Area2D" unique_id=137573349]
+[node name="Fireball" type="Area2D" unique_id=137573349]
 z_index = 9
 collision_layer = 4
 collision_mask = 26

@@ -5,16 +5,16 @@ const BULLET = preload("res://scenes/fireball/fireball.tscn")
 signal auto_shoot_changed(enabled: bool)
 
 var auto_shoot := false
-const min_fire_time := 0.1
+const MIN_FIRE_TIME := 0.1
 
-@onready var an = $Marker2D/animace
-@onready var crysta: Marker2D = %shootingPoint
+@onready var an = $Marker2D/Animace
+@onready var crysta: Marker2D = %ShootingPoint
 @onready var fire_timer: Timer = $FireTimer
-@onready var castSound = $CastSound
+@onready var cast_sound = $CastSound
 
 func increase_fire_rate():
 	fire_timer.wait_time *= 0.9
-	fire_timer.wait_time = max(fire_timer.wait_time, min_fire_time)
+	fire_timer.wait_time = max(fire_timer.wait_time,MIN_FIRE_TIME)
 
 func _process(_delta):
 	look_at(get_global_mouse_position())
@@ -34,7 +34,7 @@ func try_shoot():
 		return
 
 	shoot()
-	castSound.play()
+	cast_sound.play()
 	fire_timer.start()
 
 func shoot():

@@ -47,7 +47,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="staff" type="Node2D" unique_id=1573652247]
+[node name="Staff" type="Node2D" unique_id=1573652247]
 process_mode = 1
 script = ExtResource("1_et8ip")
 
@@ -58,12 +58,12 @@ bus = &"SFX"
 [node name="Marker2D" type="Marker2D" parent="." unique_id=1778805220]
 position = Vector2(2, 0)
 
-[node name="animace" type="AnimatedSprite2D" parent="Marker2D" unique_id=361439579]
+[node name="Animace" type="AnimatedSprite2D" parent="Marker2D" unique_id=361439579]
 position = Vector2(1, -5)
 sprite_frames = SubResource("SpriteFrames_ml4kh")
 animation = &"cast"
 
-[node name="shootingPoint" type="Marker2D" parent="Marker2D/animace" unique_id=1196206201]
+[node name="ShootingPoint" type="Marker2D" parent="Marker2D/Animace" unique_id=1196206201]
 unique_name_in_owner = true
 position = Vector2(0, -1)
 

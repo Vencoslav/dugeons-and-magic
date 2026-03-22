@@ -17,26 +17,26 @@ var is_hurt := false
 var xp_difficulty_bonus := 0
 var pending_xp_bonus := 0  
 const base_xp_per_level := 100
-const xp_growth := 25
-var pending_level_ups := 0
+const XP_GROWTH := 25
+var PENDING_LEVEL_UPS := 0
 
-@export var movementSpeed := 100
+@export var movement_speed := 100
 
-@onready var healthBar = get_node("TextureHealhBar")
-@onready var xpBar = $XpBar
-@onready var levelLabel = $XpBar/Level
-@onready var hurtBox = $hurtBox
-@onready var animace = $animace
-@onready var hurtSound = $HurtSound
+@onready var health_bar = get_node("TextureHealhBar")
+@onready var xp_bar = $XpBar
+@onready var level_label = $XpBar/Level
+@onready var hurt_box = $HurtBox
+@onready var animace = $Animace
+@onready var hurt_sound = $HurtSound
 
-const slime_scene = preload("res://scenes/slimes/slime_green/slime.gd")
+const SLIMESCENE = preload("res://scenes/slimes/slime_green/slime.gd")
 
 var character_direction := Vector2.ZERO
 
 func _ready():
-	if healthBar:
-		healthBar.max_value = max_health
-		healthBar.value = health
+	if health_bar:
+		health_bar.max_value = max_health
+		health_bar.value = health
 	
 	update_xp_required()
 	randomize()
@@ -45,16 +45,16 @@ func increase_max_health(amount: float):
 	max_health += amount
 	health = min(health + amount, max_health)
 
-	if healthBar:
-		healthBar.max_value = max_health
-		healthBar.value = health
+	if health_bar:
+		health_bar.max_value = max_health
+		health_bar.value = health
 
 var _xp := 0
 var XP:
 	get: return _xp
 	set(value):
 		_xp = value
-		xpBar.value = _xp
+		xp_bar.value = _xp
 		check_XP()
 
 var total_XP := 0
@@ -64,14 +64,14 @@ var level:
 	get: return _level
 	set(value):
 		_level = value
-		levelLabel.text = "Lv " + str(_level)
+		level_label.text = "Lv " + str(_level)
 		xp_difficulty_bonus += pending_xp_bonus
 		pending_xp_bonus = 0
 		update_xp_required()
 		emit_signal("level_up")
 
 func update_xp_required():
-	xpBar.max_value = base_xp_per_level + (_level - 1) * xp_growth + xp_difficulty_bonus
+	xp_bar.max_value = base_xp_per_level + (_level - 1) * XP_GROWTH + xp_difficulty_bonus
 
 func _physics_process(delta):
 
@@ -81,9 +81,9 @@ func _physics_process(delta):
 	)
 
 	if character_direction != Vector2.ZERO:
-		velocity = character_direction.normalized() * movementSpeed
+		velocity = character_direction.normalized() * movement_speed
 	else:
-		velocity = velocity.move_toward(Vector2.ZERO, movementSpeed)
+		velocity = velocity.move_toward(Vector2.ZERO, movement_speed)
 
 	if character_direction.x > 0:
 		animace.flip_h = false
@@ -101,7 +101,7 @@ func damage_logic(delta):
 	if damage_timer > 0:
 		return
 
-	var bodies = hurtBox.get_overlapping_bodies()
+	var bodies = hurt_box.get_overlapping_bodies()
 
 	for body in bodies:
 		if body.is_in_group("slimes"):
@@ -109,10 +109,10 @@ func damage_logic(delta):
 			damage_timer = damage_cooldown
 			is_hurt = true
 
-			hurtSound.play()
+			hurt_sound.play()
 
-			if healthBar:
-				healthBar.value = health
+			if health_bar:
+				health_bar.value = health
 
 			animace.play("hurt")
 
@@ -142,9 +142,9 @@ func gain_XP(amount):
 
 
 func check_XP():
-	while XP >= xpBar.max_value:
-		XP -= xpBar.max_value
-		pending_level_ups += 1
+	while XP >= xp_bar.max_value:
+		XP -= xp_bar.max_value
+		PENDING_LEVEL_UPS += 1
 		level += 1
 
 func _on_healing_timer_timeout():
@@ -154,8 +154,8 @@ func _on_healing_timer_timeout():
 		health += healing
 		health = min(health, max_health)
 
-		if healthBar:
-			healthBar.value = health
+		if health_bar:
+			health_bar.value = health
 
 func calculate_damage():
 
