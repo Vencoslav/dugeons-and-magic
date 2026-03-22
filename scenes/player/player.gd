@@ -16,9 +16,9 @@ var is_hurt := false
 
 var xp_difficulty_bonus := 0
 var pending_xp_bonus := 0  
-const base_xp_per_level := 100
+const BASE_XP_PER_LEVEL := 100
 const XP_GROWTH := 25
-var PENDING_LEVEL_UPS := 0
+var pending_level_ups := 0
 
 @export var movement_speed := 100
 
@@ -71,7 +71,7 @@ var level:
 		emit_signal("level_up")
 
 func update_xp_required():
-	xp_bar.max_value = base_xp_per_level + (_level - 1) * XP_GROWTH + xp_difficulty_bonus
+	xp_bar.max_value = BASE_XP_PER_LEVEL + (_level - 1) * XP_GROWTH + xp_difficulty_bonus
 
 func _physics_process(delta):
 
@@ -144,7 +144,7 @@ func gain_XP(amount):
 func check_XP():
 	while XP >= xp_bar.max_value:
 		XP -= xp_bar.max_value
-		PENDING_LEVEL_UPS += 1
+		pending_level_ups += 1
 		level += 1
 
 func _on_healing_timer_timeout():

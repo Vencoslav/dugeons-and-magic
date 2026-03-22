@@ -94,56 +94,51 @@ func _ready():
 	pause_menu.visible = false
 	
 
-func _process(_delta):
-	if Input.is_action_just_pressed(\"pause_menu\"):
-		_pause_game()
-
-func _pause_game():
-	is_paused = !is_paused
-	get_tree().paused = is_paused
-	pause_menu.visible = is_paused
+func _process(_delta): 
+	if Input.is_action_just_pressed(\"pause_menu\"): 
+		is_paused = true 
+		get_tree().paused = true 
+		$PauseMenu.visible = true
 
 func spawn_mob():
-	if current_slimes >= max_scene_slimes or current_slimes >= MAX_TOTAL_SLIMES:
+	if current_slimes >= max_scene_slimes:
 		return
 		
 	var slime_types = [
-		\"res://scenes/slimes/slime_green/slime.tscn\", 
-		\"res://scenes/slimes/slime_yellow/slime_yellow.tscn\", 
-		\"res://scenes/slimes/slime_red/slime_red.tscn\"
+		\"res://scenes/slimes/slime_green/slime.tscn\", \"scenes/slimes/slime_green/slime.tscn\", \"scenes/slimes/slime_green/slime.tscn\",
+		\"res://scenes/slimes/slime_yellow/slime_yellow.tscn\", \"scenes/slimes/slime_yellow/slime_yellow.tscn\",
+		\"res://scenes/slimes/slime_red/slime_red.tscn\" 
 	]
 	
 	var random_path = slime_types.pick_random()
 	var resource = load(random_path)
+
 	var mob = resource.instantiate()
 	
 	path_follow.progress_ratio = randf()
 	mob.global_position = path_follow.global_position
 	
-	_apply_slime_bonuses(mob, random_path)
+	match random_path:
+		\"res://scenes/slimes/slime_green/slime.tscn\":
+			mob.health += slime_health_bonus
+			mob.speed += slime_speed_bonus
+			mob.damage += slime_damage_bonus
+		\"res://scenes/slimes/slime_yellow/slime_yellow.tscn\":
+			mob.health += yellow_health_bonus
+			mob.speed += yellow_speed_bonus
+			mob.damage += yellow_damage_bonus
+		\"res://scenes/slimes/slime_red/slime_red.tscn\":
+			mob.health += red_health_bonus
+			mob.speed += red_speed_bonus
+			mob.damage += red_damage_bonus
 	
 	add_child(mob)
 	
 	if mob.has_method(\"update_level_display\"):
 		mob.update_level_display()
-	
+		
 	current_slimes += 1
 	mob.tree_exited.connect(_on_slime_removed)
-
-func _apply_slime_bonuses(mob, path):
-	match path:
-		\"res://scenes/slimes/slime_green/slime.tscn\":
-			mob.health += slime_health_bonus
-			mob.speed += slime_speed_bonus
-			mob.damage += slime_damage_bonus
-		\"res://scenes/slimes/slime_red/slime_red.tscn\":
-			mob.health += red_health_bonus
-			mob.speed += red_speed_bonus
-			mob.damage += red_damage_bonus
-		\"res://scenes/slimes/slime_yellow/slime_yellow.tscn\":
-			mob.health += yellow_health_bonus
-			mob.speed += yellow_speed_bonus
-			mob.damage += yellow_damage_bonus
 
 func _on_slime_removed():
 	kills += 1
@@ -151,137 +146,212 @@ func _on_slime_removed():
 	kills_panel.set_kills(kills)
 
 func _on_global_timer_timeout() -> void:
-	spawn_mob()
+	spawn_mob()	
+
+func _on_player_health_depleted() -> void:
+	show_game_over()
+
+func _on_button_try_again_pressed() -> void:
+	Input.flush_buffered_events()
+	get_tree().paused = false
+	get_tree().reload_current_scene()
 
 func _on_increse_difficulty_timer_timeout() -> void:
-	max_scene_slimes = min(max_scene_slimes + 3, MAX_TOTAL_SLIMES)
+	max_scene_slimes += 3
 	player.pending_xp_bonus += 10
 	
+	# zelení sliime
 	slime_health_bonus += 5
 	slime_speed_bonus += 8
 	slime_damage_bonus += 5
 	
+	# červený slime
 	red_health_bonus += 15
 	red_damage_bonus += 10
 	red_speed_bonus += 3
 	
+	# žlutí slime
 	yellow_speed_bonus += 10
 	yellow_health_bonus += 5
 	yellow_damage_bonus += 3
 
+func _on_button_quit_game_pressed() -> void:
+	Input.flush_buffered_events() 
+	get_tree().quit()
+
+func _on_button_restart_pressed() -> void:
+	Input.flush_buffered_events()
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+
+func _on_button_resume_pressed() -> void:
+	Input.flush_buffered_events()
+	is_paused = false
+	get_tree().paused = false
+	$PauseMenu.visible = false
+	
+func _on_button_settings_pressed() -> void:
+	Input.flush_buffered_events()
+	get_tree().paused = true
+	$PauseMenu.visible = false
+	settings_layer.visible = true
+	key_binds_layer.visible = false
+
+func _on_button_key_binds_pressed() -> void:
+	Input.flush_buffered_events()
+	get_tree().paused = true
+	settings_layer.visible = false
+	key_binds_layer.visible = true
+	
+func _on_button_back_pressed() -> void:
+	Input.flush_buffered_events()
+	get_tree().paused = true
+	settings_layer.visible = false
+	key_binds_layer.visible = false
+	$PauseMenu.visible = true
+
 func show_game_over():
 	%GameOver.visible = true
 	dead_sound.play()
-	get_tree().paused = true
 
-	var container = %GameOver/ColorRect/StatsContainer
-	container.get_node(\"SlimeKills\").text = \"Slimes killed: \" + str(kills)
-	container.get_node(\"DosazeniLevel\").text = \"Level reached: \" + str(player.level)
+	var status = %GameOver/ColorRect
+	var slime_label = status.get_node(\"SlimeKills\")
+	var time_label = status.get_node(\"DeadTime\")
+	var level_label = status.get_node(\"DosazeniLevel\")
+
+	slime_label.text = \"Slimes killed: \" + str(kills)
+	
+	level_label.text = \"Level reached: \" + str(player.level)
 
 	if player.has_node(\"Time/Panel\"):
 		var time_panel = player.get_node(\"Time/Panel\")
-		container.get_node(\"DeadTime\").text = \"Time survived: \" + time_panel.get_time_formatted()
-
-func _on_player_level_up() -> void:
-	if player.pending_level_ups > 0 and not level_menu.visible:
-		show_next_level_up()
+		time_label.text = \"Time survived: \" + time_panel.get_time_formatted()
+	else:
+		time_label.text = \"Time survived: 00:00\"
+		
+	get_tree().paused = true
 
 func show_next_level_up():
+	if player.pending_level_ups <= 0:
+		return
+
 	player.pending_level_ups -= 1
 	level_menu.visible = true
 	get_tree().paused = true
+	
 	reroll_used = false
 	$LevelUpMenu/ColorRect/ButtonReroll.visible = true
-	_show_random_upgrades()
 
-func _show_random_upgrades():
-	var upgrades = upgrade_container.get_children()
-	for u in upgrades:
-		u.visible = false
-	
-	upgrades.shuffle()
-	for i in range(min(3, upgrades.size())):
-		upgrades[i].visible = true
-		upgrade_container.move_child(upgrades[i], i)
+	show_random_upgrades()
 
 func close_level_up_menu():
 	level_menu.visible = false
 	get_tree().paused = false
+
 	if player.pending_level_ups > 0:
 		show_next_level_up()
+
+func _on_player_level_up() -> void:
+	if player.pending_level_ups > 0 and not level_menu.visible:
+		show_next_level_up()
+		
+		
+func show_random_upgrades():
+	var upgrades = upgrade_container.get_children()
+
+	for u in upgrades:
+		u.visible = false
+
+	upgrades.shuffle()
+
+	for i in range(min(3, upgrades.size())):
+		var upgrade_node = upgrades[i]
+		upgrade_node.visible = true
+		upgrade_container.move_child(upgrade_node, i)
+
 
 func _on_button_health_pressed() -> void:
 	player.increase_max_health(player.max_health * 0.1)
 	if health_bar:
-		var new_width: float = 200.0 + (player.max_health * 2.0)
+		var base_width := 200.0
+		var scale_factor := 2.0
+		var new_width: float = base_width + player.max_health * scale_factor
+
 		var tween = create_tween()
 		tween.tween_property(health_bar, \"size:x\", new_width, 0.5)
+
 	close_level_up_menu()
 
 func _on_button_speed_pressed() -> void:
-	player.movement_speed *= 1.1
+	player.movement_speed *= 1.1 
 	close_level_up_menu()
 
 func _on_button_damage_pressed() -> void:
 	player.damage *= 1.2
 	close_level_up_menu()
 
+func _on_button_fire_rate_pressed() -> void:
+	var staff = player.get_node(\"Staff\")
+	staff.increase_fire_rate() 
+	close_level_up_menu()
+
+func _on_button_bullet_speed_pressed() -> void:
+	fireball_speed_bonus *= 1.1
+	close_level_up_menu()
+	
+func _on_button_magnet_size_pressed() -> void:
+	var shape = magnet_collision.shape
+	magnet_collision.shape.radius *= 1.1
+	close_level_up_menu()
+
+func _on_button_healing_pressed() -> void:
+	player.healing += 0.25
+	close_level_up_menu()
+	
+func _on_button_crit_rate_pressed() -> void:
+	player.crit_rate += 0.025
+	player.crit_rate = clamp(player.crit_rate, 0, 1)
+	close_level_up_menu()
+
+
+func _on_button_crit_damage_pressed() -> void:
+	player.crit_damage += 0.05
+	close_level_up_menu()
+	
+func _on_button_pick_up_speed_pressed() -> void:
+	xp_pickup_speed_bonus *= 1.1
+	close_level_up_menu()
+	
+func _on_button_reroll_pressed() -> void:
+	if reroll_used:
+		return
+	
+	reroll_used = true
+	show_random_upgrades()
+	$LevelUpMenu/ColorRect/ButtonReroll.visible = false
+
 func update_auto_shoot_label(enabled: bool):
+	var auto_label = player.get_node(\"AutoShootLabel\")
 	if fade_tween and fade_tween.is_running():
 		fade_tween.kill()
 		
 	auto_shoot_timer.stop()
+
 	auto_label.visible = true
-	auto_label.text = \"AUTO SHOOT: \" + (\"ON\" if enabled else \"OFF\")
+	auto_label.text = \"AUTO SHOOT: ON\" if enabled else \"AUTO SHOOT: OFF\"
 	auto_label.modulate = Color.GREEN if enabled else Color.RED
 	auto_label.modulate.a = 1.0
+
 	auto_shoot_timer.start()
 
 func _on_auto_shoot_timer_timeout() -> void:
 	var auto_label = player.get_node(\"AutoShootLabel\")
 	fade_tween = create_tween()
 	fade_tween.tween_property(auto_label, \"modulate:a\", 0.0, 0.25)
-	fade_tween.tween_callback(func(): auto_label.visible = false)
+	fade_tween.tween_callback(func(): auto_label.visible = false)  
 
 func _on_button_main_menu_pressed() -> void:
-	get_tree().paused = false
-	get_tree().change_scene_to_file(\"res://scenes/main_menu/main_menu.tscn\")
-
-func _on_button_settings_pressed():
-	get_tree().paused = true
-	pause_menu.visible = false
-	settings_layer.visible = true
-	key_binds_layer.visible = false
-
-func _on_button_keybinds_pressed():
-	get_tree().paused = true
-	pause_menu.visible = false
-	settings_layer.visible = false
-	key_binds_layer.visible = true
-
-func _on_button_back_pressed():
-	get_tree().paused = true
-	pause_menu.visible = true
-	settings_layer.visible = false
-	key_binds_layer.visible = false
-
-func _on_button_quit_game_pressed() -> void:
-	get_tree().quit()
-
-func _on_button_resume_pressed() -> void:
-	pause_menu.visible = false
-	get_tree().paused = false
-	is_paused = false
-
-func _on_button_restart_pressed() -> void:
-	get_tree().paused = false
-	get_tree().reload_current_scene()
-
-func _on_button_key_binds_pressed() -> void:
-	get_tree().paused = true
-	pause_menu.visible = false
-	settings_layer.visible = false
-	key_binds_layer.visible = true
+	get_tree().change_scene_to_file(\"res://main_menu.tscn\")
 "
 
 [sub_resource type="Curve2D" id="Curve2D_j5wjh"]

@@ -19,29 +19,27 @@ func _ready():
 	update_level_display()
 
 func _physics_process(delta):
-	var dist_to_player = global_position.distance_to(player.global_position)
-	var direction = global_position.direction_to(player.global_position)
+	var dir = global_position.direction_to(player.global_position)
+	var dist = global_position.distance_to(player.global_position)
 
-	var orbit_factor = clamp((dist_to_player - 30.0) / 70.0, 0.0, 1.0)
-	var orbit_dir = Vector2(-direction.y, direction.x)
-	var steering = (direction + orbit_dir * 0.5 * orbit_factor).normalized()
-	
-	var target_velocity = steering * speed
-	var bounce_impulse = Vector2.ZERO
-	var neighbors = get_tree().get_nodes_in_group("slimes")
-	
-	for slime in neighbors:
-		if slime != self and is_instance_valid(slime):
-			var dist = global_position.distance_to(slime.global_position)
-			if dist < 16:
-				var push_dir = (global_position - slime.global_position).normalized()
-				bounce_impulse += push_dir * (16 - dist) * 15.0 # Snížená síla
+# orbit kolem hráče
+	var orbit = Vector2(-dir.y, dir.x) * clamp((dist - 30.0) / 70.0, 0.0, 1.0)
+	var target_velocity = (dir + orbit * 0.5).normalized() * speed
 
-	velocity += bounce_impulse
+# vyhýbání se ostatním slime
+	var push = Vector2.ZERO
+	for s in get_tree().get_nodes_in_group("slimes"):
+		if s != self and is_instance_valid(s):
+			var d = global_position.distance_to(s.global_position)
+			if d < 16:
+				push += (global_position - s.global_position).normalized() * (16 - d) * 15.0
+
+	velocity += push
 	velocity = velocity.lerp(target_velocity, delta * 4.0)
-	
+
 	move_and_slide()
-	
+
+# otočení sprite
 	if abs(velocity.x) > 1.0:
 		an.flip_h = velocity.x < 0
 		
