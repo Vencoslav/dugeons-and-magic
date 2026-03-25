@@ -192,7 +192,7 @@ position = Vector2(714, 278)
 collision_mask = 31
 motion_mode = 1
 wall_min_slide_angle = 0.174533
-safe_margin = 1.5
+safe_margin = 2.0
 script = ExtResource("1_onrkg")
 
 [node name="Staff" parent="." unique_id=1237324527 instance=ExtResource("4_hqtel")]

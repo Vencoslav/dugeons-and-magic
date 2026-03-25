@@ -164,12 +164,12 @@ script = ExtResource("1_5jc4t")
 [node name="animace_green" type="AnimatedSprite2D" parent="." unique_id=237514192]
 material = SubResource("CanvasItemMaterial_4l1t8")
 sprite_frames = SubResource("SpriteFrames_2002g")
-animation = &"crit_hit"
+animation = &"move"
 autoplay = "move"
 speed_scale = 0.8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1748096061]
-position = Vector2(1, 5.9999995)
+position = Vector2(0.9999999, 5)
 rotation = -1.5701952
 shape = SubResource("RectangleShape2D_5b0gg")
 one_way_collision_margin = 0.0

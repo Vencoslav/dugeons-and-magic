@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var health = 30
-var speed = 35
+var speed = 30
 var damage = 25
 
 @onready var an = $animace_yellow
@@ -11,7 +11,7 @@ var damage = 25
 @onready var death_sound = $DeadSound
 @onready var slime_level = $SlimeLevel
 
-const xp_scene = preload("res://scenes/xp/xp.tscn")
+const XP_SCENE = preload("res://scenes/xp/xp.tscn")
 
 func _ready():
 	an.play("move")
@@ -41,16 +41,14 @@ func _physics_process(delta):
 	velocity = velocity.lerp(target_velocity, delta * 4.0)
 	
 	move_and_slide()
-	
-	if abs(velocity.x) > 1.0:
-		an.flip_h = velocity.x < 0
+
 		
 func update_level_display():
-	# základní HP je 50 = Level 1 když se zvýší +1 Level
+	# základní HP je 30 = Level 1 když se zvýší +1 Level
 	var current_level = 1 + int((health - 30) / 5)
 	if slime_level:
 		slime_level.text = "Lvl: " + str(max(1, current_level))
-	
+		
 func take_damage():
 	var result = player.calculate_damage()
 	var final_damage = result[0]
@@ -90,20 +88,18 @@ func take_damage():
 	else:
 		an.play("move")
 
-
 func xp_drop(pos: Vector2):
 	call_deferred("_spawn_xp", pos)
 
 func _spawn_xp(pos: Vector2):
-	if not xp_scene:
+	if not XP_SCENE:
 		return
 
-	var xp = xp_scene.instantiate()
+	var xp = XP_SCENE.instantiate()
 	var game_root = get_tree().current_scene
 	game_root.add_child(xp)
-
 	xp.global_position = pos
-	xp.z_index = 10
+	xp.z_index = 1 # určuje orderig vrstev
 
 	if game_root.has_method("xp_pickup_speed_bonus"):
 		xp.set_speed(xp.speed * game_root.xp_pickup_speed_bonus)

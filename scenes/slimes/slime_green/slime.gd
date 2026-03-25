@@ -22,7 +22,6 @@ func _physics_process(delta):
 	var dir = global_position.direction_to(player.global_position)
 	var dist = global_position.distance_to(player.global_position)
 
-# orbit kolem hráče
 	var orbit = Vector2(-dir.y, dir.x) * clamp((dist - 30.0) / 70.0, 0.0, 1.0)
 	var target_velocity = (dir + orbit * 0.5).normalized() * speed
 
@@ -38,10 +37,6 @@ func _physics_process(delta):
 	velocity = velocity.lerp(target_velocity, delta * 4.0)
 
 	move_and_slide()
-
-# otočení sprite
-	if abs(velocity.x) > 1.0:
-		an.flip_h = velocity.x < 0
 		
 func update_level_display():
 	# základní HP je 50 = Level 1 když se zvýší +1 Level
