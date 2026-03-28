@@ -3,8 +3,9 @@ extends CharacterBody2D
 var health = 50
 var speed = 25
 var damage = 20
+var base_xp = 50
 
-@onready var an = $animace_green
+@onready var an = $AnimaceGreen
 @onready var player = get_node("/root/Game/Player")
 @onready var hurt_sound = $HurtSound
 @onready var crit_sound = $CritSound
@@ -42,7 +43,8 @@ func update_level_display():
 	# základní HP je 50 = Level 1 když se zvýší +1 Level
 	var current_level = 1 + int((health - 50) / 5)
 	if slime_level:
-		slime_level.text = "Lvl: " + str(max(1, current_level))
+		var display_lvl = max(1, current_level)
+		slime_level.text = "Lvl: " + str(display_lvl)
 	
 func take_damage():
 	var result = player.calculate_damage()
@@ -84,19 +86,21 @@ func take_damage():
 		an.play("move")
 
 func xp_drop(pos: Vector2):
-	call_deferred("_spawn_xp", pos)
-
-func _spawn_xp(pos: Vector2):
-	if not XP_SCENE:
-		return
+	var current_level = 1 + int((health - 50) / 5)
+	var final_xp = base_xp + (max(0, current_level - 1) * 2)
+	
+	call_deferred("_spawn_xp", pos, final_xp)
+	
+	call_deferred("_spawn_xp", pos, final_xp)
+func _spawn_xp(pos: Vector2, xp_val: int):
+	if not XP_SCENE: return
 
 	var xp = XP_SCENE.instantiate()
-	var game_root = get_tree().current_scene
-	game_root.add_child(xp)
+	get_tree().current_scene.add_child(xp)
+	
 	xp.global_position = pos
-	xp.z_index = 1 # určuje orderig vrstev
-
-	if game_root.has_method("xp_pickup_speed_bonus"):
-		xp.set_speed(xp.speed * game_root.xp_pickup_speed_bonus)
-	else:
-		xp.set_speed(xp.speed)
+	xp.z_index = 1
+	
+	# přídání hodnoty xp
+	if xp.has_method("set_xp_amount"):
+		xp.set_xp_amount(xp_val)

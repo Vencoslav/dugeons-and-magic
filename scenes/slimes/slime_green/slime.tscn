@@ -151,7 +151,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5b0gg"]
 size = Vector2(11.999998, 17.998795)
 
-[node name="slime_green" type="CharacterBody2D" unique_id=1471273131]
+[node name="SlimeGreen" type="CharacterBody2D" unique_id=1471273131]
 light_mask = 33
 visibility_layer = 33
 z_index = 4
@@ -161,7 +161,7 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_5jc4t")
 
-[node name="animace_green" type="AnimatedSprite2D" parent="." unique_id=237514192]
+[node name="AnimaceGreen" type="AnimatedSprite2D" parent="." unique_id=237514192]
 material = SubResource("CanvasItemMaterial_4l1t8")
 sprite_frames = SubResource("SpriteFrames_2002g")
 animation = &"move"
@@ -188,6 +188,7 @@ stream = ExtResource("8_5b0gg")
 bus = &"SFX"
 
 [node name="SlimeLevel" type="Label" parent="." unique_id=777764078]
+z_index = 20
 offset_left = -10.0
 offset_top = -14.0
 offset_right = 4.0

@@ -1,19 +1,20 @@
 extends Area2D
 
-@export var xp_amount : int = 100
+@export var xp_amount := 0 # Toto se změní při spawnu
 @export var speed := 100
 
 var player: CharacterBody2D
 var following := false
-var collected: bool = false
 
 func _ready():
-	connect("body_entered", _on_body_entered)
+	if not body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
 
 func _physics_process(delta):
 	if following and player:
 		var game = get_tree().current_scene
-		var final_speed = speed * game.xp_pickup_speed_bonus
+		var bonus = game.xp_pickup_speed_bonus if "xp_pickup_speed_bonus" in game else 1.0
+		var final_speed = speed * bonus
 		
 		global_position = global_position.move_toward(
 			player.global_position,
@@ -23,9 +24,10 @@ func _physics_process(delta):
 func follow(target):
 	player = target
 	following = true
-	
-func set_speed(new_speed: float):
-	speed = new_speed
+
+# Tuto funkci volá sliz při umírání
+func set_xp_amount(amount: int):
+	xp_amount = amount
 
 func _on_area_entered(area):
 	if area.name == "Magnet":

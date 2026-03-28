@@ -140,14 +140,14 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u6ijx"]
 size = Vector2(11.999998, 17.998795)
 
-[node name="slime_yellow" type="CharacterBody2D" unique_id=1180821747]
+[node name="SlimeYellow" type="CharacterBody2D" unique_id=1180821747]
 z_index = 4
 collision_layer = 2
 collision_mask = 19
 motion_mode = 1
 script = ExtResource("1_u6ijx")
 
-[node name="animace_yellow" type="AnimatedSprite2D" parent="." unique_id=1132511743]
+[node name="AnimaceYellow" type="AnimatedSprite2D" parent="." unique_id=1132511743]
 sprite_frames = SubResource("SpriteFrames_q3i1j")
 animation = &"crit_hit"
 autoplay = "move"
@@ -172,6 +172,7 @@ stream = ExtResource("3_p127i")
 bus = &"SFX"
 
 [node name="SlimeLevel" type="Label" parent="." unique_id=1188318157]
+z_index = 20
 offset_left = -10.0
 offset_top = -14.0
 offset_right = 4.0
