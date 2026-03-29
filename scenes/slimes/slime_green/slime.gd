@@ -3,7 +3,7 @@ extends CharacterBody2D
 var health = 50
 var speed = 25
 var damage = 20
-var base_xp = 50
+var base_xp = 30
 
 @onready var an = $AnimaceGreen
 @onready var player = get_node("/root/Game/Player")
@@ -91,7 +91,6 @@ func xp_drop(pos: Vector2):
 	
 	call_deferred("_spawn_xp", pos, final_xp)
 	
-	call_deferred("_spawn_xp", pos, final_xp)
 func _spawn_xp(pos: Vector2, xp_val: int):
 	if not XP_SCENE: return
 
@@ -99,7 +98,6 @@ func _spawn_xp(pos: Vector2, xp_val: int):
 	get_tree().current_scene.add_child(xp)
 	
 	xp.global_position = pos
-	xp.z_index = 1
 	
 	# přídání hodnoty xp
 	if xp.has_method("set_xp_amount"):

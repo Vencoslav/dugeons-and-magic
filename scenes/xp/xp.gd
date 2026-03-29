@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var xp_amount := 0 # Toto se změní při spawnu
+@export var xp_amount := 0 
 @export var speed := 100
 
 var player: CharacterBody2D

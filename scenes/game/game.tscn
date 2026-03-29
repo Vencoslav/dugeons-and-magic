@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://8cdv8xoxg1dd" path="res://assets/mapa/wall.png" id="3_fc0e3"]
 [ext_resource type="Texture2D" uid="uid://2wm5t7tca8ht" path="res://assets/mapa/corners.png" id="4_7jktm"]
 [ext_resource type="Texture2D" uid="uid://ixfbmamd7215" path="res://assets/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7.png" id="5_ryrav"]
-[ext_resource type="Texture2D" uid="uid://bdnf512d07bnh" path="res://assets/animace/snail_sheet.png" id="9_e36ub"]
+[ext_resource type="Texture2D" uid="uid://dvnm8qdadif4n" path="res://assets/animace/Snail_cry_sheet.png" id="9_3jaai"]
 [ext_resource type="FontFile" uid="uid://cftgc8pvv8clu" path="res://assets/fonts/Daydream DEMO.otf" id="9_iotsf"]
 [ext_resource type="Texture2D" uid="uid://spp6rii5775f" path="res://assets/moje_grafika/others/heart.png" id="13_lc2xo"]
 [ext_resource type="Texture2D" uid="uid://n3xvntki635h" path="res://assets/moje_grafika/others/movement.png" id="14_215e1"]
@@ -117,7 +117,6 @@ func spawn_mob():
 	var resource = load(random_path)
 
 	var mob = resource.instantiate()
-	
 
 	path_follow.progress_ratio = randf()
 	mob.global_position = path_follow.global_position
@@ -126,17 +125,17 @@ func spawn_mob():
 	
 	match random_path:
 		\"res://scenes/slimes/slime_green/slime.tscn\":
-			mob.base_xp = 15 + green_xp_bonus
+			mob.base_xp =  30 + green_xp_bonus
 			mob.health += green_health_bonus
 			mob.speed += green_damage_bonus
 			mob.damage += green_damage_bonus
 		\"res://scenes/slimes/slime_yellow/slime_yellow.tscn\":
-			mob.base_xp = 30 + yellow_xp_bonus
+			mob.base_xp = 50 + yellow_xp_bonus
 			mob.health += yellow_health_bonus
 			mob.speed += yellow_speed_bonus
 			mob.damage += yellow_damage_bonus
 		\"res://scenes/slimes/slime_red/slime_red.tscn\":
-			mob.base_xp = 50 + red_xp_bonus 
+			mob.base_xp = 90 + red_xp_bonus 
 			mob.health += red_health_bonus
 			mob.speed += red_speed_bonus
 			mob.damage += red_damage_bonus
@@ -167,8 +166,8 @@ func _on_button_try_again_pressed() -> void:
 func _on_increse_difficulty_timer_timeout() -> void:
 	max_scene_slimes += 3
 	
-	green_xp_bonus += 5    
-	yellow_xp_bonus += 15  
+	green_xp_bonus += 10
+	yellow_xp_bonus += 20
 	red_xp_bonus += 35     
 	
 	# Zelený slime staty
@@ -1184,92 +1183,106 @@ sources/0 = SubResource("TileSetAtlasSource_7jktm")
 sources/1 = SubResource("TileSetAtlasSource_ryrav")
 sources/2 = SubResource("TileSetAtlasSource_eow3j")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0o4t1"]
-atlas = ExtResource("9_e36ub")
+[sub_resource type="AtlasTexture" id="AtlasTexture_1iff4"]
+atlas = ExtResource("9_3jaai")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0k4wn"]
-atlas = ExtResource("9_e36ub")
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vuph"]
+atlas = ExtResource("9_3jaai")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_j5v2v"]
-atlas = ExtResource("9_e36ub")
+[sub_resource type="AtlasTexture" id="AtlasTexture_wdnak"]
+atlas = ExtResource("9_3jaai")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_iotk1"]
-atlas = ExtResource("9_e36ub")
+[sub_resource type="AtlasTexture" id="AtlasTexture_h48ew"]
+atlas = ExtResource("9_3jaai")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_w44g7"]
-atlas = ExtResource("9_e36ub")
+[sub_resource type="AtlasTexture" id="AtlasTexture_fty5b"]
+atlas = ExtResource("9_3jaai")
 region = Rect2(128, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cm266"]
-atlas = ExtResource("9_e36ub")
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2dhg"]
+atlas = ExtResource("9_3jaai")
 region = Rect2(160, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_g8g3n"]
-atlas = ExtResource("9_e36ub")
+[sub_resource type="AtlasTexture" id="AtlasTexture_firvq"]
+atlas = ExtResource("9_3jaai")
 region = Rect2(192, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8u0te"]
-atlas = ExtResource("9_e36ub")
+[sub_resource type="AtlasTexture" id="AtlasTexture_8krtj"]
+atlas = ExtResource("9_3jaai")
 region = Rect2(224, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oiatc"]
-atlas = ExtResource("9_e36ub")
+[sub_resource type="AtlasTexture" id="AtlasTexture_fydea"]
+atlas = ExtResource("9_3jaai")
 region = Rect2(256, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mg3m2"]
-atlas = ExtResource("9_e36ub")
+[sub_resource type="AtlasTexture" id="AtlasTexture_af6p5"]
+atlas = ExtResource("9_3jaai")
 region = Rect2(288, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ojb7r"]
-atlas = ExtResource("9_e36ub")
+[sub_resource type="AtlasTexture" id="AtlasTexture_mumkj"]
+atlas = ExtResource("9_3jaai")
 region = Rect2(320, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e5qqf"]
-atlas = ExtResource("9_e36ub")
+[sub_resource type="AtlasTexture" id="AtlasTexture_2vph8"]
+atlas = ExtResource("9_3jaai")
 region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0gkf7"]
+atlas = ExtResource("9_3jaai")
+region = Rect2(384, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ehwc"]
+atlas = ExtResource("9_3jaai")
+region = Rect2(416, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hb5m1"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0o4t1")
+"texture": SubResource("AtlasTexture_1iff4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0k4wn")
+"texture": SubResource("AtlasTexture_4vuph")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_j5v2v")
+"texture": SubResource("AtlasTexture_wdnak")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_iotk1")
+"texture": SubResource("AtlasTexture_h48ew")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w44g7")
+"texture": SubResource("AtlasTexture_fty5b")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cm266")
+"texture": SubResource("AtlasTexture_l2dhg")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g8g3n")
+"texture": SubResource("AtlasTexture_firvq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8u0te")
+"texture": SubResource("AtlasTexture_8krtj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_oiatc")
+"texture": SubResource("AtlasTexture_fydea")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mg3m2")
+"texture": SubResource("AtlasTexture_af6p5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ojb7r")
+"texture": SubResource("AtlasTexture_mumkj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_e5qqf")
+"texture": SubResource("AtlasTexture_2vph8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0gkf7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ehwc")
 }],
 "loop": true,
 "name": &"default",
@@ -1447,7 +1460,7 @@ wait_time = 3.0
 autostart = true
 
 [node name="IncreseDifficultyTimer" type="Timer" parent="." unique_id=1733514089]
-wait_time = 20.0
+wait_time = 25.0
 autostart = true
 
 [node name="GameOver" type="CanvasLayer" parent="." unique_id=601820663]
