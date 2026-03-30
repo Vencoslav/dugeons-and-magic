@@ -198,7 +198,7 @@ script = ExtResource("1_onrkg")
 [node name="Staff" parent="." unique_id=1237324527 instance=ExtResource("4_hqtel")]
 position = Vector2(5, -9)
 
-[node name="TextureHealhBar" type="TextureProgressBar" parent="." unique_id=181144996]
+[node name="TextureHealthBar" type="TextureProgressBar" parent="." unique_id=181144996]
 process_mode = 1
 z_index = 20
 offset_left = -178.0
@@ -209,7 +209,7 @@ texture_under = ExtResource("7_606se")
 texture_over = ExtResource("9_op7ga")
 texture_progress = ExtResource("8_u1c27")
 
-[node name="Hp" type="Label" parent="TextureHealhBar" unique_id=438736037]
+[node name="Hp" type="Label" parent="TextureHealthBar" unique_id=438736037]
 layout_mode = 0
 offset_left = 5.0
 offset_right = 45.0
@@ -217,7 +217,7 @@ offset_bottom = 23.0
 scale = Vector2(0.274495, 0.240646)
 text = "HP"
 
-[node name="HealingTimer" type="Timer" parent="TextureHealhBar" unique_id=2024050836]
+[node name="HealingTimer" type="Timer" parent="TextureHealthBar" unique_id=2024050836]
 autostart = true
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="." unique_id=1802536546]
@@ -354,4 +354,4 @@ position = Vector2(2, -10)
 shape = SubResource("CircleShape2D_nvl01")
 
 [connection signal="level_up" from="." to="." method="_on_level_up"]
-[connection signal="timeout" from="TextureHealhBar/HealingTimer" to="." method="_on_healing_timer_timeout"]
+[connection signal="timeout" from="TextureHealthBar/HealingTimer" to="." method="_on_healing_timer_timeout"]

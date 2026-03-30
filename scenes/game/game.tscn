@@ -28,7 +28,7 @@
 script/source = "extends Node
 @onready var path_follow = %PathFollow2D
 @onready var global_timer = $GlobalTimer
-@onready var difficulty_timer = $IncreseDifficultyTimer
+@onready var difficulty_timer = $IncreaseDifficultyTimer
 @onready var level_menu = $LevelUpMenu
 @onready var auto_shoot_timer = $AutoShootTimer
 @onready var upgrade_container = $LevelUpMenu/ColorRect/HBoxContainer
@@ -81,7 +81,7 @@ func _ready():
 	auto_label = player.get_node(\"AutoShootLabel\")
 	staff = player.get_node(\"Staff\")
 	magnet_collision = player.get_node(\"Magnet/CollisionShape2D\")
-	health_bar = player.get_node(\"TextureHealhBar\")
+	health_bar = player.get_node(\"TextureHealthBar\")
 	healing_timer = health_bar.get_node(\"HealingTimer\")
 	kills_panel = player.get_node(\"KillsPanel\")
 	
@@ -163,7 +163,8 @@ func _on_button_try_again_pressed() -> void:
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
-func _on_increse_difficulty_timer_timeout() -> void:
+func _on_increase_difficulty_timer_timeout() -> void:
+	
 	max_scene_slimes += 3
 	
 	green_xp_bonus += 10
@@ -184,6 +185,7 @@ func _on_increse_difficulty_timer_timeout() -> void:
 	yellow_speed_bonus += 10
 	yellow_health_bonus += 5
 	yellow_damage_bonus += 3
+	
 
 func _on_button_quit_game_pressed() -> void:
 	Input.flush_buffered_events() 
@@ -327,7 +329,7 @@ func _on_button_crit_damage_pressed() -> void:
 	close_level_up_menu()
 	
 func _on_button_pick_up_speed_pressed() -> void:
-	xp_pickup_speed_bonus *= 1.1
+	xp_pickup_speed_bonus *= 1.2
 	close_level_up_menu()
 	
 func _on_button_reroll_pressed() -> void:
@@ -1459,7 +1461,7 @@ tile_set = SubResource("TileSet_j5wjh")
 wait_time = 3.0
 autostart = true
 
-[node name="IncreseDifficultyTimer" type="Timer" parent="." unique_id=1733514089]
+[node name="IncreaseDifficultyTimer" type="Timer" parent="." unique_id=1733514089]
 wait_time = 25.0
 autostart = true
 
@@ -2355,7 +2357,7 @@ offset_bottom = 44.755127
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 16
-text = "Increase pick up speed by 10  %"
+text = "Increase pick up speed by 20  %"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -2816,7 +2818,7 @@ text = "Back"
 [connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="AutoShootTimer" to="." method="_on_auto_shoot_timer_timeout"]
 [connection signal="timeout" from="GlobalTimer" to="." method="_on_global_timer_timeout"]
-[connection signal="timeout" from="IncreseDifficultyTimer" to="." method="_on_increse_difficulty_timer_timeout"]
+[connection signal="timeout" from="IncreaseDifficultyTimer" to="." method="_on_increase_difficulty_timer_timeout"]
 [connection signal="pressed" from="GameOver/ColorRect/ButtonTryAgain" to="." method="_on_button_try_again_pressed"]
 [connection signal="pressed" from="GameOver/ColorRect/ButtonMainMenu" to="." method="_on_button_main_menu_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonResume" to="." method="_on_button_resume_pressed"]

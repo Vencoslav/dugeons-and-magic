@@ -1,7 +1,7 @@
 extends Area2D
 
 @export var xp_amount := 0 
-@export var speed := 100
+@export var speed := 150
 
 var player: CharacterBody2D
 var following := false

@@ -267,6 +267,7 @@ parameters/looping = true
 
 [node name="Settings" type="Panel" parent="." unique_id=1650062803]
 process_mode = 3
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -436,7 +437,6 @@ text = "Fullscreen"
 script = ExtResource("9_dy7ct")
 
 [node name="KeyBinds" type="Panel" parent="." unique_id=134156385]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -642,16 +642,6 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_fu7sn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_jix8l")
 text = "Back"
 
-[node name="FullscreenControl" type="CheckButton" parent="KeyBinds" unique_id=320645874]
-process_mode = 3
-layout_mode = 0
-offset_left = 40.5
-offset_top = 171.0
-offset_right = 349.5
-offset_bottom = 202.0
-text = "Fullscreen"
-script = ExtResource("9_dy7ct")
-
 [connection signal="pressed" from="MainButtons/ButtonStartGame" to="." method="_on_button_start_game_pressed"]
 [connection signal="pressed" from="MainButtons/ButtonSettings" to="." method="_on_button_settings_pressed"]
 [connection signal="pressed" from="MainButtons/ButtonExit" to="." method="_on_button_exit_pressed"]
@@ -664,4 +654,3 @@ script = ExtResource("9_dy7ct")
 [connection signal="pressed" from="KeyBinds/HBoxContainer/ButtonSettins" to="." method="_on_button_settins_pressed"]
 [connection signal="pressed" from="KeyBinds/HBoxContainer/ButtonKeyBinds" to="." method="_on_button_key_binds_pressed"]
 [connection signal="pressed" from="KeyBinds/ButtonBack" to="." method="_on_button_back_pressed"]
-[connection signal="toggled" from="KeyBinds/FullscreenControl" to="KeyBinds/FullscreenControl" method="_on_toggled"]
